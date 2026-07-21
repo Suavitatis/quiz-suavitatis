@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Painel de Leads · Quiz SUAVIS | Suavitatis</title>
+<style>
+  :root {
+    --accent: #a155f2; --accent-dark: #7c3aed; --accent-soft: rgba(161, 85, 242, .12);
+    --bg: #f6f7fb; --card: #ffffff; --line: #ececf3;
+    --text: #1d1d27; --text-muted: #6b6b7b; --text-dim: #9a9aaa;
+    --green: #16a34a; --green-soft: #dcfce7; --amber: #d97706; --amber-soft: #fef3c7;
+    --blue: #2563eb; --blue-soft: #dbeafe; --red: #dc2626;
+    --shadow: 0 1px 3px rgba(20, 20, 40, .06), 0 8px 24px rgba(20, 20, 40, .05);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  b { font-weight: 700; }
+
+  /* ===== LOGIN GATE ===== */
+  #gate {
+    position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #f6f7fb, #eef0f8); padding: 20px;
+  }
+  .gate-card {
+    background: var(--card); border-radius: 18px; box-shadow: var(--shadow);
+    padding: 32px 28px; width: 100%; max-width: 360px; text-align: center;
+  }
+  .gate-logo {
+    width: 52px; height: 52px; border-radius: 13px; background: #16161e; color: #fff;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+    font-weight: 800; font-size: 19px; letter-spacing: .02em;
+  }
+  .gate-card h1 { font-size: 18px; margin-bottom: 4px; }
+  .gate-card p { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
+  .gate-card input {
+    width: 100%; padding: 13px 15px; border: 1.5px solid var(--line); border-radius: 11px;
+    font-size: 15px; outline: none; transition: border-color .15s; margin-bottom: 12px;
+  }
+  .gate-card input:focus { border-color: var(--accent); }
+  .gate-card button {
+    width: 100%; padding: 13px; border: none; border-radius: 11px; cursor: pointer;
+    background: var(--accent); color: #fff; font-size: 15px; font-weight: 700; transition: filter .15s;
+  }
+  .gate-card button:hover { filter: brightness(1.05); }
+  .gate-err { color: var(--red); font-size: 13px; margin-top: 12px; min-height: 16px; }
+
+  /* ===== APP SHELL ===== */
+  #app { display: none; max-width: 1180px; margin: 0 auto; padding: 22px 20px 60px; }
+  .topbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+  .brand { display: flex; align-items: center; gap: 11px; margin-right: auto; }
+  .brand .logo {
+    width: 38px; height: 38px; border-radius: 10px; background: #16161e; color: #fff;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .brand h1 { font-size: 16px; line-height: 1.2; }
+  .brand small { color: var(--text-dim); font-size: 11.5px; font-weight: 500; }
+  .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .seg { display: inline-flex; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  .seg button {
+    border: none; background: transparent; padding: 8px 12px; cursor: pointer; font-size: 12.5px;
+    color: var(--text-muted); font-weight: 600; transition: all .12s;
+  }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .btn {
+    border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 8px 13px;
+    cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--text); box-shadow: var(--shadow);
+    transition: all .12s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent-dark); }
+  .updated { font-size: 11.5px; color: var(--text-dim); width: 100%; margin-top: -8px; }
+
+  /* elementos escondidos pela navegação SEMPRE somem (vence display:grid etc.) */
+  [hidden] { display: none !important; }
+
+  /* ===== LAYOUT CRM — menu lateral ===== */
+  .layout { display: grid; grid-template-columns: 205px minmax(0, 1fr); gap: 18px; align-items: start; }
+  .sidenav { position: sticky; top: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 3px; box-shadow: var(--shadow); }
+  .sidenav button { text-align: left; border: none; background: none; padding: 9px 11px; border-radius: 9px; font-size: 13.5px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+  .sidenav button:hover { background: var(--accent-soft); color: var(--text); }
+  .sidenav button.on { background: var(--accent); color: #fff; }
+  .nav-grupo { font-size: 10.5px; font-weight: 800; letter-spacing: .08em; color: var(--text-dim); padding: 10px 11px 3px; }
+  .acao-btn { cursor: pointer; border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 4px 8px; font-size: 12px; }
+  .acao-btn:hover { background: var(--accent-soft); }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidenav { position: static; flex-direction: row; flex-wrap: wrap; }
+    .nav-grupo { display: none; }
+  }
+
+  /* ===== AGENDA — calendário ===== */
+  .ag-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+  .ag-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .ag-wd { font-size: 11px; font-weight: 800; color: var(--text-dim); text-align: center; padding: 4px 0; letter-spacing: .05em; }
+  .ag-cell { min-height: 84px; border: 1px solid var(--line); border-radius: 10px; padding: 6px; background: var(--card); cursor: pointer; overflow: hidden; }
+  .ag-cell:hover { border-color: var(--accent); }
+  .ag-cell.fora { opacity: .38; }
+  .ag-cell.hoje { border: 2px solid var(--accent); }
+  .ag-cell.sel { background: var(--accent-soft); }
+  .ag-cell .dnum { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+  .ag-card { background: var(--accent-soft); color: var(--accent-dark); border-radius: 6px; padding: 2px 6px; font-size: 11px; font-weight: 600; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ag-card.concluido { background: var(--green-soft); color: var(--green); }
+  .ag-card.cancelado { background: #fee2e2; color: var(--red); text-decoration: line-through; }
+  .ag-mais { font-size: 11px; font-weight: 700; color: var(--accent-dark); }
+
+  /* ===== KANBAN ===== */
+  .kb-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+  .kb-cols { display: flex; gap: 12px; align-items: flex-start; overflow-x: auto; padding-bottom: 10px; }
+  .kb-col { min-width: 250px; max-width: 250px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; flex-shrink: 0; }
+  .kb-col-head { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
+  .kb-col-head b { font-size: 13.5px; flex: 1; }
+  .kb-col-head .n { font-size: 11.5px; color: var(--text-muted); font-weight: 700; }
+  .kb-body { min-height: 40px; display: flex; flex-direction: column; gap: 7px; }
+  .kb-body.drag { outline: 2px dashed var(--accent); outline-offset: 3px; border-radius: 8px; }
+  .kb-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; cursor: grab; box-shadow: var(--shadow); position: relative; }
+  .kb-card b { font-size: 13px; display: block; margin-bottom: 2px; }
+  .kb-card small { font-size: 11.5px; color: var(--text-muted); display: block; }
+  .kb-card .x { position: absolute; top: 5px; right: 7px; cursor: pointer; color: var(--text-dim); font-size: 12px; border: none; background: none; }
+  .kb-card .x:hover { color: var(--red); }
+  .kb-add { margin-top: 8px; }
+  .kb-busca { width: 100%; margin-top: 6px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; font-size: 12.5px; }
+  .kb-res { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
+  .kb-res button { text-align: left; border: 1px solid var(--line); background: var(--card); border-radius: 7px; padding: 6px 8px; font-size: 12px; cursor: pointer; }
+  .kb-res button:hover { background: var(--accent-soft); }
+
+  /* ===== GRUPOS DE RENDA (acordeão) ===== */
+  .renda-g { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; overflow: hidden; background: var(--card); }
+  .renda-g-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; user-select: none; }
+  .renda-g-head:hover { background: var(--accent-soft); }
+  .renda-g-bar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent-soft); z-index: 0; }
+  .renda-g-seta { position: relative; z-index: 1; color: var(--accent-dark); font-size: 13px; width: 14px; }
+  .renda-g-lab { position: relative; z-index: 1; font-weight: 600; font-size: 13.5px; flex: 1; }
+  .renda-g-num { position: relative; z-index: 1; font-size: 12.5px; color: var(--text-muted); white-space: nowrap; }
+  .renda-g-num b { color: var(--text); font-size: 14px; }
+  .renda-g-det { border-top: 1px solid var(--line); padding: 6px 10px 10px; }
+
+  /* ===== KPI CARDS ===== */
+  .kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 13px; margin-bottom: 22px; }
+  .kpi {
+    background: var(--card); border-radius: 15px; padding: 16px 16px 15px; box-shadow: var(--shadow);
+    border: 1px solid var(--line); position: relative; overflow: hidden;
+  }
+  .kpi .k-label { font-size: 11.5px; color: var(--text-muted); font-weight: 600; margin-bottom: 7px; display: flex; align-items: center; gap: 5px; }
+  .kpi .k-num { font-size: 27px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+  .kpi .k-sub { font-size: 11.5px; color: var(--text-dim); margin-top: 6px; }
+  .kpi.hero { background: linear-gradient(150deg, var(--accent), var(--accent-dark)); border: none; }
+  .kpi.hero .k-label, .kpi.hero .k-num, .kpi.hero .k-sub { color: #fff; }
+  .kpi.hero .k-sub { opacity: .85; }
+  .kpi .k-num.green { color: var(--green); }
+  .kpi .k-num.blue { color: var(--blue); }
+  .kpi .k-num.amber { color: var(--amber); }
+
+  /* ===== SECTIONS / GRID ===== */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .panel { background: var(--card); border-radius: 15px; padding: 18px; box-shadow: var(--shadow); border: 1px solid var(--line); margin-bottom: 16px; }
+  .panel h2 { font-size: 14px; margin-bottom: 3px; }
+  .panel .sub { font-size: 11.5px; color: var(--text-dim); margin-bottom: 15px; }
+  .panel.grid2-item { margin-bottom: 0; }
+
+  /* ===== FUNNEL ===== */
+  .funnel-stage { margin-bottom: 13px; }
+  .fs-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .fs-name { font-size: 13px; font-weight: 600; }
+  .fs-vals { font-size: 12px; color: var(--text-muted); }
+  .fs-vals b { color: var(--text); }
+  .fs-track { height: 26px; background: var(--accent-soft); border-radius: 8px; overflow: hidden; }
+  .fs-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 8px; transition: width .5s cubic-bezier(.22,1,.36,1); min-width: 2px; }
+  .fs-drop { font-size: 11px; color: var(--red); margin-top: 3px; }
+
+  /* ===== BAR CHART ===== */
+  .bc-row { display: grid; grid-template-columns: 130px 1fr auto; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .bc-label { font-size: 12.5px; color: var(--text); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bc-track { height: 20px; background: #f1f1f7; border-radius: 6px; overflow: hidden; position: relative; }
+  .bc-fill { height: 100%; background: var(--accent-soft); border-radius: 6px; position: relative; transition: width .5s; min-width: 2px; }
+  .bc-won { position: absolute; left: 0; top: 0; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); border-radius: 6px; }
+  .bc-val { font-size: 12px; color: var(--text-muted); font-weight: 600; white-space: nowrap; min-width: 78px; text-align: right; }
+  .bc-val .won { color: var(--accent-dark); }
+  .legend { display: flex; gap: 16px; margin-top: 12px; font-size: 11.5px; color: var(--text-muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .empty { color: var(--text-dim); font-size: 12.5px; padding: 8px 0; }
+
+  /* ===== TRILHA (stacked) ===== */
+  .stack { height: 30px; border-radius: 9px; overflow: hidden; display: flex; margin: 6px 0 4px; }
+  .stack > div { height: 100%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; transition: width .5s; }
+  .seg-prem { background: linear-gradient(90deg, var(--accent), var(--accent-dark)); }
+  .seg-aud { background: linear-gradient(90deg, #2563eb, #1e40af); }
+  .seg-pad { background: #c9cad6; }
+  .trilha-stats { display: flex; gap: 10px; margin-top: 14px; }
+  .ts-card { flex: 1; background: #f7f7fb; border-radius: 11px; padding: 12px; }
+  .ts-card .n { font-size: 21px; font-weight: 800; }
+  .ts-card .l { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+  .ts-card.prem .n { color: var(--accent-dark); }
+  .ts-card.aud .n { color: #1e40af; }
+
+  /* ===== TABLES ===== */
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--text-dim); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; }
+  td.nome { font-weight: 600; }
+  tr:hover td { background: #fafaff; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+  .pill.parcial { background: #f1f1f7; color: var(--text-muted); }
+  .pill.contato { background: var(--blue-soft); color: var(--blue); }
+  .pill.completo { background: var(--amber-soft); color: var(--amber); }
+  .pill.agendado { background: var(--green-soft); color: var(--green); }
+  .pill.prem { background: var(--accent-soft); color: var(--accent-dark); }
+  .pill.aud { background: #dbeafe; color: #1e40af; }
+  .pill.pad { background: #f1f1f7; color: var(--text-muted); }
+  .tbl-tools { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .tbl-tools input {
+    flex: 1; min-width: 180px; padding: 9px 13px; border: 1.5px solid var(--line); border-radius: 10px;
+    font-size: 13px; outline: none;
+  }
+  .tbl-tools input:focus { border-color: var(--accent); }
+  .muted-cell { color: var(--text-dim); }
+
+  @media (max-width: 920px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .grid2 { grid-template-columns: 1fr; }
+    .bc-row { grid-template-columns: 100px 1fr auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="gate">
+    <div class="gate-card">
+      <div class="gate-logo">🌿</div>
+      <h1>Painel de Leads</h1>
+      <p>Quiz SUAVIS · Suavitatis Terapias Integrativas</p>
+      <input id="gate-pass" type="password" placeholder="Senha de acesso" autocomplete="current-password" />
+      <button id="gate-btn">Entrar</button>
+      <div class="gate-err" id="gate-err"></div>
+    </div>
+  </div>
+
+  <!-- PRIMEIRO ACESSO: definir a própria senha -->
+  <div id="gate2" style="display:none;position:fixed;inset:0;z-index:60;background:var(--bg);align-items:center;justify-content:center;">
+    <div class="gate-card">
+      <div class="gate-logo">🔑</div>
+      <h1>Crie a sua senha</h1>
+      <p>Este é seu primeiro acesso (ou sua senha foi resetada). Escolha uma senha só sua — nem a administradora consegue vê-la.</p>
+      <input id="gate2-s1" type="password" placeholder="Nova senha (mín. 6 caracteres)" autocomplete="new-password" />
+      <input id="gate2-s2" type="password" placeholder="Repita a nova senha" autocomplete="new-password" style="margin-top:8px;" />
+      <button id="gate2-btn" style="margin-top:12px;">Salvar e entrar</button>
+      <div class="gate-err" id="gate2-err"></div>
+    </div>
+  </div>
+
+  <!-- AGENDAMENTOS DO DIA (janela flutuante do calendário) -->
+  <div id="diaModal" style="display:none;position:fixed;inset:0;z-index:65;background:rgba(20,20,40,.45);align-items:center;justify-content:center;padding:16px;">
+    <div style="background:var(--card);border-radius:16px;max-width:760px;width:100%;max-height:88vh;overflow:auto;padding:20px 22px;box-shadow:var(--shadow);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <h2 id="dmTitulo" style="flex:1;margin:0;font-size:16px;"></h2>
+        <button class="acao-btn" id="dmFechar" title="Fechar">✕</button>
+      </div>
+      <div id="dmCorpo"></div>
+    </div>
+  </div>
+
+  <!-- DETALHE DO AGENDAMENTO / LEAD (janela flutuante) -->
+  <div id="leadModal" style="display:none;position:fixed;inset:0;z-index:70;background:rgba(20,20,40,.45);align-items:center;justify-content:center;padding:16px;">
+    <div id="leadModalCard" style="background:var(--card);border-radius:16px;max-width:580px;width:100%;max-height:88vh;overflow:auto;padding:20px 22px;box-shadow:var(--shadow);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <h2 id="lmTitulo" style="flex:1;margin:0;font-size:17px;"></h2>
+        <button class="acao-btn" id="lmFechar" title="Fechar">✕</button>
+      </div>
+      <div id="lmCorpo"></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">🌿</div>
+        <div>
+          <h1>CRM SUAVIS</h1>
+          <small>Suavitatis Terapias Integrativas</small>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="seg" id="range">
+          <button data-d="0" class="on">Tudo</button>
+          <button data-d="30">30d</button>
+          <button data-d="7">7d</button>
+          <button data-d="1">Hoje</button>
+        </div>
+        <button class="btn" id="btn-refresh">↻ Atualizar</button>
+        <button class="btn" id="btn-csv">⬇ CSV</button>
+        <button class="btn" id="btn-logout">Sair</button>
+      </div>
+      <div class="updated" id="updated"></div>
+    </div>
+
+    <div class="seg" id="tabs" style="display:none;">
+      <button data-tab="funil" class="on">📊 Funil</button>
+      <button data-tab="cal">📅 Agendamentos (Cal)</button>
+    </div>
+
+    <div class="layout">
+      <aside class="sidenav" id="sidenav">
+        <button data-sec="geral" class="on">📊 Visão Geral</button>
+        <div class="nav-grupo">AGENDA</div>
+        <button data-sec="agendaDash">📅 Dashboard</button>
+        <button data-sec="agendados">🗓️ Leads Agendados</button>
+        <button data-sec="calEspelho">🔁 Espelho do Cal</button>
+        <div class="nav-grupo">GESTÃO</div>
+        <button data-sec="quadro">📋 Quadro (Funil)</button>
+        <button data-sec="leads">👥 Leads</button>
+        <div class="nav-grupo">SISTEMA</div>
+        <button data-sec="config">⚙️ Configurações</button>
+      </aside>
+      <div class="maincol">
+
+    <div id="tabFunil">
+    <div class="kpis" id="kpis"></div>
+
+    <div class="panel" style="display:none;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div>
+        <h2>🎯 Priorizar closer (trilha premium)</h2>
+        <div class="sub">(Recurso do funil original com time de vendedores — oculto no SUAVIS. Reativa quando houver equipe.)</div>
+      </div>
+      <select id="priorSelect" style="margin-left:auto;padding:10px 13px;border:1.5px solid var(--line);border-radius:10px;font-size:13.5px;font-weight:600;min-width:230px;cursor:pointer;">
+        <option value="">Automático (sorteio)</option>
+      </select>
+      <span class="muted-cell" id="priorStatus" style="min-width:120px;"></span>
+    </div>
+
+    <div class="panel" id="pFunil">
+      <h2>Funil de conversão</h2>
+      <div class="sub">Cada etapa conta quem chegou nela <i>ou além</i> — o lead avança de forma acumulada.</div>
+      <div id="funnel"></div>
+    </div>
+
+    <!-- (o quadro "Destino dos agendamentos" mudou para Agenda → Dashboard) -->
+
+    <div class="panel" id="pRenda" hidden>
+      <h2>Renda familiar mensal</h2>
+      <div class="sub">Total por faixa de renda · <b>clique numa faixa</b> para ver todos os leads dela (clique de novo para recolher)</div>
+      <div id="renda"></div>
+    </div>
+
+    <div class="panel" id="pNicho">
+      <h2>Como se sentem cuidando</h2>
+      <div class="sub">Resposta da pergunta 2 · barra escura = quantas agendaram conversa</div>
+      <div id="nicho"></div>
+    </div>
+
+    <div class="grid2" id="pIdadeAreas">
+      <div class="panel grid2-item">
+        <h2>Faixa etária</h2>
+        <div class="sub">Idade informada no quiz</div>
+        <div id="seguidores"></div>
+      </div>
+      <div class="panel grid2-item" style="grid-column:1/-1">
+        <h2>Áreas da vida mais afetadas</h2>
+        <div class="sub"><b>Clique numa área</b> para ver todos os leads que a marcaram (clique de novo para recolher). Como a pergunta aceita várias escolhas, a mesma lead pode aparecer em mais de uma área.</div>
+        <div id="desafio"></div>
+      </div>
+    </div>
+
+    <div class="grid2" id="pDiaUF">
+      <div class="panel grid2-item">
+        <h2>Leads por dia</h2>
+        <div class="sub">Últimos 7 dias, dia a dia · a 1ª barra 📦 é o acumulado de tudo que entrou antes (este quadro não muda com o filtro de período)</div>
+        <div id="perday"></div>
+      </div>
+      <div class="panel grid2-item">
+        <h2>Top estados (UF)</h2>
+        <div class="sub">Pelo DDD do WhatsApp</div>
+        <div id="uf"></div>
+      </div>
+    </div>
+
+    <!-- Origem dos leads (UTM): oculto a pedido da Suely em 17/07/2026 — todos
+         os leads chegam sem UTM por enquanto. Reativar quando houver anúncios:
+         basta remover o display:none abaixo. -->
+    <div class="panel" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div>
+          <h2>Origem dos leads (UTM)</h2>
+          <div class="sub">De onde vêm os leads e quais origens mais agendam</div>
+        </div>
+        <div class="seg" id="utmDim">
+          <button data-d="utm_source" class="on">Source</button>
+          <button data-d="utm_campaign">Campanha</button>
+          <button data-d="utm_medium">Medium</button>
+          <button data-d="utm_content">Conteúdo</button>
+        </div>
+      </div>
+      <div class="tbl-wrap"><table id="utmTable"></table></div>
+    </div>
+
+    <div class="panel" id="pUpcoming" hidden>
+      <h2>🗓️ Leads Agendados</h2>
+      <div class="sub">Todos os leads com Encontro marcado: futuros primeiro, depois os que já passaram (esmaecidos). Atribua o atendente responsável e controle o status. <b>Atenção:</b> Reagendar/Cancelar aqui muda só o status no painel — ajuste a agenda real no cal.com (a integração direta chega em breve).</div>
+      <div class="tbl-tools" style="gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+        <!-- fileira 1: período (pela DATA DO ENCONTRO) -->
+        <div style="width:100%;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:12px;font-weight:700;color:var(--text-muted);">📅 Data do Encontro:</span>
+          <div class="seg" id="uaRange">
+            <button data-ur="tudo" class="on">Tudo</button>
+            <button data-ur="hoje">Hoje</button>
+            <button data-ur="semana">Esta semana</button>
+            <button data-ur="mes">Este mês</button>
+            <button data-ur="custom">Personalizado</button>
+          </div>
+          <div id="uaCustom" style="display:none;gap:6px;align-items:center;font-size:13px;font-weight:600;">
+            de <input type="date" id="uaIni" style="padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;">
+            até <input type="date" id="uaFim" style="padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;">
+            <button class="btn" id="uaAplicar">Aplicar</button>
+          </div>
+        </div>
+        <!-- fileira 2: busca + destino -->
+        <div style="width:100%;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <input id="uaBusca" placeholder="Buscar por nome, e-mail ou WhatsApp..." style="flex:1;min-width:220px;padding:10px 13px;border:1.5px solid var(--line);border-radius:10px;font-size:13.5px;">
+          <div class="seg" id="uaTrilha">
+            <button data-t="" class="on">Todas</button>
+            <button data-t="comunidade">🌿 Comunidade</button>
+            <button data-t="imersao">🌊 Imersão</button>
+            <button data-t="premium">💬 WhatsApp</button>
+          </div>
+        </div>
+        <!-- fileira 3: status do agendamento + atendente + contagem -->
+        <div style="width:100%;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <div class="seg" id="uaStatus">
+            <button data-s="" class="on">Todos</button>
+            <button data-s="confirmado">🟢 Confirmado</button>
+            <button data-s="concluido">✅ Concluído</button>
+            <button data-s="reagendado">🔁 Reagendado</button>
+            <button data-s="cancelado">❌ Cancelado</button>
+          </div>
+          <select id="uaAtendente" style="padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">
+            <option value="">Todos os atendentes</option>
+          </select>
+          <span id="upCount" class="muted-cell" style="margin-left:auto;"></span>
+        </div>
+      </div>
+      <div class="tbl-wrap"><table id="upcoming"></table></div>
+    </div>
+
+    <div class="panel" id="pLeads" hidden>
+      <h2>👥 Todos os leads</h2>
+      <div class="seg" id="leadsRange" style="margin:10px 0;">
+        <button data-lr="tudo" class="on">Tudo</button>
+        <button data-lr="hoje">Hoje</button>
+        <button data-lr="semana">Esta semana</button>
+        <button data-lr="mes">Este mês</button>
+        <button data-lr="custom">Personalizado</button>
+      </div>
+      <div id="leadsCustom" style="display:none;gap:8px;align-items:center;margin:0 0 10px;font-size:13px;font-weight:600;">
+        de <input type="date" id="lrIni" style="padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;">
+        até <input type="date" id="lrFim" style="padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;">
+        <button class="btn" id="lrAplicar">Aplicar</button>
+      </div>
+      <div class="tbl-tools">
+        <input id="search" placeholder="Buscar por nome, @, e-mail ou WhatsApp..." />
+        <div class="seg" id="trilhaFilter">
+          <button data-t="" class="on">Todas</button>
+          <button data-t="comunidade">🌿 Comunidade</button>
+          <button data-t="imersao">🌊 Imersão</button>
+          <button data-t="premium">💬 WhatsApp</button>
+        </div>
+        <div class="seg" id="statusFilter">
+          <button data-s="" class="on">Todos</button>
+          <button data-s="parcial">Parcial</button>
+          <button data-s="contato">Contato</button>
+          <button data-s="completo">Completo</button>
+          <button data-s="agendado">Agendado</button>
+        </div>
+        <span class="muted-cell" id="tbl-count"></span>
+      </div>
+      <div class="tbl-wrap"><table id="leads"></table></div>
+    </div>
+
+    <!-- ===== AGENDA — Dashboard (calendário) ===== -->
+    <div class="panel" id="pAgendaDash" hidden>
+      <h2>📅 Agenda</h2>
+      <div class="sub">Todos os Encontros agendados no calendário. Clique num dia para ver os compromissos dele e agir (atendente, status).</div>
+      <div class="ag-toolbar">
+        <div class="seg" id="agModo">
+          <button data-m="mes" class="on">Mês</button>
+          <button data-m="semana">Semana</button>
+        </div>
+        <button class="btn" id="agPrev">‹</button>
+        <b id="agTitulo" style="min-width:170px;text-align:center;font-size:14px;"></b>
+        <button class="btn" id="agNext">›</button>
+        <button class="btn" id="agHoje">Hoje</button>
+        <span style="flex:1"></span>
+        <a class="btn" href="https://cal.com/suavitatisterapias/comunidade" target="_blank" rel="noopener" title="Agendar manualmente em nome de uma lead (Comunidade)">➕ Novo (Comunidade)</a>
+        <a class="btn" href="https://cal.com/suavitatisterapias/imersao" target="_blank" rel="noopener" title="Agendar manualmente em nome de uma lead (Imersão)">➕ Novo (Imersão)</a>
+      </div>
+      <div class="ag-cal" id="agGrid"></div>
+      <div id="agDia" style="margin-top:14px;"></div>
+    </div>
+
+    <div class="grid2" id="pDestino" hidden>
+      <div class="panel grid2-item" style="display:none">
+        <h2>Agendamentos por vendedor</h2>
+        <div class="sub">(oculto — sem equipe de vendedores por enquanto)</div>
+        <div id="vendedores"></div>
+      </div>
+      <div class="panel grid2-item" style="grid-column:1/-1">
+        <h2>Destino dos agendamentos</h2>
+        <div class="sub">🌿 Comunidade · 🌊 Imersão · 💬 WhatsApp — conforme as faixas de renda publicadas no quiz (Configurações → Quiz)</div>
+        <div id="trilha"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="pAgendaram" hidden>
+      <h2>🗓️ Agendaram conversas</h2>
+      <div class="sub">Resumo dos Encontros marcados pelo quiz</div>
+      <div class="kpis" id="agStats" style="margin-bottom:0;"></div>
+    </div>
+
+    <div class="panel" id="pPorAtendente" hidden>
+      <h2>👤 Agendamentos por atendente</h2>
+      <div class="sub">Quantos Encontros cada atendente é responsável · barra escura = concluídos</div>
+      <div id="porAtendente"></div>
+    </div>
+
+    <!-- ===== QUADRO (FUNIL) — Kanban ===== -->
+    <div class="panel" id="pQuadro" hidden>
+      <h2>📋 Quadro (Funil)</h2>
+      <div class="sub">Organize os leads em colunas e <b>arraste os cartões</b> entre elas. Crie quantos quadros (funis) precisar.</div>
+      <div class="kb-toolbar">
+        <select id="kbBoardSel" style="padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:13.5px;font-weight:600;cursor:pointer;min-width:200px;"></select>
+        <button class="btn" id="kbNovoQuadro">➕ Novo Quadro</button>
+        <button class="btn" id="kbNovaCol">➕ Nova Coluna</button>
+        <button class="btn" id="kbExcluirQuadro" title="Excluir o quadro selecionado">🗑️</button>
+        <span class="muted-cell" id="kbAviso"></span>
+      </div>
+      <div class="kb-cols" id="kbCols"></div>
+    </div>
+    <div class="panel" id="pConfigExtras" hidden>
+      <h2>⚙️ Configurações</h2>
+      <div class="sub">
+        <b>Usuários (atendentes):</b> gestão completa logo abaixo (somente a administradora).<br>
+        <b>Quiz:</b> edite as perguntas no quadro "📝 Quiz — perguntas" abaixo (somente a administradora).<br>
+        <b>Administração:</b> hospedagem no Netlify (site <i>quiz-suavitatis</i>) · banco de dados no Supabase (projeto Suavitatis) · agendas no cal.com (<i>suavitatisterapias</i>).
+      </div>
+    </div>
+
+    <!-- ===== EDITOR DO QUIZ — só a administradora vê ===== -->
+    <div class="panel" id="pQuizEditor" hidden>
+      <h2>📝 Quiz — perguntas</h2>
+      <div class="sub">
+        Edite os textos, ative/inative, crie e exclua perguntas do quiz publicado. Nada muda no site até você clicar em <b>💾 Publicar perguntas</b>.<br>
+        🔑 A <b>pergunta-chave da renda</b> não pode ser excluída nem inativada: são os <b>destinos</b> dela (🌿/🌊/💬) que decidem para qual agenda cada lead vai.<br>
+        Os pontos <b>B / M / A</b> de cada opção alimentam o texto do resultado (Baixa/Média/Alta consciência) — na dúvida, deixe como está.
+      </div>
+      <div id="qeLista" style="margin-top:12px;"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center;">
+        <button class="btn" id="qeNova">➕ Nova pergunta</button>
+        <span style="flex:1"></span>
+        <button class="btn" id="qeRestaurar">↩ Restaurar padrão</button>
+        <button id="qePublicar" style="padding:10px 18px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-weight:700;font-size:13.5px;cursor:pointer;">💾 Publicar perguntas</button>
+      </div>
+      <div class="muted-cell" id="qeStatus" style="margin-top:8px;"></div>
+    </div>
+
+    <!-- ===== ÁREA EQUIPE — só a administradora vê ===== -->
+    <div class="panel" id="equipePanel" hidden>
+      <h2>👥 Equipe — usuários do painel</h2>
+      <div class="sub">Só você (administradora) vê esta área. Ao criar um usuário, o sistema gera uma <b>senha temporária</b> para você enviar à pessoa — no primeiro acesso ela cria a própria senha (que ninguém consegue ver, nem você). A data de validade corta o acesso automaticamente ao vencer (vazia = sem prazo).</div>
+
+      <div style="display:grid;grid-template-columns:2fr 2fr 1.4fr 1.2fr auto auto;gap:8px;margin:14px 0;align-items:end;">
+        <label style="font-size:11.5px;font-weight:600;">Nome completo<input id="eqNome" style="width:100%;margin-top:4px;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;" placeholder="Maria da Silva"></label>
+        <label style="font-size:11.5px;font-weight:600;">E-mail<input id="eqEmail" type="email" style="width:100%;margin-top:4px;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;" placeholder="maria@email.com"></label>
+        <label style="font-size:11.5px;font-weight:600;">Celular<input id="eqCel" style="width:100%;margin-top:4px;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;" placeholder="(11) 99999-9999"></label>
+        <label style="font-size:11.5px;font-weight:600;">Validade<input id="eqVal" type="date" style="width:100%;margin-top:4px;padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;"></label>
+        <button id="eqSalvar" style="padding:10px 16px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-weight:700;font-size:13px;cursor:pointer;">Adicionar</button>
+        <button id="eqCancelar" style="padding:10px 12px;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-weight:600;font-size:13px;cursor:pointer;display:none;">Cancelar</button>
+      </div>
+      <span class="muted-cell" id="eqStatus"></span>
+      <div class="tbl-wrap"><table id="eqUsers"></table></div>
+
+      <h2 style="margin-top:22px;">📖 Livro de registros (log)</h2>
+      <div class="sub">Cada acesso ao painel e cada extração de relatório, do mais recente para o mais antigo (últimos 300).</div>
+      <div class="tbl-wrap"><table id="eqLogs"></table></div>
+    </div>
+    </div><!-- /tabFunil -->
+
+    <div id="tabCal" hidden>
+      <div class="panel" style="padding:12px 16px;">
+        <div class="tbl-tools" style="gap:12px;flex-wrap:wrap;">
+          <div class="seg" id="calScope">
+            <button data-s="" class="on">Todos os eventos</button>
+            <button data-s="funil">Só deste funil</button>
+          </div>
+          <span class="muted-cell">Esta aba conta <b>agendamentos registrados no Cal.com</b>. O card <b>"Agendaram conversa"</b> da aba Funil conta <b>pessoas</b>. A API do Cal devolve só os <b>50 agendamentos mais recentes de TODAS as suas agendas</b>, então pode <b>não bater 1:1</b> com o Funil. Use <b>"Só deste funil"</b> pra ver só o que veio do quiz.</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Agendamentos no Cal — por evento</h2>
+        <div class="sub">Espelho direto da agenda do Cal · confirmados vs cancelados</div>
+        <div class="tbl-wrap"><table id="calPorEvento"></table></div>
+      </div>
+      <div class="panel">
+        <h2>Reuniões por data</h2>
+        <div class="sub">Quando os calls (confirmados, do período filtrado) vão acontecer</div>
+        <div id="calPorDia"></div>
+      </div>
+      <div class="panel">
+        <h2>Lista de agendamentos</h2>
+        <div class="tbl-tools">
+          <span id="calCount" class="muted-cell"></span>
+          <button class="btn" id="calRefresh" style="margin-left:auto;">↻ Atualizar do Cal</button>
+        </div>
+        <div class="tbl-wrap"><table id="calTable"></table></div>
+      </div>
+    </div>
+
+      </div><!-- /maincol -->
+    </div><!-- /layout -->
+  </div>
+
+<script>
+'use strict';
+const API = '/api/metrics';
+const TKEY = 'core_dash_token';
+
+// ---- helpers ----
+const $ = (s) => document.querySelector(s);
+const el = (t, c) => { const e = document.createElement(t); if (c) e.className = c; return e; };
+const nf = (n) => Number(n || 0).toLocaleString('pt-BR');
+const pct = (a, b) => b ? Math.round((a / b) * 100) : 0;
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+// faixas na ordem certa (espelham as constantes do funil)
+const ORD_RENDA = ['Entre R$ 1.500,00 e R$ 2.500,00', 'Entre R$ 2.500,00 e R$ 5.000,00', 'Entre R$ 5.000,00 e R$ 10.000,00', 'Entre R$ 10.000,00 e R$ 20.000,00', 'Acima de R$ 20.000,00'];
+const ORD_SEG = ['🌻 30-45', '🌳 46-60', '🕊️ 61+'];
+const STATUS_ORD = { parcial: 1, contato: 2, completo: 3, agendado: 4 };
+
+let ALL = [];      // todos os leads carregados
+let RANGE = 0;     // 0 = tudo; senão nº de dias
+let IS_ADMIN = false;     // true = entrou com a senha da administradora
+let MUST_CHANGE = false;  // true = usuário precisa definir a própria senha
+let ATENDENTES = [];      // nomes da equipe (pro seletor de responsável)
+
+// ================= LOGIN =================
+function showGate(msg) {
+  $('#gate').style.display = 'flex';
+  $('#app').style.display = 'none';
+  $('#gate-err').textContent = msg || '';
+}
+async function tryToken(token) {
+  const res = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-dash-token': token },
+    body: JSON.stringify({ token }),
+  });
+  if (res.status === 401) throw new Error('Senha incorreta.');
+  if (res.status === 403) throw new Error('Seu acesso expirou. Fale com a administradora.');
+  if (res.status === 503) throw new Error('Painel ainda não configurado no servidor (DASHBOARD_TOKEN).');
+  if (!res.ok) throw new Error('Erro ao carregar (' + res.status + ').');
+  const data = await res.json();
+  IS_ADMIN = !!data.admin;
+  MUST_CHANGE = !!data.trocar_senha;
+  ATENDENTES = data.atendentes || [];
+  return data.leads || [];
+}
+function aplicarPerfil() {
+  navGo(NAV_ATUAL);           // reaplica a seção atual do menu lateral
+  if (IS_ADMIN) carregarEquipe();
+}
+async function doLogin(token) {
+  try {
+    ALL = await tryToken(token);
+    localStorage.setItem(TKEY, token);
+    if (MUST_CHANGE) {   // primeiro acesso (ou reset): definir a própria senha antes de entrar
+      $('#gate').style.display = 'none';
+      $('#app').style.display = 'none';
+      $('#gate2').style.display = 'flex';
+      return;
+    }
+    $('#gate').style.display = 'none';
+    $('#app').style.display = 'block';
+    render();
+    carregarPrioridade();
+    carregarRendaCfg();   // faixas de renda atuais do quiz (pro quadro de renda)
+    aplicarPerfil();
+  } catch (e) {
+    localStorage.removeItem(TKEY);
+    showGate(e.message);
+  }
+}
+$('#gate2-btn').onclick = async () => {
+  const s1 = $('#gate2-s1').value.trim(), s2 = $('#gate2-s2').value.trim();
+  if (s1.length < 6) { $('#gate2-err').textContent = 'A senha precisa de pelo menos 6 caracteres.'; return; }
+  if (s1 !== s2) { $('#gate2-err').textContent = 'As senhas não conferem.'; return; }
+  $('#gate2-err').textContent = 'salvando…';
+  const r = await fetch('/api/dash-users', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', action: 'trocar_senha', novaSenha: s1 }),
+  }).then((x) => x.json()).catch(() => ({ ok: false, error: 'Erro de rede.' }));
+  if (!r.ok) { $('#gate2-err').textContent = r.error || 'Erro ao salvar.'; return; }
+  $('#gate2').style.display = 'none';
+  $('#gate2-s1').value = ''; $('#gate2-s2').value = ''; $('#gate2-err').textContent = '';
+  doLogin(s1);   // entra já com a senha nova
+};
+
+// ===== Priorizar closer =====
+async function carregarPrioridade() {
+  try {
+    const r = await fetch('/api/config', { headers: { 'x-dash-token': localStorage.getItem(TKEY) || '' } });
+    if (!r.ok) return;
+    const d = await r.json();
+    const sel = $('#priorSelect'); clear(sel);
+    const auto = document.createElement('option'); auto.value = ''; auto.textContent = 'Automático (sorteio)'; sel.appendChild(auto);
+    (d.vendedores || []).forEach((v) => { const o = document.createElement('option'); o.value = String(v.eventTypeId); o.textContent = v.nome; sel.appendChild(o); });
+    sel.value = d.forced || '';
+    $('#priorStatus').textContent = d.forced ? '● prioridade ativa' : '';
+    $('#priorStatus').style.color = d.forced ? 'var(--accent-dark)' : '';
+  } catch (e) {}
+}
+$('#priorSelect').addEventListener('change', async (e) => {
+  const value = e.target.value;
+  const label = e.target.selectedOptions[0].textContent;
+  $('#priorStatus').textContent = 'salvando…'; $('#priorStatus').style.color = '';
+  try {
+    const r = await fetch('/api/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-dash-token': localStorage.getItem(TKEY) || '' },
+      body: JSON.stringify({ value }),
+    });
+    if (r.ok) {
+      $('#priorStatus').textContent = value ? '✓ priorizando ' + label : '✓ sorteio automático';
+      $('#priorStatus').style.color = value ? 'var(--accent-dark)' : 'var(--green)';
+    } else { $('#priorStatus').textContent = 'erro ao salvar'; }
+  } catch { $('#priorStatus').textContent = 'erro ao salvar'; }
+});
+$('#gate-btn').onclick = () => {
+  const p = $('#gate-pass').value.trim();
+  if (p) doLogin(p);
+};
+$('#gate-pass').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#gate-btn').click(); });
+
+async function refresh() {
+  const token = localStorage.getItem(TKEY);
+  if (!token) return showGate();
+  try {
+    ALL = await tryToken(token);
+    render();
+    aplicarPerfil();
+  } catch (e) { showGate(e.message); }
+}
+$('#btn-refresh').onclick = refresh;
+$('#btn-logout').onclick = () => { localStorage.removeItem(TKEY); showGate(); };
+
+// range selector
+$('#range').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#range').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  RANGE = Number(b.dataset.d);
+  render();
+  if (CAL_BOOKINGS !== null) renderCal();   // o filtro de data também vale pra aba Cal
+});
+
+// ================= AGREGAÇÃO + RENDER =================
+// data-calendário de Brasília (yyyy-mm-dd) — base de todo o filtro/agrupamento por data
+const fmtDiaBRT = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' });
+const diaBRT = (d) => fmtDiaBRT.format(d);
+const inicioHojeBRT = () => new Date(diaBRT(new Date()) + 'T00:00:00-03:00').getTime();
+function inRange(lead) {
+  if (!RANGE) return true;
+  const created = new Date(lead.created_at).getTime();
+  // Hoje = desde 00:00 de hoje (Brasília); 7d/30d = últimos N dias-calendário incluindo hoje.
+  const cutoff = inicioHojeBRT() - (RANGE - 1) * 864e5;
+  return created >= cutoff;
+}
+// filtro de data da aba Cal: por DATA DO AGENDAMENTO (created), "últimos N dias"
+// — igual ao funil (Hoje = agendados hoje, 7d = agendados nos últimos 7 dias).
+function inRangeCal(b) {
+  if (!RANGE) return true;
+  const t = b.created ? new Date(b.created).getTime() : 0;
+  if (!t) return false;
+  const cutoff = inicioHojeBRT() - (RANGE - 1) * 864e5;
+  return t >= cutoff;
+}
+function countBy(rows, keyFn) {
+  const m = new Map();
+  rows.forEach((r) => { const k = keyFn(r); if (k == null || k === '') return; m.set(k, (m.get(k) || 0) + 1); });
+  return m;
+}
+// "Agendaram reunião" = PESSOAS distintas com booking confirmado.
+// Dedupa por e-mail (quem reiniciou o funil vira 1), mas mantém cada pessoa de um
+// call EM GRUPO (vários leads no mesmo booking_uid de seats) como 1 agendamento.
+// Exige booking_uid: linha sem booking confirmado (Cal falhou) não entra na conta.
+const pessoasAgendadas = (rows) => new Set(
+  rows.filter((r) => r.agendado && r.booking_uid)
+      .map((r) => ((r.email || '').trim().toLowerCase()) || ('uid:' + r.booking_uid)),
+).size;
+
+function render() {
+  const rows = ALL.filter(inRange);
+  $('#updated').textContent = 'Atualizado ' + new Date().toLocaleString('pt-BR') +
+    ' · ' + nf(ALL.length) + ' leads no total' + (RANGE ? ' · exibindo ' + nf(rows.length) + ' no período' : '');
+
+  renderKpis(rows);
+  renderFunnel(rows);
+  renderVendedores(rows);
+  renderTrilha(rows);
+  renderRenda(rows);
+  renderNicho(rows);
+  renderSeguidores(rows);
+  renderDesafio(rows);
+  renderPerDay(rows);
+  renderUF(rows);
+  renderUTM(rows);
+  renderUpcoming();
+  renderLeads(ALL);   // o módulo Leads tem filtro de período próprio
+  renderAgendaram();
+  renderPorAtendente();
+}
+
+/* ===== NAVEGAÇÃO — menu lateral do CRM ===== */
+const SECTIONS = {
+  /* Visão Geral concentra TODOS os quadros analíticos; cada módulo fica
+     só com o seu card essencial (pedido da Suely em 21/07/2026) */
+  geral: ['#kpis', '#pFunil', '#pRenda', '#pNicho', '#pIdadeAreas', '#pDiaUF', '#pDestino', '#pAgendaram', '#pPorAtendente'],
+  agendaDash: ['#pAgendaDash'],      // só o Calendário
+  agendados: ['#pUpcoming'],         // só Leads Agendados
+  calEspelho: [],
+  quadro: ['#pQuadro'],              // só o Quadro Funil
+  leads: ['#pLeads'],                // só Todos os Leads
+  config: ['#pConfigExtras', '#pQuizEditor', '#equipePanel'],
+};
+const TODOS_PANEIS = [...new Set(Object.values(SECTIONS).flat())];
+let NAV_ATUAL = 'geral';
+function navGo(sec) {
+  NAV_ATUAL = sec;
+  document.querySelectorAll('#sidenav button[data-sec]').forEach((b) => b.classList.toggle('on', b.dataset.sec === sec));
+  const cal = sec === 'calEspelho';
+  $('#tabFunil').hidden = cal;
+  $('#tabCal').hidden = !cal;
+  if (cal) { if (CAL_BOOKINGS === null) carregarCal(); return; }
+  const mostrar = new Set(SECTIONS[sec] || []);
+  TODOS_PANEIS.forEach((sel) => { const e = $(sel); if (e) e.hidden = !mostrar.has(sel); });
+  if (sec === 'config') {   // Equipe e Editor do Quiz: só administradora
+    $('#equipePanel').hidden = !IS_ADMIN;
+    $('#pQuizEditor').hidden = !IS_ADMIN;
+    if (IS_ADMIN && !QE_CARREGADO) qeCarregar();
+  }
+  if (sec === 'agendaDash') { renderAgendaCal(); renderAgDia(); }
+  if (sec === 'quadro' && !KB_CARREGADO) kbCarregar();
+}
+$('#sidenav').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-sec]');
+  if (b) navGo(b.dataset.sec);
+});
+
+/* ===== ações da equipe sobre um lead (atendente / status do agendamento) ===== */
+async function salvarLeadCampos(r, campos) {
+  const res = await fetch('/api/lead-admin', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', lead_ref: r.lead_ref, campos }),
+  }).then((x) => x.json()).catch(() => ({ ok: false, error: 'Erro de rede.' }));
+  if (res.ok) {
+    if (campos.atendente !== undefined) r.atendente = campos.atendente;
+    if (campos.agendamento_status !== undefined) r.agendamento_status = campos.agendamento_status;
+    if (res.equipe_json) r.equipe_json = res.equipe_json;
+    LM_DRAFT = null;   // o cartão recarrega com a versão salva (e o histórico novo)
+    renderUpcoming(); drawLeads(); renderAgendaCal(); renderAgDia();
+    renderAgendaram(); renderPorAtendente();
+    if (LM_ATUAL === r) abrirLeadModal(r);   // cartão aberto acompanha a mudança
+  } else alert(res.error || 'Erro ao salvar.');
+  return res;
+}
+async function excluirLead(r) {
+  if (!confirm('Deseja realmente excluir este lead?')) return;
+  const res = await fetch('/api/lead-admin', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', action: 'excluir', lead_ref: r.lead_ref }),
+  }).then((x) => x.json()).catch(() => ({ ok: false, error: 'Erro de rede.' }));
+  if (!res.ok) { alert(res.error || 'Erro ao excluir.'); return; }
+  const i = ALL.indexOf(r); if (i >= 0) ALL.splice(i, 1);
+  fecharLeadModal();
+  render();
+  if (KB_CARREGADO) kbCarregar();
+}
+/* nome clicável: abre o Cartão do Lead em qualquer tela */
+function nomeLink(r) {
+  const a = el('a');
+  a.textContent = r.nome || '(sem nome)';
+  a.title = 'Ver o Cartão do Lead';
+  a.style.cssText = 'cursor:pointer;font-weight:700;color:var(--accent-dark);text-decoration:underline dotted;';
+  a.onclick = () => abrirLeadModal(r);
+  return a;
+}
+function selAtendente(r) {
+  const s = el('select');
+  s.style.cssText = 'padding:6px 8px;border:1px solid var(--line);border-radius:7px;font-size:12px;cursor:pointer;max-width:160px;';
+  const o0 = el('option'); o0.value = ''; o0.textContent = '— atendente —'; s.appendChild(o0);
+  [...new Set([...(ATENDENTES || []), r.atendente].filter(Boolean))].forEach((n) => {
+    const o = el('option'); o.value = n; o.textContent = n; s.appendChild(o);
+  });
+  s.value = r.atendente || '';
+  s.onchange = () => salvarLeadCampos(r, { atendente: s.value });
+  return s;
+}
+function agendPill(st) {
+  const map = { '': ['agendado', '🟢 confirmado'], concluido: ['agendado', '✅ concluído'], reagendado: ['contato', '🔁 reagendado'], cancelado: ['parcial', '❌ cancelado'] };
+  const [cls, texto] = map[st || ''] || map[''];
+  const p = el('span', 'pill ' + cls); p.textContent = texto; return p;
+}
+function acoesAgendamento(r) {
+  const wrap = el('div'); wrap.style.cssText = 'display:flex;gap:5px;flex-wrap:wrap;';
+  const mk = (rotulo, st, dica) => {
+    const b = el('button', 'acao-btn'); b.textContent = rotulo; b.title = dica;
+    b.onclick = () => salvarLeadCampos(r, { agendamento_status: st });
+    return b;
+  };
+  if (r.agendamento_status) { wrap.appendChild(mk('↩ desfazer', '', 'Voltar para confirmado')); return wrap; }
+  wrap.append(
+    mk('✅ Concluir', 'concluido', 'Encontro realizado'),
+    mk('🔁 Reagendar', 'reagendado', 'Marcar como reagendado (ajuste a data no cal.com)'),
+    mk('❌ Cancelar', 'cancelado', 'Cancelar este agendamento (status no painel)'),
+  );
+  return wrap;
+}
+
+/* ===== filtro de período do módulo Leads ===== */
+let LEADS_RANGE = { tipo: 'tudo', ini: null, fim: null };
+function inLeadsRange(r) {
+  if (LEADS_RANGE.tipo === 'tudo') return true;
+  const t = new Date(r.created_at).getTime();
+  if (LEADS_RANGE.tipo === 'hoje') return t >= inicioHojeBRT();
+  if (LEADS_RANGE.tipo === 'semana') {
+    const d0 = new Date(diaBRT(new Date()) + 'T00:00:00-03:00');
+    return t >= d0.getTime() - d0.getDay() * 864e5;   // desde domingo
+  }
+  if (LEADS_RANGE.tipo === 'mes') {
+    return t >= new Date(diaBRT(new Date()).slice(0, 8) + '01T00:00:00-03:00').getTime();
+  }
+  if (LEADS_RANGE.tipo === 'custom') {
+    const ini = LEADS_RANGE.ini ? new Date(LEADS_RANGE.ini + 'T00:00:00-03:00').getTime() : -Infinity;
+    const fim = LEADS_RANGE.fim ? new Date(LEADS_RANGE.fim + 'T23:59:59-03:00').getTime() : Infinity;
+    return t >= ini && t <= fim;
+  }
+  return true;
+}
+$('#leadsRange').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#leadsRange').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  LEADS_RANGE.tipo = b.dataset.lr;
+  $('#leadsCustom').style.display = b.dataset.lr === 'custom' ? 'flex' : 'none';
+  if (b.dataset.lr !== 'custom') drawLeads();
+});
+$('#lrAplicar').onclick = () => {
+  LEADS_RANGE.ini = $('#lrIni').value || null;
+  LEADS_RANGE.fim = $('#lrFim').value || null;
+  drawLeads();
+};
+
+/* ===== AGENDA — calendário mensal/semanal ===== */
+let AG_REF = new Date();     // mês/semana em exibição
+let AG_MODO = 'mes';
+let AG_DIA = null;           // dia selecionado (yyyy-mm-dd)
+const AG_FMT_MES = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' });
+const AG_FMT_DIA = new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+const AG_WDS = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
+const capAg = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+
+function agPorDia() {
+  const m = new Map();
+  ALL.forEach((r) => {
+    if (!r.agendado || !r.agendamento_em) return;
+    const k = diaBRT(new Date(r.agendamento_em));
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(r);
+  });
+  m.forEach((arr) => arr.sort((a, b) => new Date(a.agendamento_em) - new Date(b.agendamento_em)));
+  return m;
+}
+function agHora(r) {
+  const d = new Date(r.agendamento_em);
+  return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+}
+function agCardEl(r) {
+  const c = el('div', 'ag-card' + (r.agendamento_status === 'concluido' ? ' concluido' : r.agendamento_status === 'cancelado' ? ' cancelado' : ''));
+  c.textContent = agHora(r) + ' ' + (r.nome || '').split(' ')[0];
+  c.title = (r.nome || '') + ' · clique para ver os detalhes';
+  c.onclick = (e) => { e.stopPropagation(); abrirLeadModal(r); };
+  return c;
+}
+
+/* ===== CARTÃO DO LEAD — ficha completa ===== */
+let LM_ATUAL = null;
+let LM_DRAFT = null;   // rascunho das anotações em edição (obs + campos)
+function lmLinha(rotulo, valor) {
+  const row = el('div'); row.style.cssText = 'display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;align-items:center;';
+  const l = el('span'); l.textContent = rotulo; l.style.cssText = 'color:var(--text-muted);font-weight:600;min-width:135px;flex-shrink:0;';
+  row.appendChild(l);
+  if (valor instanceof Node) row.appendChild(valor);
+  else { const v = el('span'); v.textContent = (valor == null || valor === '') ? '—' : String(valor); row.appendChild(v); }
+  return row;
+}
+function leadEquipe(r) {
+  try {
+    const p = JSON.parse(r.equipe_json || '');
+    if (p && typeof p === 'object') return { obs: p.obs || '', campos: Array.isArray(p.campos) ? p.campos : [], historico: Array.isArray(p.historico) ? p.historico : [] };
+  } catch (e) { /* vazio */ }
+  return { obs: '', campos: [], historico: [] };
+}
+function abrirLeadModal(r) {
+  if (LM_ATUAL !== r || !LM_DRAFT) {
+    const eq = leadEquipe(r);
+    LM_DRAFT = { obs: eq.obs, campos: eq.campos.map((f) => ({ k: f.k, v: f.v })) };
+  }
+  LM_ATUAL = r;
+  $('#lmTitulo').textContent = '👤 ' + (r.nome || '(sem nome)');
+  const c = $('#lmCorpo'); clear(c);
+
+  const st = el('div'); st.style.cssText = 'display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;';
+  st.append(trilhaPill(r.call_track), agendPill(r.agendamento_status), statusPill(r.status));
+  c.appendChild(st);
+
+  /* botões principais: Conversar · Agendar · Excluir */
+  const acoes = el('div'); acoes.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px;';
+  if (r.whatsapp) {
+    const wa = el('a');
+    wa.href = 'https://wa.me/' + String(r.whatsapp).replace(/\D/g, '');
+    wa.target = '_blank'; wa.rel = 'noopener';
+    wa.textContent = '💬 Conversar';
+    wa.style.cssText = 'background:var(--green);color:#fff;font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px;text-decoration:none;';
+    acoes.appendChild(wa);
+  }
+  const linkAgendar = r.call_track === 'imersao'
+    ? 'https://cal.com/suavitatisterapias/imersao'
+    : 'https://cal.com/suavitatisterapias/comunidade';
+  const ag = el('a');
+  ag.href = linkAgendar; ag.target = '_blank'; ag.rel = 'noopener';
+  ag.textContent = '📅 Agendar';
+  ag.title = 'Abre a agenda do destino deste lead — preencha com o nome e e-mail dele';
+  ag.style.cssText = 'background:var(--accent);color:#fff;font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px;text-decoration:none;';
+  acoes.appendChild(ag);
+  const bx = el('button');
+  bx.textContent = '🗑 Excluir lead';
+  bx.style.cssText = 'background:#fff;color:var(--red);border:1.5px solid var(--red);font-weight:700;font-size:13px;padding:8px 14px;border-radius:9px;cursor:pointer;margin-left:auto;';
+  bx.onclick = () => excluirLead(r);
+  acoes.appendChild(bx);
+  c.appendChild(acoes);
+
+  const h1 = el('h2'); h1.textContent = '📅 Agendamento'; h1.style.marginTop = '12px'; c.appendChild(h1);
+  c.appendChild(lmLinha('Quando', r.agendamento_em ? fmtDateTime(r.agendamento_em) : '—'));
+  c.appendChild(lmLinha('Atendente', selAtendente(r)));
+  c.appendChild(lmLinha('Ações', acoesAgendamento(r)));
+  if (r.booking_uid && r.booking_uid !== 'confirmado_manual_suely') c.appendChild(lmLinha('Código no Cal', r.booking_uid));
+
+  const h2 = el('h2'); h2.textContent = '🌿 Respostas do quiz'; h2.style.marginTop = '14px'; c.appendChild(h2);
+  if (r.whatsapp) {
+    const a = el('a'); a.href = 'https://wa.me/' + String(r.whatsapp).replace(/\D/g, ''); a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = r.whatsapp; a.style.fontWeight = '600';
+    c.appendChild(lmLinha('WhatsApp', a));
+  } else c.appendChild(lmLinha('WhatsApp', '—'));
+  c.appendChild(lmLinha('E-mail', r.email));
+  c.appendChild(lmLinha('Renda familiar', r.renda));
+  c.appendChild(lmLinha('Como se sente', r.nicho));
+  c.appendChild(lmLinha('Áreas afetadas', r.dificuldade));
+  c.appendChild(lmLinha('Faixa etária', r.seguidores));
+  c.appendChild(lmLinha('Buscou ajuda antes?', r.nicho_detectado));
+  c.appendChild(lmLinha('Entrou no quiz em', fmtDateTime(r.created_at)));
+  c.appendChild(lmLinha('Última atualização', fmtDateTime(r.updated_at)));
+
+  /* anotações da equipe: observações + campos personalizados */
+  const h3 = el('h2'); h3.textContent = '📝 Anotações da equipe'; h3.style.marginTop = '14px'; c.appendChild(h3);
+  const ta = el('textarea');
+  ta.value = LM_DRAFT.obs;
+  ta.placeholder = 'Observações do atendente sobre este lead...';
+  ta.style.cssText = 'width:100%;min-height:74px;padding:10px 12px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;font-family:inherit;resize:vertical;margin:6px 0;';
+  ta.oninput = () => { LM_DRAFT.obs = ta.value; };
+  c.appendChild(ta);
+
+  LM_DRAFT.campos.forEach((f, fi) => {
+    const row = el('div'); row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px;align-items:center;';
+    const ik = el('input'); ik.value = f.k; ik.placeholder = 'Nome do campo (ex: Cidade)';
+    ik.style.cssText = 'width:38%;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;font-size:12.5px;';
+    ik.oninput = () => { f.k = ik.value; };
+    const iv = el('input'); iv.value = f.v; iv.placeholder = 'Valor (ex: Santos/SP)';
+    iv.style.cssText = 'flex:1;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;font-size:12.5px;';
+    iv.oninput = () => { f.v = iv.value; };
+    const del = el('button', 'acao-btn'); del.textContent = '✕';
+    del.onclick = () => { LM_DRAFT.campos.splice(fi, 1); abrirLeadModal(r); };
+    row.append(ik, iv, del);
+    c.appendChild(row);
+  });
+  const rodape = el('div'); rodape.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;';
+  const bAdd = el('button', 'acao-btn'); bAdd.textContent = '➕ Adicionar campo';
+  bAdd.onclick = () => { LM_DRAFT.campos.push({ k: '', v: '' }); abrirLeadModal(r); };
+  const bSalvar = el('button');
+  bSalvar.textContent = '💾 Salvar anotações';
+  bSalvar.style.cssText = 'background:var(--accent);color:#fff;border:none;font-weight:700;font-size:12.5px;padding:8px 14px;border-radius:9px;cursor:pointer;';
+  bSalvar.onclick = () => salvarLeadCampos(r, { obs: LM_DRAFT.obs, campos_extras: LM_DRAFT.campos });
+  rodape.append(bAdd, bSalvar);
+  c.appendChild(rodape);
+
+  /* histórico automático */
+  const eqSalvo = leadEquipe(r);
+  const h4 = el('h2'); h4.textContent = '🕘 Histórico'; h4.style.marginTop = '14px'; c.appendChild(h4);
+  if (!eqSalvo.historico.length) {
+    const e2 = el('div', 'muted-cell'); e2.textContent = 'Ainda sem registros — cada mudança feita pela equipe aparece aqui, com quem fez e quando.';
+    e2.style.padding = '6px 0'; c.appendChild(e2);
+  } else {
+    eqSalvo.historico.slice(0, 12).forEach((h) => {
+      const d = new Date(h.t);
+      const linha = el('div'); linha.style.cssText = 'font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);color:var(--text-muted);';
+      const b = el('b'); b.textContent = h.quem; b.style.color = 'var(--text)';
+      linha.append(d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + ' · ', b, ' · ' + h.txt);
+      c.appendChild(linha);
+    });
+  }
+
+  $('#leadModal').style.display = 'flex';
+}
+function fecharLeadModal() { $('#leadModal').style.display = 'none'; LM_ATUAL = null; LM_DRAFT = null; }
+$('#lmFechar').onclick = fecharLeadModal;
+$('#leadModal').addEventListener('click', (e) => { if (e.target === $('#leadModal')) fecharLeadModal(); });
+
+/* ===== quadros da Agenda: resumo + por atendente ===== */
+function renderAgendaram() {
+  const box = $('#agStats'); if (!box) return;
+  clear(box);
+  const ags = ALL.filter((r) => r.agendado && r.agendamento_em);
+  const agora = Date.now();
+  const futuras = ags.filter((r) => new Date(r.agendamento_em).getTime() >= agora && r.agendamento_status !== 'cancelado').length;
+  const passadas = ags.filter((r) => new Date(r.agendamento_em).getTime() < agora).length;
+  const concl = ags.filter((r) => r.agendamento_status === 'concluido').length;
+  const canc = ags.filter((r) => r.agendamento_status === 'cancelado').length;
+  box.append(
+    kpiCard('🗓️ Agendaram conversa', nf(pessoasAgendadas(ALL)), 'pessoas (dedupe por e-mail)', { hero: true }),
+    kpiCard('Conversas futuras', nf(futuras), 'a partir de agora', { color: 'green' }),
+    kpiCard('Já aconteceram', nf(passadas), 'datas passadas'),
+    kpiCard('✅ Concluídas', nf(concl), 'marcadas pela equipe', { color: 'green' }),
+    kpiCard('❌ Canceladas', nf(canc), 'marcadas pela equipe', { color: 'amber' }),
+  );
+}
+function renderPorAtendente() {
+  const box = $('#porAtendente'); if (!box) return;
+  const ags = ALL.filter((r) => r.agendado && r.agendamento_em);
+  const m = new Map();
+  ags.forEach((r) => {
+    const k = (r.atendente || '').trim() || '(sem atendente)';
+    if (!m.has(k)) m.set(k, { total: 0, won: 0 });
+    const o = m.get(k); o.total++; if (r.agendamento_status === 'concluido') o.won++;
+  });
+  const items = [...m.entries()].sort((a, b) => b[1].total - a[1].total)
+    .map(([label, o]) => ({ label, value: o.total, won: o.won }));
+  barChart(box, items, { won: true });
+}
+function agCelula(dt, dentroDoMes, porDia) {
+  const k = diaBRT(dt);
+  const cell = el('div', 'ag-cell' + (dentroDoMes ? '' : ' fora') + (k === diaBRT(new Date()) ? ' hoje' : '') + (k === AG_DIA ? ' sel' : ''));
+  const dn = el('div', 'dnum'); dn.textContent = dt.getDate(); cell.appendChild(dn);
+  const doDia = porDia.get(k) || [];
+  const maxCards = AG_MODO === 'semana' ? 12 : 3;
+  doDia.slice(0, maxCards).forEach((r) => cell.appendChild(agCardEl(r)));
+  if (doDia.length > maxCards) { const mais = el('div', 'ag-mais'); mais.textContent = '+' + (doDia.length - maxCards) + ' mais'; cell.appendChild(mais); }
+  cell.onclick = () => { AG_DIA = k; renderAgendaCal(); abrirDiaModal(k); };
+  return cell;
+}
+function renderAgendaCal() {
+  const grid = $('#agGrid'); if (!grid) return;
+  clear(grid);
+  const porDia = agPorDia();
+  AG_WDS.forEach((w) => { const h = el('div', 'ag-wd'); h.textContent = w; grid.appendChild(h); });
+  if (AG_MODO === 'mes') {
+    $('#agTitulo').textContent = capAg(AG_FMT_MES.format(AG_REF));
+    const primeiro = new Date(AG_REF.getFullYear(), AG_REF.getMonth(), 1);
+    const inicio = new Date(primeiro.getTime() - primeiro.getDay() * 864e5);
+    for (let i = 0; i < 42; i++) {
+      const dt = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate() + i);
+      grid.appendChild(agCelula(dt, dt.getMonth() === AG_REF.getMonth(), porDia));
+    }
+  } else {
+    const dom = new Date(AG_REF.getFullYear(), AG_REF.getMonth(), AG_REF.getDate() - AG_REF.getDay());
+    const sab = new Date(dom.getFullYear(), dom.getMonth(), dom.getDate() + 6);
+    $('#agTitulo').textContent = dom.getDate() + '/' + (dom.getMonth() + 1) + ' a ' + sab.getDate() + '/' + (sab.getMonth() + 1) + '/' + sab.getFullYear();
+    for (let i = 0; i < 7; i++) {
+      const dt = new Date(dom.getFullYear(), dom.getMonth(), dom.getDate() + i);
+      grid.appendChild(agCelula(dt, true, porDia));
+    }
+  }
+}
+/* popup do dia: todos os Encontros da data clicada */
+let DIA_ABERTO = null;
+function abrirDiaModal(k) {
+  DIA_ABERTO = k;
+  $('#dmTitulo').textContent = '📍 ' + capAg(AG_FMT_DIA.format(new Date(k + 'T12:00:00-03:00')));
+  const box = $('#dmCorpo'); clear(box);
+  const doDia = agPorDia().get(k) || [];
+  if (!doDia.length) {
+    const e = el('div', 'muted-cell'); e.textContent = 'Nenhum Encontro neste dia.'; e.style.padding = '8px 0';
+    box.appendChild(e);
+  } else {
+    const resumo = el('div', 'muted-cell'); resumo.textContent = doDia.length + ' Encontro(s) agendado(s)'; resumo.style.marginBottom = '8px';
+    box.appendChild(resumo);
+    const t = el('table');
+    t.appendChild(tableHead(['Hora', 'Lead', 'WhatsApp', 'Destino', 'Atendente', 'Status', 'Ações']));
+    const tb = el('tbody');
+    doDia.forEach((r) => {
+      const tr = el('tr');
+      const ac = acoesAgendamento(r);
+      const ver = el('button', 'acao-btn'); ver.textContent = '👤 Ver lead';
+      ver.onclick = () => abrirLeadModal(r);
+      ac.insertBefore(ver, ac.firstChild);
+      tr.append(td(agHora(r)), td(nomeLink(r), 'nome'), td(r.whatsapp), td(trilhaPill(r.call_track)), td(selAtendente(r)), td(agendPill(r.agendamento_status)), td(ac));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    const w = el('div', 'tbl-wrap'); w.appendChild(t); box.appendChild(w);
+  }
+  $('#diaModal').style.display = 'flex';
+}
+function fecharDiaModal() { $('#diaModal').style.display = 'none'; DIA_ABERTO = null; }
+$('#dmFechar').onclick = fecharDiaModal;
+$('#diaModal').addEventListener('click', (e) => { if (e.target === $('#diaModal')) fecharDiaModal(); });
+/* mantém o popup do dia atualizado quando a equipe muda algo */
+function renderAgDia() { if (DIA_ABERTO) abrirDiaModal(DIA_ABERTO); }
+$('#agModo').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#agModo').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  AG_MODO = b.dataset.m;
+  renderAgendaCal();
+});
+$('#agPrev').onclick = () => { AG_REF = AG_MODO === 'mes' ? new Date(AG_REF.getFullYear(), AG_REF.getMonth() - 1, 1) : new Date(AG_REF.getTime() - 7 * 864e5); renderAgendaCal(); };
+$('#agNext').onclick = () => { AG_REF = AG_MODO === 'mes' ? new Date(AG_REF.getFullYear(), AG_REF.getMonth() + 1, 1) : new Date(AG_REF.getTime() + 7 * 864e5); renderAgendaCal(); };
+$('#agHoje').onclick = () => { AG_REF = new Date(); AG_DIA = diaBRT(new Date()); renderAgendaCal(); renderAgDia(); };
+
+/* ===== EDITOR DO QUIZ (só administradora) ===== */
+let QE = [];             // perguntas em edição (rascunho local)
+let QE_CARREGADO = false;
+function qeEhChave(p) { return (p.opts || []).some((o) => o && o.destino); }
+async function qeCarregar() {
+  QE_CARREGADO = true;
+  const r = await fetch('/api/quiz-config').then((x) => x.json()).catch(() => null);
+  if (!r || !r.ok) { $('#qeStatus').textContent = 'Erro ao carregar as perguntas.'; return; }
+  QE = JSON.parse(JSON.stringify(r.perguntas));
+  $('#qeStatus').textContent = r.personalizado
+    ? 'O quiz está usando perguntas personalizadas publicadas por você.'
+    : 'O quiz está usando as perguntas padrão.';
+  qeRender();
+}
+function qeRender() {
+  const box = $('#qeLista'); clear(box);
+  QE.forEach((p, pi) => {
+    const card = el('div');
+    card.style.cssText = 'border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--bg);';
+
+    const head = el('div'); head.style.cssText = 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;';
+    const num = el('b'); num.textContent = 'Pergunta ' + (pi + 1); head.appendChild(num);
+    if (qeEhChave(p)) { const bd = el('span', 'pill contato'); bd.textContent = '🔑 pergunta-chave (renda)'; head.appendChild(bd); }
+    const lativa = el('label'); lativa.style.cssText = 'font-size:12.5px;font-weight:600;display:flex;gap:5px;align-items:center;cursor:pointer;';
+    const cativa = el('input'); cativa.type = 'checkbox'; cativa.checked = p.ativo !== false; cativa.disabled = qeEhChave(p);
+    cativa.onchange = () => { p.ativo = cativa.checked; };
+    lativa.append(cativa, 'Ativa');
+    const lmulti = el('label'); lmulti.style.cssText = lativa.style.cssText;
+    const cmulti = el('input'); cmulti.type = 'checkbox'; cmulti.checked = !!p.multi; cmulti.disabled = qeEhChave(p);
+    cmulti.onchange = () => { p.multi = cmulti.checked; };
+    lmulti.append(cmulti, 'Aceita várias escolhas');
+    head.append(lativa, lmulti);
+    const sp = el('span'); sp.style.flex = '1'; head.appendChild(sp);
+    if (!qeEhChave(p)) {
+      const bdel = el('button', 'acao-btn'); bdel.textContent = '🗑 Excluir';
+      bdel.onclick = () => { if (confirm('Excluir esta pergunta do rascunho?')) { QE.splice(pi, 1); qeRender(); } };
+      head.appendChild(bdel);
+    }
+    card.appendChild(head);
+
+    const iq = el('input'); iq.value = p.q || ''; iq.placeholder = 'Texto da pergunta...';
+    iq.style.cssText = 'width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:13.5px;margin-bottom:8px;background:var(--card);';
+    iq.oninput = () => { p.q = iq.value; };
+    card.appendChild(iq);
+
+    (p.opts || []).forEach((o, oi) => {
+      const row = el('div'); row.style.cssText = 'display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap;';
+      const it = el('input'); it.value = o.t || ''; it.placeholder = 'Texto da opção...';
+      it.style.cssText = 'flex:1;min-width:170px;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;font-size:13px;background:var(--card);';
+      it.oninput = () => { o.t = it.value; };
+      row.appendChild(it);
+      [['low', 'B', 'pontos p/ Baixa consciência'], ['mid', 'M', 'pontos p/ Média'], ['high', 'A', 'pontos p/ Alta']].forEach(([k, lab, dica]) => {
+        const w = el('label'); w.title = dica;
+        w.style.cssText = 'font-size:11px;font-weight:700;color:var(--text-muted);display:flex;align-items:center;gap:3px;';
+        const inp = el('input'); inp.type = 'number'; inp.min = 0; inp.max = 9; inp.value = (o.s && o.s[k]) || 0;
+        inp.style.cssText = 'width:44px;padding:6px;border:1.5px solid var(--line);border-radius:7px;font-size:12px;background:var(--card);';
+        inp.oninput = () => { o.s = o.s || {}; o.s[k] = Number(inp.value) || 0; };
+        w.append(lab, inp); row.appendChild(w);
+      });
+      if (qeEhChave(p)) {
+        const sd = el('select');
+        sd.style.cssText = 'padding:7px 8px;border:1.5px solid var(--line);border-radius:8px;font-size:12px;cursor:pointer;background:var(--card);';
+        [['comunidade', '🌿 Comunidade'], ['imersao', '🌊 Imersão'], ['premium', '💬 WhatsApp']].forEach(([v, tx]) => {
+          const op = el('option'); op.value = v; op.textContent = tx; sd.appendChild(op);
+        });
+        sd.value = o.destino || 'comunidade';
+        sd.onchange = () => { o.destino = sd.value; };
+        row.appendChild(sd);
+      }
+      const bx = el('button', 'acao-btn'); bx.textContent = '✕'; bx.title = 'Remover opção';
+      bx.onclick = () => {
+        if (p.opts.length <= 2) { alert('Cada pergunta precisa de pelo menos 2 opções.'); return; }
+        p.opts.splice(oi, 1); qeRender();
+      };
+      row.appendChild(bx);
+      card.appendChild(row);
+    });
+    const badd = el('button', 'acao-btn'); badd.textContent = '➕ Opção';
+    badd.onclick = () => {
+      const nova = { t: '', s: { low: 1, mid: 2, high: 2 } };
+      if (qeEhChave(p)) nova.destino = 'comunidade';
+      p.opts.push(nova); qeRender();
+    };
+    card.appendChild(badd);
+    box.appendChild(card);
+  });
+}
+$('#qeNova').onclick = () => {
+  QE.push({ id: 'p' + Math.abs((Date.now()) % 1e9).toString(36), q: '', multi: false, ativo: true, opts: [
+    { t: '', s: { low: 1, mid: 2, high: 2 } },
+    { t: '', s: { low: 1, mid: 2, high: 2 } },
+  ]});
+  qeRender();
+};
+$('#qePublicar').onclick = async () => {
+  $('#qeStatus').textContent = 'publicando…';
+  const r = await fetch('/api/quiz-config', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', perguntas: QE }),
+  }).then((x) => x.json()).catch(() => ({ ok: false, error: 'Erro de rede.' }));
+  $('#qeStatus').textContent = r.ok ? '✅ Publicado! O quiz já está usando as novas perguntas.' : ('⚠️ ' + (r.error || 'Erro ao publicar.'));
+  if (r.ok) { qeCarregar(); carregarRendaCfg(); }   // o quadro de renda acompanha na hora
+};
+$('#qeRestaurar').onclick = async () => {
+  if (!confirm('Voltar para as perguntas PADRÃO do quiz? As personalizações publicadas serão descartadas.')) return;
+  const r = await fetch('/api/quiz-config', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', action: 'restaurar' }),
+  }).then((x) => x.json()).catch(() => ({ ok: false }));
+  $('#qeStatus').textContent = r.ok ? '↩ Padrão restaurado.' : 'Erro ao restaurar.';
+  qeCarregar();
+};
+
+/* ===== KANBAN — quadros, colunas e cartões ===== */
+let KB = { boards: [], cols: [], cards: [] };
+let KB_BOARD = null;
+let KB_DRAG = null;
+let KB_CARREGADO = false;
+async function kbApi(payload) {
+  return fetch('/api/kanban', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', ...payload }),
+  }).then((x) => x.json()).catch(() => ({ ok: false, error: 'Erro de rede.' }));
+}
+async function kbCarregar() {
+  const r = await kbApi({ action: 'estado' });
+  if (!r.ok) { $('#kbAviso').textContent = r.error || 'Erro ao carregar.'; return; }
+  KB = r; KB_CARREGADO = true;
+  $('#kbAviso').textContent = '';
+  if (!KB.boards.find((b) => b.id === KB_BOARD)) KB_BOARD = KB.boards.length ? KB.boards[0].id : null;
+  kbRender();
+}
+function kbRender() {
+  const sel = $('#kbBoardSel'); clear(sel);
+  KB.boards.forEach((b) => { const o = el('option'); o.value = b.id; o.textContent = b.nome; sel.appendChild(o); });
+  if (KB_BOARD) sel.value = String(KB_BOARD);
+  const wrap = $('#kbCols'); clear(wrap);
+  if (!KB.boards.length) { $('#kbAviso').textContent = 'Crie seu primeiro quadro no botão ➕ Novo Quadro.'; return; }
+  const byRef = new Map(ALL.map((l) => [l.lead_ref, l]));
+  KB.cols.filter((c) => c.board_id === KB_BOARD).forEach((col) => {
+    const cEl = el('div', 'kb-col');
+    const head = el('div', 'kb-col-head');
+    const nome = el('b'); nome.textContent = col.nome;
+    const cards = KB.cards.filter((k) => k.col_id === col.id);
+    const n = el('span', 'n'); n.textContent = cards.length;
+    const bx = el('button', 'acao-btn'); bx.textContent = '🗑'; bx.title = 'Excluir coluna (e seus cartões)';
+    bx.onclick = async () => { if (confirm('Excluir a coluna "' + col.nome + '" e os cartões dela?')) { await kbApi({ action: 'col_excluir', id: col.id }); kbCarregar(); } };
+    head.append(nome, n, bx);
+    const body = el('div', 'kb-body');
+    body.ondragover = (e) => { e.preventDefault(); body.classList.add('drag'); };
+    body.ondragleave = () => body.classList.remove('drag');
+    body.ondrop = async (e) => {
+      e.preventDefault(); body.classList.remove('drag');
+      if (KB_DRAG) { await kbApi({ action: 'card_mover', id: KB_DRAG, col_id: col.id }); KB_DRAG = null; kbCarregar(); }
+    };
+    cards.forEach((card) => {
+      const lead = byRef.get(card.lead_ref);
+      const k = el('div', 'kb-card');
+      k.draggable = true;
+      k.ondragstart = () => { KB_DRAG = card.id; };
+      k.title = 'Clique para abrir o Cartão do Lead · arraste para mover de coluna';
+      if (lead) k.onclick = () => abrirLeadModal(lead);
+      const nm = el('b'); nm.textContent = lead ? lead.nome : card.lead_ref;
+      const sm = el('small'); sm.textContent = lead ? [(lead.whatsapp || ''), (lead.call_track === 'imersao' ? '🌊' : lead.call_track === 'premium' ? '💬' : lead.call_track === 'comunidade' ? '🌿' : '')].filter(Boolean).join(' · ') : '';
+      const x = el('button', 'x'); x.textContent = '✕'; x.title = 'Tirar do quadro';
+      x.onclick = async (e) => { e.stopPropagation(); await kbApi({ action: 'card_excluir', id: card.id }); kbCarregar(); };
+      k.append(nm, sm, x);
+      body.appendChild(k);
+    });
+    const add = el('button', 'acao-btn kb-add'); add.textContent = '➕ Adicionar Lead';
+    const busca = el('input', 'kb-busca'); busca.placeholder = 'Busque por nome, e-mail ou WhatsApp...'; busca.style.display = 'none';
+    const res = el('div', 'kb-res');
+    add.onclick = () => { busca.style.display = busca.style.display === 'none' ? '' : 'none'; clear(res); if (busca.style.display === '') busca.focus(); };
+    busca.oninput = () => {
+      clear(res);
+      const q = busca.value.trim().toLowerCase();
+      if (q.length < 2) return;
+      const noQuadro = new Set(KB.cards.filter((k2) => k2.board_id === KB_BOARD).map((k2) => k2.lead_ref));
+      ALL.filter((l) => !noQuadro.has(l.lead_ref) && [l.nome, l.email, l.whatsapp].some((v) => String(v || '').toLowerCase().includes(q)))
+        .slice(0, 8)
+        .forEach((l) => {
+          const b = el('button'); b.textContent = (l.nome || '(sem nome)') + ' · ' + (l.whatsapp || l.email || '');
+          b.onclick = async () => {
+            const r2 = await kbApi({ action: 'card_criar', board_id: KB_BOARD, col_id: col.id, lead_ref: l.lead_ref });
+            if (!r2.ok) $('#kbAviso').textContent = r2.error || 'Erro.';
+            kbCarregar();
+          };
+          res.appendChild(b);
+        });
+    };
+    cEl.append(head, body, add, busca, res);
+    wrap.appendChild(cEl);
+  });
+}
+$('#kbBoardSel').addEventListener('change', (e) => { KB_BOARD = Number(e.target.value); kbRender(); });
+$('#kbNovoQuadro').onclick = async () => {
+  const nome = prompt('Nome do novo quadro (funil):');
+  if (!nome) return;
+  const r = await kbApi({ action: 'board_criar', nome });
+  if (r.ok) KB_BOARD = r.board_id;
+  else $('#kbAviso').textContent = r.error || 'Erro.';
+  kbCarregar();
+};
+$('#kbNovaCol').onclick = async () => {
+  if (!KB_BOARD) { $('#kbAviso').textContent = 'Crie um quadro primeiro.'; return; }
+  const nome = prompt('Nome da nova coluna:');
+  if (!nome) return;
+  await kbApi({ action: 'col_criar', board_id: KB_BOARD, nome });
+  kbCarregar();
+};
+$('#kbExcluirQuadro').onclick = async () => {
+  if (!KB_BOARD) return;
+  const b = KB.boards.find((x) => x.id === KB_BOARD);
+  if (!confirm('Excluir o quadro "' + (b ? b.nome : '') + '" com todas as colunas e cartões?')) return;
+  await kbApi({ action: 'board_excluir', id: KB_BOARD });
+  KB_BOARD = null;
+  kbCarregar();
+};
+
+function kpiCard(label, num, sub, opts = {}) {
+  const c = el('div', 'kpi' + (opts.hero ? ' hero' : ''));
+  const l = el('div', 'k-label'); l.textContent = label;
+  const n = el('div', 'k-num' + (opts.color ? ' ' + opts.color : '')); n.textContent = num;
+  c.append(l, n);
+  if (sub) { const s = el('div', 'k-sub'); s.textContent = sub; c.appendChild(s); }
+  return c;
+}
+function renderKpis(rows) {
+  const box = $('#kpis'); clear(box);
+  const total = rows.length;
+  const reached = (s) => rows.filter((r) => (STATUS_ORD[r.status] || 1) >= STATUS_ORD[s] || (s === 'agendado' && r.agendado)).length;
+  const completos = reached('completo');
+  const agendados = pessoasAgendadas(rows);                                    // pessoas distintas c/ booking confirmado
+  const agendRows = rows.filter((r) => r.agendado).length;                     // linhas marcadas (inclui restart/duplicata)
+  const semBooking = rows.filter((r) => r.agendado && !r.booking_uid).length;  // marcou mas o Cal não confirmou
+  const qualificados = rows.filter((r) => r.qualificado === true).length;
+  const premium = rows.filter((r) => r.call_track === 'premium').length;
+  const premAgend = pessoasAgendadas(rows.filter((r) => r.call_track === 'premium'));
+  const futuras = pessoasAgendadas(rows.filter((r) => r.agendamento_em && new Date(r.agendamento_em).getTime() > Date.now()));
+
+  const agendSub = pct(agendados, completos) + '% dos que completaram · pessoas (dedupe por e-mail)'
+    + (agendRows > agendados ? ' · ' + nf(agendRows - agendados) + ' duplicadas ignoradas' : '');
+
+  box.append(
+    kpiCard('Total de leads', nf(total), 'entraram no quiz'),
+    kpiCard('🗓️ Agendaram conversa', nf(agendados), agendSub, { hero: true }),
+    kpiCard('Completaram o quiz', nf(completos), pct(completos, total) + '% do total', { color: 'blue' }),
+    kpiCard('Pararam no meio', nf(Math.max(0, total - completos)), 'responderam só uma parte', { color: 'amber' }),
+    kpiCard('💬 WhatsApp (R$20 mil+)', nf(premium), premAgend + ' agendaram', { color: 'green' }),
+    kpiCard('Conversas futuras', nf(futuras), 'a partir de agora'),
+  );
+  // monitor do bug latente: lead marcou agendado mas sem booking_uid (Cal falhou / modo local)
+  if (semBooking) box.append(kpiCard('⚠️ Sem código do Cal', nf(semBooking), 'agendaram pelo chat, mas o código de confirmação não foi salvo. Confira na sua agenda do Google/Cal se estão lá', { color: 'amber' }));
+}
+
+function renderFunnel(rows) {
+  const box = $('#funnel'); clear(box);
+  const total = rows.length || 1;
+  const reached = (s) => rows.filter((r) => (STATUS_ORD[r.status] || 1) >= STATUS_ORD[s] || (s === 'agendado' && r.agendado)).length;
+  const stages = [
+    { name: '1 · Deixaram o WhatsApp', n: reached('parcial') },
+    { name: '2 · Deixaram o e-mail', n: reached('contato') },
+    { name: '3 · Completaram o quiz', n: reached('completo') },
+    { name: '4 · Agendaram conversa', n: pessoasAgendadas(rows) },
+  ];
+  stages.forEach((st, i) => {
+    const wrap = el('div', 'funnel-stage');
+    const head = el('div', 'fs-head');
+    const nm = el('div', 'fs-name'); nm.textContent = st.name;
+    const vl = el('div', 'fs-vals');
+    const strong = el('b'); strong.textContent = nf(st.n);
+    vl.append(strong, document.createTextNode(' · ' + pct(st.n, total) + '% do topo'));
+    head.append(nm, vl);
+    const track = el('div', 'fs-track');
+    const fill = el('div', 'fs-fill'); fill.style.width = pct(st.n, total) + '%';
+    track.appendChild(fill);
+    wrap.append(head, track);
+    if (i > 0) {
+      const prev = stages[i - 1].n;
+      const drop = prev - st.n;
+      if (prev > 0) {
+        const d = el('div', 'fs-drop');
+        d.textContent = '↓ ' + nf(drop) + ' saíram (' + pct(drop, prev) + '% de queda nesta etapa)';
+        wrap.appendChild(d);
+      }
+    }
+    box.appendChild(wrap);
+  });
+}
+
+// barra horizontal genérica; item: {label, value, won}
+function barChart(box, items, opts = {}) {
+  clear(box);
+  const live = items.filter((i) => i.value > 0);
+  if (!live.length) { const e = el('div', 'empty'); e.textContent = 'Sem dados no período.'; box.appendChild(e); return; }
+  const max = Math.max(...items.map((i) => i.value));
+  items.forEach((it) => {
+    const row = el('div', 'bc-row');
+    const lab = el('div', 'bc-label'); lab.textContent = it.label; lab.title = it.label;
+    const track = el('div', 'bc-track');
+    const fill = el('div', 'bc-fill'); fill.style.width = (it.value / max * 100) + '%';
+    if (it.won != null && opts.won) {
+      const won = el('div', 'bc-won'); won.style.width = (it.value ? (it.won / it.value * 100) : 0) + '%';
+      fill.appendChild(won);
+    }
+    track.appendChild(fill);
+    const val = el('div', 'bc-val');
+    if (it.won != null && opts.won) {
+      val.appendChild(document.createTextNode(nf(it.value) + ' · '));
+      const w = el('span', 'won'); w.textContent = nf(it.won) + ' agend.';
+      val.appendChild(w);
+    } else {
+      val.textContent = nf(it.value);
+    }
+    row.append(lab, track, val);
+    box.appendChild(row);
+  });
+}
+
+function renderVendedores(rows) {
+  const ag = rows.filter((r) => r.agendado && r.vendedor);
+  const m = countBy(ag, (r) => r.vendedor);
+  const items = [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value }));
+  barChart($('#vendedores'), items);
+}
+
+function renderTrilha(rows) {
+  const box = $('#trilha'); clear(box);
+  const cnt = (t) => rows.filter((r) => r.call_track === t).length;
+  const prem = cnt('premium'), aud = cnt('imersao'), pad = cnt('comunidade');
+  const tot = prem + aud + pad;
+  if (!tot) { const e = el('div', 'empty'); e.textContent = 'Nenhum lead chegou à etapa de agendamento ainda.'; box.appendChild(e); return; }
+  const stack = el('div', 'stack');
+  const seg = (cls, n) => { const s = el('div', cls); s.style.width = (n / tot * 100) + '%'; if (n) s.textContent = pct(n, tot) + '%'; return s; };
+  stack.append(seg('seg-prem', prem), seg('seg-aud', aud), seg('seg-pad', pad));
+  const stats = el('div', 'trilha-stats');
+  const mk = (cls, n, l) => { const c = el('div', 'ts-card' + cls); const nn = el('div', 'n'); nn.textContent = nf(n); const ll = el('div', 'l'); ll.textContent = l; c.append(nn, ll); return c; };
+  stats.append(
+    mk(' prem', prem, '💬 WhatsApp (R$20 mil+)'),
+    mk(' aud', aud, '🌊 Imersão (R$5–20 mil)'),
+    mk('', pad, '🌿 Comunidade (R$1,5–5 mil)'),
+  );
+  box.append(stack, stats);
+}
+
+/* Renda familiar: grupos clicáveis — abre a lista de leads da faixa / recolhe.
+   As faixas vêm da pergunta-chave PUBLICADA no editor do quiz; faixas antigas
+   (de leads que responderam antes de uma mudança) aparecem como "(faixa antiga)". */
+const RENDA_ABERTAS = new Set();
+let RENDA_CFG = null;   // opções atuais da pergunta-chave publicada
+async function carregarRendaCfg() {
+  try {
+    const d = await fetch('/api/quiz-config').then((x) => x.json());
+    const chave = (d.perguntas || []).find((p) => (p.opts || []).some((o) => o.destino));
+    if (chave) { RENDA_CFG = chave.opts.map((o) => o.t); render(); }
+  } catch (e) { /* mantém as faixas fixas */ }
+}
+function renderRenda(rows) {
+  const box = $('#renda'); clear(box);
+  const SEM_RENDA = 'Ainda não responderam a renda';
+  const labels = RENDA_CFG || ORD_RENDA;
+  /* aceita também valores antigos salvos cortados (ex: "...R$ 2.500,0") */
+  const bandaDe = (r) => {
+    const v = String(r.renda || '').trim();
+    if (!v) return null;
+    return labels.find((label) => label === v || label.startsWith(v)) || null;
+  };
+  const grupos = labels.map((label) => ({ label, leads: rows.filter((r) => bandaDe(r) === label) }));
+  /* respostas de faixas que não existem mais na configuração atual */
+  const antigas = new Set();
+  rows.forEach((r) => { const v = String(r.renda || '').trim(); if (v && !bandaDe(r)) antigas.add(v); });
+  [...antigas].sort().forEach((v) => grupos.push({
+    label: v + ' · (faixa antiga)',
+    leads: rows.filter((r) => String(r.renda || '').trim() === v),
+  }));
+  grupos.push({ label: SEM_RENDA, leads: rows.filter((r) => !String(r.renda || '').trim()) });
+  const max = Math.max(...grupos.map((g) => g.leads.length), 1);
+
+  grupos.forEach((g) => box.appendChild(grupoAcordeao(g, max, RENDA_ABERTAS)));
+}
+
+/* grupo clicável genérico (usado por Renda e Áreas): cabeçalho com barra
+   proporcional + lista de leads que abre/recolhe */
+function grupoAcordeao(g, max, abertas) {
+  const won = g.leads.filter((r) => r.agendado).length;
+  const wrap = el('div', 'renda-g');
+
+  const head = el('div', 'renda-g-head');
+  const bar = el('i', 'renda-g-bar'); bar.style.width = (g.leads.length / max * 100) + '%';
+  const seta = el('span', 'renda-g-seta'); seta.textContent = abertas.has(g.label) ? '▾' : '▸';
+  const lab = el('span', 'renda-g-lab'); lab.textContent = g.label;
+  const num = el('span', 'renda-g-num');
+  const b1 = el('b'); b1.textContent = nf(g.leads.length);
+  num.append(b1, ' lead(s)');
+  if (won) { const b2 = el('b'); b2.textContent = nf(won); b2.style.color = 'var(--green)'; num.append(' · ', b2, ' agendaram'); }
+  head.append(bar, seta, lab, num);
+
+  const det = el('div', 'renda-g-det');
+  det.hidden = !abertas.has(g.label);
+  if (!det.hidden) montarTabelaLeads(det, g.leads);
+
+  head.onclick = () => {
+    if (abertas.has(g.label)) { abertas.delete(g.label); det.hidden = true; seta.textContent = '▸'; }
+    else {
+      abertas.add(g.label);
+      if (!det.firstChild) montarTabelaLeads(det, g.leads);
+      det.hidden = false; seta.textContent = '▾';
+    }
+  };
+
+  wrap.append(head, det);
+  return wrap;
+}
+function montarTabelaLeads(det, leads) {
+  clear(det);
+  if (!leads.length) { const e = el('div', 'muted-cell'); e.textContent = 'Nenhum lead nessa faixa no período.'; e.style.padding = '10px 4px'; det.appendChild(e); return; }
+  const t = el('table');
+  t.appendChild(tableHead(['Entrou', 'Status', 'Nome', 'WhatsApp', 'E-mail', 'Agendou', 'Destino']));
+  const tb = el('tbody');
+  [...leads].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).forEach((r) => {
+    const tr = el('tr');
+    tr.append(
+      td(fmtDateTime(r.created_at)),
+      td(statusPill(r.status)),
+      td(r.nome, 'nome'),
+      td(r.whatsapp),
+      td(r.email),
+      td(r.agendado ? '✅' : '—'),
+      td(trilhaPill(r.call_track)),
+    );
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  const wrapT = el('div', 'tbl-wrap'); wrapT.appendChild(t);
+  det.appendChild(wrapT);
+}
+
+function renderNicho(rows) {
+  const map = new Map();
+  rows.forEach((r) => {
+    const k = r.nicho || r.nicho_detectado; if (!k) return;
+    if (!map.has(k)) map.set(k, { total: 0, won: 0 });
+    const o = map.get(k); o.total++; if (r.agendado) o.won++;
+  });
+  const items = [...map.entries()].sort((a, b) => b[1].total - a[1].total)
+    .map(([label, o]) => ({ label, value: o.total, won: o.won }));
+  barChart($('#nicho'), items, { won: true });
+}
+
+function renderSeguidores(rows) {
+  const items = ORD_SEG.map((label) => ({ label, value: rows.filter((r) => r.seguidores === label).length }));
+  barChart($('#seguidores'), items);
+}
+
+/* Áreas da vida afetadas: pergunta de múltipla escolha — a lead conta em
+   TODOS os grupos que marcou. Casa pela figurinha (💪🧠❤️💼🎨), o que
+   recupera também os registros antigos salvos cortados. */
+const ORD_AREAS = ['💪 Saúde física', '🧠 Saúde mental', '❤️ Relacionamentos', '💼 Carreira/Trabalho', '🎨 Tempo livre/Hobbies'];
+const AREAS_ABERTAS = new Set();
+function renderDesafio(rows) {
+  const box = $('#desafio'); clear(box);
+  const temArea = (r, label) => String(r.dificuldade || '').includes(label.split(' ')[0]);
+  const grupos = ORD_AREAS.map((label) => ({ label, leads: rows.filter((r) => temArea(r, label)) }));
+  grupos.sort((a, b) => b.leads.length - a.leads.length);
+  grupos.push({ label: 'Ainda não responderam as áreas', leads: rows.filter((r) => !String(r.dificuldade || '').trim()) });
+  const max = Math.max(...grupos.map((g) => g.leads.length), 1);
+  grupos.forEach((g) => box.appendChild(grupoAcordeao(g, max, AREAS_ABERTAS)));
+}
+
+function renderUF(rows) {
+  const m = countBy(rows, (r) => (r.uf || '').toUpperCase());
+  const items = [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([label, value]) => ({ label, value }));
+  barChart($('#uf'), items);
+}
+
+let UTM_DIM = 'utm_source';
+function renderUTM(rows) {
+  const t = $('#utmTable'); clear(t);
+  const map = new Map();
+  rows.forEach((r) => {
+    const k = String(r[UTM_DIM] || '').trim() || '(direto / sem UTM)';
+    if (!map.has(k)) map.set(k, { leads: 0, qual: 0, agend: 0 });
+    const o = map.get(k); o.leads++;
+    if (r.qualificado === true) o.qual++;
+    if (r.agendado) o.agend++;
+  });
+  const linhas = [...map.entries()].sort((a, b) => b[1].agend - a[1].agend || b[1].leads - a[1].leads);
+  t.appendChild(tableHead(['Origem (' + UTM_DIM.replace('utm_', '') + ')', 'Leads', 'Qualif.', 'Agendaram', 'Taxa agend.']));
+  const tb = el('tbody');
+  if (!linhas.length) { const tr = el('tr'); const c = td('Sem dados no período.'); c.colSpan = 5; c.className = 'muted-cell'; tr.appendChild(c); tb.appendChild(tr); }
+  linhas.forEach(([k, o]) => {
+    const tr = el('tr');
+    tr.append(td(k, 'nome'), td(nf(o.leads)), td(nf(o.qual)), td(nf(o.agend)), td(pct(o.agend, o.leads) + '%'));
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+}
+
+/* Últimos 7 dias, dia a dia + 1 barra com o ACUMULADO de tudo que entrou
+   antes da janela. Usa TODOS os leads (independe do filtro de período). */
+function renderPerDay() {
+  const ancora = new Date(diaBRT(new Date()) + 'T12:00:00-03:00').getTime();  // meio-dia BRT de hoje
+  const buckets = [];
+  for (let i = 6; i >= 0; i--) {
+    const key = diaBRT(new Date(ancora - i * 864e5));   // dia BRT (yyyy-mm-dd)
+    buckets.push({ key, label: key.slice(8, 10) + '/' + key.slice(5, 7), value: 0 });
+  }
+  const inicioJanela = buckets[0].key;
+  const idx = new Map(buckets.map((b, i) => [b.key, i]));
+  let acumulado = 0;
+  ALL.forEach((r) => {
+    const k = diaBRT(new Date(r.created_at));
+    if (k < inicioJanela) acumulado++;
+    else if (idx.has(k)) buckets[idx.get(k)].value++;
+  });
+  const vespera = diaBRT(new Date(ancora - 7 * 864e5));   // dia anterior ao início da janela
+  const items = [
+    { label: '📦 Até ' + vespera.slice(8, 10) + '/' + vespera.slice(5, 7) + ' (acumulado)', value: acumulado },
+    ...buckets.map((b) => ({ label: b.label, value: b.value })),
+  ];
+  barChart($('#perday'), items);
+}
+
+function fmtDateTime(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' +
+         d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+function statusPill(s) {
+  const p = el('span', 'pill ' + (s || 'parcial')); p.textContent = s || 'parcial'; return p;
+}
+
+function tableHead(cols) { const tr = el('tr'); cols.forEach((c) => { const th = el('th'); th.textContent = c; tr.appendChild(th); }); const thead = el('thead'); thead.appendChild(tr); return thead; }
+function td(text, cls) { const c = el('td', cls); if (text instanceof Node) c.appendChild(text); else c.textContent = (text == null || text === '') ? '—' : String(text); return c; }
+
+/* filtros do quadro Leads Agendados */
+let UA = { periodo: 'tudo', ini: null, fim: null, busca: '', trilha: '', status: '', atendente: '' };
+function uaInPeriodo(r) {
+  if (UA.periodo === 'tudo') return true;
+  const t = new Date(r.agendamento_em).getTime();
+  if (UA.periodo === 'hoje') { const ini = inicioHojeBRT(); return t >= ini && t < ini + 864e5; }
+  if (UA.periodo === 'semana') {
+    const d0 = new Date(diaBRT(new Date()) + 'T00:00:00-03:00');
+    const ini = d0.getTime() - d0.getDay() * 864e5;
+    return t >= ini && t < ini + 7 * 864e5;
+  }
+  if (UA.periodo === 'mes') {
+    const k = diaBRT(new Date());
+    const ini = new Date(k.slice(0, 8) + '01T00:00:00-03:00');
+    const fim = new Date(ini.getFullYear(), ini.getMonth() + 1, 1);
+    return t >= ini.getTime() && t < fim.getTime();
+  }
+  if (UA.periodo === 'custom') {
+    const ini = UA.ini ? new Date(UA.ini + 'T00:00:00-03:00').getTime() : -Infinity;
+    const fim = UA.fim ? new Date(UA.fim + 'T23:59:59-03:00').getTime() : Infinity;
+    return t >= ini && t <= fim;
+  }
+  return true;
+}
+function popularUaAtendente(list) {
+  const sel = $('#uaAtendente');
+  const nomes = [...new Set([...(ATENDENTES || []), ...list.map((r) => (r.atendente || '').trim())].filter(Boolean))].sort();
+  const want = nomes.join('|');
+  if (sel.dataset.opts === want) return;     // lista não mudou: preserva a seleção
+  sel.dataset.opts = want;
+  const atual = UA.atendente;
+  clear(sel);
+  const o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Todos os atendentes'; sel.appendChild(o0);
+  const os = document.createElement('option'); os.value = '(sem)'; os.textContent = '(sem atendente)'; sel.appendChild(os);
+  nomes.forEach((v) => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+  UA.atendente = (atual === '(sem)' || nomes.includes(atual)) ? atual : '';
+  sel.value = UA.atendente;
+}
+function renderUpcoming() {
+  const t = $('#upcoming'); clear(t);
+  const agora = Date.now();
+  const todas = ALL.filter((r) => r.agendado && r.agendamento_em)
+    .sort((a, b) => new Date(a.agendamento_em) - new Date(b.agendamento_em));
+  popularUaAtendente(todas);
+  let filtradas = todas.filter(uaInPeriodo);
+  if (UA.trilha) filtradas = filtradas.filter((r) => r.call_track === UA.trilha);
+  if (UA.status) {
+    filtradas = UA.status === 'confirmado'
+      ? filtradas.filter((r) => !r.agendamento_status)
+      : filtradas.filter((r) => r.agendamento_status === UA.status);
+  }
+  if (UA.atendente) {
+    filtradas = UA.atendente === '(sem)'
+      ? filtradas.filter((r) => !(r.atendente || '').trim())
+      : filtradas.filter((r) => (r.atendente || '').trim() === UA.atendente);
+  }
+  const q = UA.busca.trim().toLowerCase();
+  if (q) filtradas = filtradas.filter((r) => [r.nome, r.email, r.whatsapp].some((v) => String(v || '').toLowerCase().includes(q)));
+  const futuras = filtradas.filter((r) => new Date(r.agendamento_em).getTime() >= agora);
+  const passadas = filtradas.filter((r) => new Date(r.agendamento_em).getTime() < agora).reverse();
+  const up = [...futuras, ...passadas];
+  $('#upCount').textContent = nf(futuras.length) + ' futura(s) · ' + nf(passadas.length) + ' passada(s)';
+  t.appendChild(tableHead(['Quando', 'Lead', 'WhatsApp', 'Renda familiar', 'Destino', 'Atendente', 'Status', 'Ações']));
+  const tb = el('tbody');
+  if (!up.length) { const tr = el('tr'); const c = td('Nenhum lead agendado ainda.'); c.colSpan = 8; c.className = 'muted-cell'; tr.appendChild(c); tb.appendChild(tr); }
+  up.forEach((r) => {
+    const tr = el('tr');
+    if (new Date(r.agendamento_em).getTime() < agora) tr.style.opacity = '.62';
+    const ac = acoesAgendamento(r);
+    const ver = el('button', 'acao-btn'); ver.textContent = '👤 Ver lead';
+    ver.onclick = () => abrirLeadModal(r);
+    ac.insertBefore(ver, ac.firstChild);
+    tr.append(
+      td(fmtDateTime(r.agendamento_em)),
+      td(nomeLink(r), 'nome'),
+      td(r.whatsapp),
+      td(r.renda),
+      td(trilhaPill(r.call_track)),
+      td(selAtendente(r)),
+      td(agendPill(r.agendamento_status)),
+      td(ac),
+    );
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+}
+function trilhaPill(t) {
+  if (t === 'premium') { const p = el('span', 'pill prem'); p.textContent = '💬 WhatsApp'; return p; }
+  if (t === 'imersao') { const p = el('span', 'pill aud'); p.textContent = '🌊 Imersão'; return p; }
+  if (t === 'comunidade') { const p = el('span', 'pill pad'); p.textContent = '🌿 Comunidade'; return p; }
+  return document.createTextNode('—');
+}
+
+let LEADS_VIEW = [];
+let TRILHA_FILTER = '';
+let STATUS_FILTER = '';
+function renderLeads(rows) {
+  LEADS_VIEW = [...rows].sort((a, b) => new Date(b.updated_at || b.created_at) - new Date(a.updated_at || a.created_at));
+  drawLeads();
+}
+function drawLeads() {
+  const q = ($('#search').value || '').trim().toLowerCase();
+  let data = LEADS_VIEW.filter(inLeadsRange);
+  if (TRILHA_FILTER) data = data.filter((r) => r.call_track === TRILHA_FILTER);
+  if (STATUS_FILTER) {
+    data = STATUS_FILTER === 'agendado'
+      ? data.filter((r) => r.agendado || r.status === 'agendado')
+      : data.filter((r) => r.status === STATUS_FILTER && !r.agendado);
+  }
+  if (q) data = data.filter((r) => [r.nome, r.email, r.instagram, r.whatsapp].some((v) => String(v || '').toLowerCase().includes(q)));
+  $('#tbl-count').textContent = nf(data.length) + ' lead(s)';
+  const t = $('#leads'); clear(t);
+  t.appendChild(tableHead(['Cadastro', 'Última atualização', 'Status', 'Nome', 'WhatsApp', 'E-mail', 'Atendente', 'Renda familiar', 'Origem', 'Agendou', 'Destino']));
+  const tb = el('tbody');
+  data.slice(0, 500).forEach((r) => {
+    const tr = el('tr');
+    tr.append(
+      td(fmtDateTime(r.created_at)),
+      td(fmtDateTime(r.updated_at)),
+      td(statusPill(r.status)),
+      td(nomeLink(r), 'nome'),
+      td(r.whatsapp),
+      td(r.email),
+      td(selAtendente(r)),
+      td(r.renda),
+      td(utmCell(r)),
+      td(r.agendado ? '✅' : '—'),
+      td(trilhaPill(r.call_track)),
+    );
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  if (data.length > 500) {
+    const tr = el('tr'); const c = td('Mostrando os 500 mais recentes de ' + nf(data.length) + '. Refine a busca ou o período.'); c.colSpan = 11; c.className = 'muted-cell'; tr.appendChild(c); tb.appendChild(tr);
+  }
+}
+function utmCell(r) {
+  const s = String(r.utm_source || '').trim();
+  const span = el('span');
+  span.textContent = s || '(direto)';
+  if (!s) span.className = 'muted-cell';
+  const partes = [r.utm_source, r.utm_medium, r.utm_campaign, r.utm_content].filter(Boolean);
+  if (partes.length) span.title = partes.join(' / ');     // detalhe completo no hover
+  return span;
+}
+$('#search').addEventListener('input', drawLeads);
+$('#trilhaFilter').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#trilhaFilter').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  TRILHA_FILTER = b.dataset.t || '';
+  drawLeads();
+});
+$('#statusFilter').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#statusFilter').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  STATUS_FILTER = b.dataset.s || '';
+  drawLeads();
+});
+$('#utmDim').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#utmDim').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  UTM_DIM = b.dataset.d;
+  renderUTM(ALL.filter(inRange));
+});
+
+// ================= CSV =================
+function csvCell(v) { const s = (v == null ? '' : String(v)).replace(/"/g, '""'); return '"' + s + '"'; }
+$('#btn-csv').onclick = () => {
+  const rows = ALL.filter(inRange);
+  const cols = ['created_at', 'updated_at', 'status', 'nome', 'email', 'whatsapp', 'uf', 'instagram',
+    'nicho', 'nicho_detectado', 'seguidores', 'ig_followers', 'dificuldade', 'renda', 'lead_score',
+    'qualificado', 'call_track', 'atendente', 'agendamento_status', 'agendado', 'agendamento_em',
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'referrer'];
+  const head = cols.join(',');
+  const body = rows.map((r) => cols.map((c) => csvCell(r[c])).join(',')).join('\n');
+  const blob = new Blob(['﻿' + head + '\n' + body], { type: 'text/csv;charset=utf-8;' });
+  const a = el('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'leads-quiz-suavis.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  // registra a extração no livro de registros (melhor-esforço)
+  fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', log: 'exportou_relatorio' }),
+  }).catch(() => {});
+};
+
+// ================= ÁREA EQUIPE (só administradora) =================
+let EQ_EDIT_ID = null;   // null = criando; número = editando esse usuário
+async function eqApi(payload) {
+  const r = await fetch('/api/dash-users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: localStorage.getItem(TKEY) || '', ...payload }),
+  });
+  return r.json().catch(() => ({ ok: false, error: 'erro de rede' }));
+}
+function fmtDataBR(d) {
+  if (!d) return '—';
+  const [y, m, dd] = String(d).slice(0, 10).split('-');
+  return dd + '/' + m + '/' + y;
+}
+async function carregarEquipe() {
+  const [u, l] = await Promise.all([eqApi({ action: 'list' }), eqApi({ action: 'logs' })]);
+  renderEqUsers(u);
+  renderEqLogs(l);
+}
+function renderEqUsers(res) {
+  const t = $('#eqUsers'); clear(t);
+  if (!res.ok) { $('#eqStatus').textContent = res.error || 'Erro ao carregar usuários.'; return; }
+  t.appendChild(tableHead(['Nome completo', 'E-mail', 'Celular', 'Validade', 'Senha', 'Situação', '', '', '']));
+  const tb = el('tbody');
+  if (!res.users.length) { const tr = el('tr'); const c = td('Nenhum usuário criado ainda.'); c.colSpan = 9; c.className = 'muted-cell'; tr.appendChild(c); tb.appendChild(tr); }
+  const hoje = new Date();
+  const btnCss = 'cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 9px;font-size:12px;white-space:nowrap;';
+  res.users.forEach((u) => {
+    const vencido = u.validade && new Date(u.validade + 'T23:59:59-03:00') < hoje;
+    const tr = el('tr');
+    const sit = el('span', 'pill ' + (vencido ? 'parcial' : 'agendado')); sit.textContent = vencido ? 'expirado' : 'ativo';
+    const senhaTxt = u.trocar_senha ? '🔑 temporária (aguardando 1º acesso)' : '✅ própria (invisível)';
+    const bEd = el('button'); bEd.textContent = '✏️ Editar'; bEd.style.cssText = btnCss;
+    bEd.onclick = () => {
+      EQ_EDIT_ID = u.id;
+      $('#eqNome').value = u.nome; $('#eqEmail').value = u.email; $('#eqCel').value = u.celular || '';
+      $('#eqVal').value = u.validade || '';
+      $('#eqSalvar').textContent = 'Salvar alterações';
+      $('#eqCancelar').style.display = '';
+      $('#eqNome').focus();
+    };
+    const bReset = el('button'); bReset.textContent = '🔁 Resetar senha'; bReset.style.cssText = btnCss;
+    bReset.onclick = async () => {
+      if (!confirm('Resetar a senha de ' + u.nome + '? A senha atual deixa de funcionar e você recebe uma temporária nova para enviar.')) return;
+      const r = await eqApi({ action: 'reset', id: u.id });
+      if (r.ok && r.senhaTemporaria) mostrarSenhaTemp(u.nome, r.senhaTemporaria);
+      else $('#eqStatus').textContent = r.error || 'Erro ao resetar.';
+      carregarEquipe();
+    };
+    const bDel = el('button'); bDel.textContent = '🗑️'; bDel.title = 'Excluir usuário'; bDel.style.cssText = btnCss;
+    bDel.onclick = async () => {
+      if (!confirm('Excluir o acesso de ' + u.nome + '? Essa pessoa não conseguirá mais entrar no painel.')) return;
+      await eqApi({ action: 'delete', id: u.id });
+      carregarEquipe();
+    };
+    tr.append(td(u.nome, 'nome'), td(u.email), td(u.celular), td(fmtDataBR(u.validade)), td(senhaTxt), td(sit), td(bEd), td(bReset), td(bDel));
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+}
+/* mostra a senha temporária UMA vez, com botão de copiar */
+function mostrarSenhaTemp(nome, senha) {
+  const s = $('#eqStatus');
+  clear(s);
+  s.append('🔑 Senha temporária de ' + nome + ': ');
+  const b = el('b'); b.textContent = senha; b.style.cssText = 'font-size:14px;color:var(--accent-dark);';
+  const bc = el('button'); bc.textContent = '📋 Copiar'; bc.style.cssText = 'margin-left:8px;cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;font-size:12px;';
+  bc.onclick = () => { navigator.clipboard.writeText(senha).then(() => { bc.textContent = '✓ Copiado'; }); };
+  s.append(b, bc, ' — envie para a pessoa; ela cria a própria senha no primeiro acesso. (Esta senha não aparece de novo!)');
+}
+function renderEqLogs(res) {
+  const t = $('#eqLogs'); clear(t);
+  if (!res.ok) return;
+  t.appendChild(tableHead(['Data', 'Hora', 'Ação', 'Nome do usuário', 'E-mail', 'Celular', 'Validade']));
+  const tb = el('tbody');
+  if (!res.logs.length) { const tr = el('tr'); const c = td('Nenhum registro ainda.'); c.colSpan = 7; c.className = 'muted-cell'; tr.appendChild(c); tb.appendChild(tr); }
+  res.logs.forEach((g) => {
+    const d = new Date(g.criado_em);
+    const tr = el('tr');
+    tr.append(
+      td(d.toLocaleDateString('pt-BR')),
+      td(d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })),
+      td(g.tipo === 'exportou_relatorio' ? '📥 Extraiu relatório' : '🔓 Acessou o painel'),
+      td(g.nome, 'nome'), td(g.email), td(g.celular), td(fmtDataBR(g.validade)),
+    );
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+}
+function eqLimparForm() {
+  EQ_EDIT_ID = null;
+  ['#eqNome', '#eqEmail', '#eqCel', '#eqVal'].forEach((s) => { $(s).value = ''; });
+  $('#eqSalvar').textContent = 'Adicionar';
+  $('#eqCancelar').style.display = 'none';
+}
+$('#eqCancelar').onclick = eqLimparForm;
+$('#eqSalvar').onclick = async () => {
+  const criando = !EQ_EDIT_ID;
+  const nomeDigitado = $('#eqNome').value.trim();
+  const payload = {
+    action: criando ? 'create' : 'update',
+    id: EQ_EDIT_ID,
+    nome: nomeDigitado, email: $('#eqEmail').value,
+    celular: $('#eqCel').value, validade: $('#eqVal').value || null,
+  };
+  $('#eqStatus').textContent = 'salvando…';
+  const r = await eqApi(payload);
+  if (r.ok) {
+    eqLimparForm();
+    if (criando && r.senhaTemporaria) mostrarSenhaTemp(nomeDigitado, r.senhaTemporaria);
+    else $('#eqStatus').textContent = '✓ salvo';
+    carregarEquipe();
+  } else {
+    $('#eqStatus').textContent = r.error || 'erro ao salvar';
+  }
+};
+
+// ================= ABA AGENDAMENTOS (CAL) =================
+let CAL_BOOKINGS = null;
+let CAL_SCOPE = '';   // '' = todos os eventos; 'funil' = só bookings deste funil (uid presente nos leads)
+$('#tabs').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#tabs').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  const tab = b.dataset.tab;
+  $('#tabFunil').hidden = tab !== 'funil';
+  $('#tabCal').hidden = tab !== 'cal';
+  if (tab === 'cal' && CAL_BOOKINGS === null) carregarCal();
+});
+$('#calRefresh').onclick = () => carregarCal();
+$('#calScope').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#calScope').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  CAL_SCOPE = b.dataset.s || '';
+  if (CAL_BOOKINGS !== null) renderCal();
+});
+$('#uaRange').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#uaRange').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  UA.periodo = b.dataset.ur;
+  $('#uaCustom').style.display = b.dataset.ur === 'custom' ? 'flex' : 'none';
+  if (b.dataset.ur !== 'custom') renderUpcoming();
+});
+$('#uaAplicar').onclick = () => { UA.ini = $('#uaIni').value || null; UA.fim = $('#uaFim').value || null; renderUpcoming(); };
+$('#uaBusca').addEventListener('input', (e) => { UA.busca = e.target.value; renderUpcoming(); });
+$('#uaTrilha').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#uaTrilha').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  UA.trilha = b.dataset.t || '';
+  renderUpcoming();
+});
+$('#uaStatus').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('#uaStatus').children].forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+  UA.status = b.dataset.s || '';
+  renderUpcoming();
+});
+$('#uaAtendente').addEventListener('change', (e) => { UA.atendente = e.target.value; renderUpcoming(); });
+
+async function carregarCal() {
+  $('#calCount').textContent = 'carregando do Cal…';
+  try {
+    const r = await fetch('/api/cal-bookings', { headers: { 'x-dash-token': localStorage.getItem(TKEY) || '' } });
+    if (!r.ok) { $('#calCount').textContent = 'erro ao buscar no Cal (' + r.status + ')'; return; }
+    const d = await r.json();
+    CAL_BOOKINGS = d.bookings || [];
+    renderCal();
+  } catch (e) { $('#calCount').textContent = 'erro ao buscar no Cal'; }
+}
+
+function renderCal() {
+  let bk = (CAL_BOOKINGS || []).filter(inRangeCal);
+  if (CAL_SCOPE === 'funil') {
+    const funilUids = new Set(ALL.filter((r) => r.booking_uid).map((r) => r.booking_uid));
+    bk = bk.filter((b) => funilUids.has(b.uid));
+  }
+  const ativos = bk.filter((b) => b.status !== 'cancelled');
+  const janela = RANGE ? (RANGE === 1 ? ' · agendados hoje' : ' · agendados nos últimos ' + RANGE + ' dias') : '';
+  const escopo = CAL_SCOPE === 'funil' ? ' · só deste funil' : ' · todos os eventos';
+  $('#calCount').textContent = nf(bk.length) + ' bookings · ' + nf(ativos.length) + ' confirmados · ' + nf(bk.length - ativos.length) + ' cancelados' + escopo + janela;
+
+  // por evento
+  const ev = new Map();
+  bk.forEach((b) => {
+    const k = b.evento || '(sem nome)';
+    if (!ev.has(k)) ev.set(k, { conf: 0, canc: 0 });
+    const o = ev.get(k); if (b.status === 'cancelled') o.canc++; else o.conf++;
+  });
+  const evRows = [...ev.entries()].sort((a, b) => b[1].conf - a[1].conf);
+  const te = $('#calPorEvento'); clear(te);
+  te.appendChild(tableHead(['Evento', 'Confirmados', 'Cancelados', 'Total']));
+  const teb = el('tbody');
+  if (!evRows.length) { const tr = el('tr'); const c = td('Sem agendamentos.'); c.colSpan = 4; c.className = 'muted-cell'; tr.appendChild(c); teb.appendChild(tr); }
+  evRows.forEach(([k, o]) => { const tr = el('tr'); tr.append(td(k, 'nome'), td(nf(o.conf)), td(o.canc ? nf(o.canc) : '—'), td(nf(o.conf + o.canc))); teb.appendChild(tr); });
+  te.appendChild(teb);
+
+  // por dia (confirmados), fuso de Brasília
+  const dia = new Map();
+  ativos.forEach((b) => { if (!b.start) return; const k = diaBRT(new Date(b.start)); dia.set(k, (dia.get(k) || 0) + 1); });
+  const diaItems = [...dia.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1)).map(([k, v]) => ({ label: k.slice(8, 10) + '/' + k.slice(5, 7), value: v }));
+  barChart($('#calPorDia'), diaItems);
+
+  // lista (mais próximo/recente primeiro)
+  const t = $('#calTable'); clear(t);
+  t.appendChild(tableHead(['Evento', 'Data', 'Hora', 'Participante', 'Status']));
+  const tb = el('tbody');
+  [...bk].sort((a, b) => new Date(b.start) - new Date(a.start)).slice(0, 200).forEach((b) => {
+    const dt = b.start ? new Date(b.start) : null;
+    const stp = el('span', 'pill ' + (b.status === 'cancelled' ? 'pad' : 'agendado')); stp.textContent = b.status || '—';
+    const tr = el('tr');
+    tr.append(
+      td(b.evento, 'nome'),
+      td(dt ? dt.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' }) : '—'),
+      td(dt ? dt.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }) : '—'),
+      td(b.attendee + (b.attendeesCount > 1 ? ' +' + (b.attendeesCount - 1) : '')),
+      td(stp),
+    );
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+}
+
+// ================= BOOT =================
+(function boot() {
+  const saved = localStorage.getItem(TKEY);
+  if (saved) doLogin(saved); else showGate();
+})();
+</script>
+</body>
+</html>
