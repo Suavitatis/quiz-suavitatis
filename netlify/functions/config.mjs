@@ -9,21 +9,22 @@
  *   POST /api/config {value}    → grava closer_prioritario (eventTypeId ou '')
  */
 import { vendedoresDaTrilha } from './agenda.mjs';
+import { temConfig, autenticar } from '../_tokens.mjs';
 
 const SUPABASE_URL = (process.env.SUPABASE_DIAG_URL || 'https://aktktxizmpwckvxbdjzf.supabase.co').replace(/\/+$/, '');
 
 export default async (req) => {
   if (req.method === 'OPTIONS') return new Response('', { headers: cors() });
 
-  const EXPECTED = process.env.DASHBOARD_TOKEN;
-  if (!EXPECTED) return json({ error: 'DASHBOARD_TOKEN not configured' }, 503);
+  if (!temConfig()) return json({ error: 'DASHBOARD_TOKEN not configured' }, 503);
   const KEY = process.env.SUPABASE_DIAG_SERVICE;
   if (!KEY) return json({ error: 'SUPABASE_DIAG_SERVICE not configured' }, 500);
 
   let body = {};
   try { if (req.method === 'POST') body = await req.json(); } catch { /* sem body */ }
   const token = req.headers.get('x-dash-token') || body.token || '';
-  if (!safeEqual(String(token), String(EXPECTED))) return json({ error: 'unauthorized' }, 401);
+  const acesso = await autenticar(token);
+  if (!acesso.ok) return json({ error: 'unauthorized' }, 401);
 
   const vendedores = vendedoresDaTrilha('premium').map((v) => ({ nome: v.nome, eventTypeId: +v.eventTypeId }));
   const auth = { apikey: KEY, Authorization: `Bearer ${KEY}` };

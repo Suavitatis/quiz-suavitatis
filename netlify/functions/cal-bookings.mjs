@@ -1,33 +1,44 @@
 /**
- * Espelho dos agendamentos do Cal (aba "Agendamentos" do painel).
- * Puxa direto da API interna do Cal (<sua-instancia-cal>/interno/bookings) —
- * fonte da verdade, inclui bookings feitos fora do funil e o status real.
- * Protegido pelo DASHBOARD_TOKEN (mesmo do /api/metrics).
+ * Espelho dos agendamentos do Cal (aba "Espelho do Cal" do painel).
+ * Puxa direto da API OFICIAL do cal.com (v2) com a chave da Suely —
+ * fonte da verdade: inclui bookings feitos fora do funil e o status real.
+ * Protegido pelas senhas do painel.
  *
- * OBS: a API interna devolve os ~50 bookings mais recentes (sem paginação).
- *   GET /api/cal-bookings → { ok, count, bookings:[{uid,eventTypeId,evento,start,end,status,attendee,attendeesCount}] }
+ *   GET /api/cal-bookings → { ok, count, bookings:[{uid,eventTypeId,evento,start,end,created,status,attendee,attendeesCount}] }
  */
-import { CAL_BASE as PRIV_CAL_BASE } from '../_private.mjs';
-const CAL_BASE = (process.env.CALCOM_BASE_URL || PRIV_CAL_BASE).replace(/\/+$/, '');
+import { temConfig, autenticar } from '../_tokens.mjs';
+const CAL_API = 'https://api.cal.com/v2';
+const CAL_VERSAO = '2024-08-13';
 
 export default async (req) => {
   if (req.method === 'OPTIONS') return new Response('', { headers: cors() });
 
-  const EXPECTED = process.env.DASHBOARD_TOKEN;
-  if (!EXPECTED) return json({ error: 'DASHBOARD_TOKEN not configured' }, 503);
+  if (!temConfig()) return json({ error: 'DASHBOARD_TOKEN not configured' }, 503);
   const apiKey = process.env.CALCOM_API_KEY;
   if (!apiKey) return json({ error: 'CALCOM_API_KEY not configured' }, 500);
 
   let body = {};
   try { if (req.method === 'POST') body = await req.json(); } catch { /* sem body */ }
   const token = req.headers.get('x-dash-token') || body.token || '';
-  if (!safeEqual(String(token), String(EXPECTED))) return json({ error: 'unauthorized' }, 401);
+  const auth = await autenticar(token);
+  if (!auth.ok) return json({ error: 'unauthorized' }, 401);
 
   try {
-    const r = await fetch(`${CAL_BASE}/bookings`, { headers: { Authorization: `Bearer ${apiKey}` } });
-    if (!r.ok) { console.error('cal-bookings:', r.status, await r.text().catch(() => '')); return json({ ok: false, reason: 'cal_error' }, 502); }
-    const data = await r.json();
-    const arr = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
+    // pagina a lista oficial (até 1000 bookings)
+    const arr = [];
+    for (let skip = 0; skip < 1000; skip += 250) {
+      const r = await fetch(`${CAL_API}/bookings?take=250&skip=${skip}`, {
+        headers: { Authorization: `Bearer ${apiKey}`, 'cal-api-version': CAL_VERSAO },
+      });
+      if (!r.ok) {
+        if (skip === 0) { console.error('cal-bookings:', r.status, await r.text().catch(() => '')); return json({ ok: false, reason: 'cal_error' }, 502); }
+        break;
+      }
+      const data = await r.json();
+      const pagina = Array.isArray(data?.data) ? data.data : [];
+      arr.push(...pagina);
+      if (pagina.length < 250) break;
+    }
     const bookings = arr.map((b) => {
       const at = Array.isArray(b.attendees) ? b.attendees : [];
       // título vem "Nome do evento entre X e Y" (ou "between X and Y") — fica só o nome do evento

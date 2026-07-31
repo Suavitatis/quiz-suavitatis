@@ -4,51 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#ffffff">
-  <title>Diagnóstico de Crescimento Orgânico | Core Audience</title>
-  <meta name="description" content="Descubra em 2 minutos o que está travando o crescimento orgânico do seu perfil no Instagram.">
+  <title>Reconstrua Suas Emoções | Suavitatis Terapias Integrativas</title>
+  <meta name="description" content="Descubra em 2 minutos o quanto você está pronta para voltar a viver — diagnóstico emocional para quem cuida dos pais idosos.">
   <link rel="icon" type="image/png" href="logo.png">
-  <!-- Meta Pixel (Core Audience) -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '943872144205445');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none" alt=""
-    src="https://www.facebook.com/tr?id=943872144205445&ev=PageView&noscript=1"/></noscript>
-  <!-- End Meta Pixel -->
+  <!-- Pixel do Meta removido (o original enviava dados para a conta do autor).
+       Quando houver Pixel próprio da Suavitatis, reinstalar aqui com o ID dela. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* ===== TEMA CLEAN (claro) — roxo Core só como acento ===== */
-      --bg-page: #fafafc;
-      --bg-header: #0d0a1a;
+      /* ===== TEMA SUAVITATIS (claro) — verde da marca como acento ===== */
+      --bg-page: #fafcfb;
+      --bg-header: #04302f;
       --bg-card: #ffffff;
-      --bg-soft: #f2f1f7;          /* bolha do bot */
+      --bg-soft: #eef4f2;          /* bolha do bot */
       --bg-input: #ffffff;
-      --text: #18141f;
-      --text-dim: #4a4458;
-      --text-muted: #9b95a8;
-      --border: rgba(24, 20, 31, 0.08);
-      --border-accent: rgba(161, 85, 242, 0.3);
-      --accent: #a155f2;
-      --accent-bright: #b876ff;
-      --accent-dark: #7d3bd6;
-      --accent-soft: rgba(161, 85, 242, 0.09);
-      --accent-glow: rgba(161, 85, 242, 0.3);
+      --text: #14201e;
+      --text-dim: #40534f;
+      --text-muted: #8fa19c;
+      --border: rgba(20, 32, 30, 0.08);
+      --border-accent: rgba(0, 83, 85, 0.3);
+      --accent: #005355;
+      --accent-bright: #1b7a7c;
+      --accent-dark: #003b3c;
+      --accent-soft: rgba(0, 83, 85, 0.09);
+      --accent-glow: rgba(0, 83, 85, 0.28);
       --green: #25d366;
       --green-dark: #1faa52;
       --gold: #f5a623;
       --red: #e5485f;
-      --gradient: linear-gradient(135deg, #a155f2 0%, #8b3fe0 100%);
+      --gradient: linear-gradient(135deg, #0e6b6d 0%, #005355 100%);
       --gradient-gold: linear-gradient(135deg, #f7b545 0%, #ef8f1f 100%);
       --shadow-soft: 0 1px 2px rgba(24,20,31,.04), 0 8px 24px rgba(24,20,31,.06);
       --radius: 18px;
@@ -79,10 +65,10 @@
     }
     .brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
     .brand-badge {
-      background: var(--bg-header); border-radius: 11px; padding: 8px 12px;
+      background: transparent; border-radius: 11px; padding: 0;
       display: flex; align-items: center; flex-shrink: 0;
     }
-    .brand-badge img { height: 17px; width: auto; max-width: 92px; object-fit: contain; display: block; }
+    .brand-badge img { height: 34px; width: auto; max-width: 160px; object-fit: contain; display: block; }
     .brand-sub {
       font-size: 12.5px; font-weight: 600; color: var(--text-dim);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -515,6 +501,10 @@
     .pr-foot b { color: #7ef0a5; font-size: 16px; letter-spacing: .03em; }
     .produto-img { width: 100%; display: block; }
 
+    /* chips de múltipla escolha (quiz SUAVIS) */
+    .chip.sel { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .chip-ok { background: var(--gradient); color: #fff; font-weight: 700; }
+
     @media (max-width: 560px) {
       .bubble { max-width: 88%; font-size: 14.5px; }
       .progress-track { max-width: none; }
@@ -528,10 +518,10 @@
   <header>
     <div class="topbar">
       <div class="brand">
-        <span class="brand-badge"><img src="logo.png" alt="Core Audience"></span>
-        <span class="brand-sub">Diagnóstico de Crescimento Orgânico</span>
+        <span class="brand-badge"><img src="logo.png" alt="Suavitatis Terapias Integrativas"></span>
+        <span class="brand-sub">Reconstrua Suas Emoções</span>
       </div>
-      <div class="step-pill" id="stepPill">0 de 8</div>
+      <div class="step-pill" id="stepPill">0 de 11</div>
     </div>
     <div class="progress-line"><i id="progressFill"></i></div>
   </header>
@@ -577,54 +567,127 @@ const esc = (s) => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').re
    CONFIG — ajuste aqui antes de publicar
    ================================================================ */
 const CONFIG = {
-  WHATSAPP_NUMERO: '5511999999999',      // <-- SEU número com DDI+DDD, só dígitos
-  AVATAR_URL: 'fabio.jpg',                // foto do Fabio (cai no logo.png se o arquivo não existir)
+  WHATSAPP_NUMERO: '5511993746788',       // WhatsApp da Suely (leads acima de R$20 mil)
+  AVATAR_URL: 'suely.png',                // foto da Suely (cai no logo.png se o arquivo não existir)
   AVATAR_FALLBACK: 'logo.png',
-  PRODUTO_IMG: '',                        // <-- opcional: imagem real do template (ex: 'template-30-reels.png'). Vazio = mockup nativo
+  PRODUTO_IMG: 'ebook.png',               // capa real do ebook "7 Dicas"
+  SITE_URL: 'https://www.suavitatisterapias.com.br',
+  CAL_COMUNIDADE: 'https://cal.com/suavitatisterapias/comunidade',  // agenda COMUNIDADE (R$1.500–5.000)
+  CAL_IMERSAO: 'https://cal.com/suavitatisterapias/comunidade',     // agenda IMERSÃO foi UNIFICADA na Comunidade (29/07/2026) — a trilha do lead continua 'imersao'
+  IMERSAO_ATE: '2026-08-13',  // última data da turma da Imersão — depois disso, leads dessa faixa vão pra COMUNIDADE
   API_SAVE: '/api/save-lead',
-  API_PROFILE: '/api/instagram-profile',  // Apify assíncrono (start+poll)
-  API_DIAGNOSIS: '/api/ai-diagnosis',     // Método CORE via Claude — fallback p/ template local
-  API_AGENDA: '/api/agenda',              // motor Cal.com invisível (slots/booking reais) — fallback p/ AGENDA local
-  CAL_EMBED_BASE: '', // não usado: o embed deriva a base do embedLink do backend (instância fora do repo)
-  API_TRANSCRIBE: '/api/transcribe-reel', // transcrição do áudio do reel (Apify) — fallback p/ legenda
-  API_FB_EVENT: '/api/fb-event',          // Meta CAPI (servidor) — evento Lead 10k+ (médico e audience), deduplicado com o Pixel
-  /* Agenda inline (estilo Viver de IA) — o horário escolhido cai no
-     Supabase (status 'agendado' + agendamento_em) pro seu time confirmar */
+  API_AGENDA: '/api/agenda',              // usado só pela agenda local de emergência
+  API_FB_EVENT: '/api/fb-event',          // desativado (sem Pixel próprio por enquanto)
+  /* Agenda local de emergência — só aparece se o embed do cal.com falhar */
   AGENDA: {
     diasSemana: [1, 2, 3, 4, 5],          // 0=dom ... 6=sáb
     horarios: ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'],
-    diasAdiante: 14,                       // janela de agendamento
-    minHorasAntecedencia: 3,               // esconde slots muito em cima da hora
+    diasAdiante: 14,
+    minHorasAntecedencia: 3,
   },
 };
 
 /* ================================================================
-   SCORING — REGRA DE QUALIFICAÇÃO (ajuste fino é seu, Fabio)
+   QUIZ SUAVIS — 8 perguntas com pontuação em 3 perfis (low/mid/high).
+   Resultado = perfil com mais pontos. Qualificada = perfil 'high'
+   (e a resposta "sem orçamento" corta a qualificação — `corta`).
    ================================================================ */
-const PONTOS_SEGUIDORES = {
-  'Menos de 1 mil': 1, '1 a 5 mil': 2, '5 a 20 mil': 3,
-  '20 a 50 mil': 4, '50 a 100 mil': 5, 'Mais de 100 mil': 6,
-};
-const PONTOS_FATURAMENTO = {
-  'Até R$5 mil/mês': 1, 'R$5 a 10 mil/mês': 2, 'R$10 a 20 mil/mês': 4,
-  'R$20 a 50 mil/mês': 6, 'Acima de R$50 mil/mês': 8,
-};
-const DESAFIOS_DE_CONVERSAO = ['Não converto em vendas', 'Seguidores não engajam'];
+const QUIZ_PADRAO = [
+  { id: 'q1', q: 'Pra começar: qual a sua idade?', multi: false, opts: [
+    { t: '🌻 30-45', s: { low: 1, mid: 2, high: 2 } },
+    { t: '🌳 46-60', s: { low: 1, mid: 2, high: 2 } },
+    { t: '🕊️ 61+', s: { low: 2, mid: 1, high: 2 } },
+  ]},
+  { id: 'q2', q: 'Como você se sente cuidando de seus pais?', multi: false, opts: [
+    { t: '😩 Exausta', s: { low: 4, mid: 1, high: 0 } },
+    { t: '🤯 Sobrecarregada', s: { low: 2, mid: 3, high: 0 } },
+    { t: '🧘‍♀️ Em Paz', s: { low: 0, mid: 1, high: 4 } },
+  ]},
+  { id: 'q3', q: 'Quais áreas da sua vida você sente que estão sendo <b>mais afetadas</b>? Pode marcar mais de uma 🙂', multi: true, opts: [
+    { t: '💪 Saúde física', s: { low: 1, mid: 2, high: 2 } },
+    { t: '🧠 Saúde mental', s: { low: 1, mid: 2, high: 2 } },
+    { t: '❤️ Relacionamentos', s: { low: 1, mid: 2, high: 2 } },
+    { t: '💼 Carreira/Trabalho', s: { low: 1, mid: 2, high: 2 } },
+    { t: '🎨 Tempo livre/Hobbies', s: { low: 1, mid: 2, high: 2 } },
+  ]},
+  { id: 'q4', q: 'Em uma escala de 1 a 5, o quanto você se sente <b>culpada</b> por não conseguir "dar conta de tudo"?', multi: false, opts: [
+    { t: '😊 1 - Nada culpada', s: { low: 0, mid: 1, high: 4 } },
+    { t: '🙂 2', s: { low: 1, mid: 2, high: 2 } },
+    { t: '😐 3', s: { low: 2, mid: 2, high: 1 } },
+    { t: '🙁 4', s: { low: 3, mid: 1, high: 1 } },
+    { t: '😔 5 - Extremamente culpada', s: { low: 4, mid: 0, high: 1 } },
+  ]},
+  { id: 'q5', q: 'Você já buscou ajuda profissional (terapia, grupos de apoio...) pra lidar com o estresse do cuidado?', multi: false, opts: [
+    { t: '🌱 Sim, e estou em acompanhamento', s: { low: 1, mid: 2, high: 2 } },
+    { t: '💔 Sim, mas não funcionou', s: { low: 2, mid: 3, high: 0 } },
+    { t: '🤔 Não, nunca busquei', s: { low: 3, mid: 1, high: 1 } },
+  ]},
+  { id: 'q6', q: '🌻 Qual é a renda média <b>mensal</b> da sua família?', multi: false, opts: [
+    { t: 'Entre R$ 1.500,00 e R$ 2.500,00', s: { low: 2, mid: 2, high: 1 }, destino: 'comunidade' },
+    { t: 'Entre R$ 2.500,00 e R$ 5.000,00', s: { low: 1, mid: 2, high: 2 }, destino: 'comunidade' },
+    { t: 'Entre R$ 5.000,00 e R$ 10.000,00', s: { low: 1, mid: 2, high: 3 }, destino: 'comunidade' },
+    { t: 'Entre R$ 10.000,00 e R$ 20.000,00', s: { low: 0, mid: 1, high: 4 }, destino: 'comunidade' },
+    { t: 'Acima de R$ 20.000,00', s: { low: 0, mid: 1, high: 4 }, destino: 'premium' },
+  ]},
+  { id: 'q7', q: 'Em qual <b>prazo</b> você gostaria de começar a sentir uma melhora significativa na sua vida?', multi: false, opts: [
+    { t: '🚨 O mais rápido possível, preciso de uma mudança urgente!', s: { low: 0, mid: 1, high: 4 } },
+    { t: '⏳ Em até 3 meses', s: { low: 1, mid: 3, high: 1 } },
+    { t: '🕰️ Não tenho pressa', s: { low: 4, mid: 1, high: 0 } },
+  ]},
+  { id: 'q8', q: 'Última: qual o <b>orçamento disponível</b> pra investir em um programa de desenvolvimento pessoal?', multi: false, opts: [
+    { t: '💰 Já tenho um orçamento definido e estou pronta para investir.', s: { low: 0, mid: 1, high: 4 } },
+    { t: '🤔 Preciso entender melhor o programa para avaliar o investimento.', s: { low: 1, mid: 3, high: 1 } },
+    { t: '💸 Não tenho orçamento disponível no momento.', s: { low: 4, mid: 1, high: 0 } },
+  ]},
+];
+let QUIZ = QUIZ_PADRAO;                                // perguntas em uso (podem vir do painel)
+const PASSOS_CONTATO = 3;                              // nome, whatsapp, e-mail
+let TOTAL_PASSOS = PASSOS_CONTATO + QUIZ.length;
 
-function calcularScore(d) {
-  let score = (PONTOS_SEGUIDORES[d.seguidores] || 0) + (PONTOS_FATURAMENTO[d.faturamento] || 0);
-  if (DESAFIOS_DE_CONVERSAO.includes(d.desafio)) score += 1;
-  return score;
+/* Perguntas editadas no painel (Configurações → Quiz). Qualquer problema na
+   carga (rede, config inválida, sem pergunta-chave) → usa o PADRÃO embutido
+   acima e o quiz NUNCA trava. */
+async function carregarQuizConfig() {
+  try {
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 3500);
+    const r = await fetch('/api/quiz-config', { signal: ctl.signal });
+    clearTimeout(t);
+    if (!r.ok) return;
+    const j = await r.json();
+    const ps = j && j.ok && Array.isArray(j.perguntas) ? j.perguntas : null;
+    if (!ps) return;
+    const ativas = ps.filter((p) => p && p.ativo !== false && p.q && Array.isArray(p.opts) && p.opts.length >= 2);
+    if (!ativas.length) return;
+    if (!ativas.some((p) => p.opts.some((o) => o && o.destino))) return;  // sem pergunta-chave, não troca
+    QUIZ = ativas;
+    TOTAL_PASSOS = PASSOS_CONTATO + QUIZ.length;
+  } catch (e) { /* mantém o padrão embutido */ }
 }
-const QUALIFICADO_MIN = 6;
 
-function followersToFaixa(n) {
-  if (n < 1000) return 'Menos de 1 mil';
-  if (n < 5000) return '1 a 5 mil';
-  if (n < 20000) return '5 a 20 mil';
-  if (n < 50000) return '20 a 50 mil';
-  if (n < 100000) return '50 a 100 mil';
-  return 'Mais de 100 mil';
+/* o destino do agendamento (comunidade/imersão/premium) vem da resposta
+   de renda familiar — campo `destino` nas opções da pergunta q6 */
+
+/* O placar low/mid/high serve SÓ pra escolher qual texto de resultado a
+   pessoa lê (personalização). A qualificação/destino vem APENAS da renda
+   familiar (q6): comunidade, imersão ou WhatsApp — todo mundo segue. */
+function calcularResultado() {
+  const r = state.data.respostas || {};
+  const tot = { low: 0, mid: 0, high: 0 };
+  QUIZ.forEach((p) => {
+    const sel = r[p.id];
+    const escolhidas = p.multi ? (Array.isArray(sel) ? sel : []) : (sel != null ? [sel] : []);
+    escolhidas.forEach((idx) => {
+      const o = p.opts[idx];
+      if (!o) return;
+      tot.low += o.s.low; tot.mid += o.s.mid; tot.high += o.s.high;
+    });
+  });
+  const soma = tot.low + tot.mid + tot.high || 1;
+  let perfil = 'low';
+  if (tot.mid >= tot.low) perfil = 'mid';
+  if (tot.high >= tot.mid && tot.high >= tot.low) perfil = 'high';
+  return { perfil, score: Math.round((tot.high / soma) * 100) };
 }
 
 /* ================================================================
@@ -642,36 +705,8 @@ const DDD_UF = {
   81:'PE',87:'PE',82:'AL',83:'PB',84:'RN',85:'CE',88:'CE',86:'PI',89:'PI',
   91:'PA',93:'PA',94:'PA',92:'AM',97:'AM',95:'RR',96:'AP',98:'MA',99:'MA',
 };
-const MSG_UF = {
-  SP: 'São Paulo — o mercado mais disputado de atenção do Brasil. Quem aparece com estratégia aqui fecha cliente toda semana.',
-  RJ: 'Rio de Janeiro — terra de marca pessoal forte. Perfil carioca com posicionamento certo vira referência rápido.',
-  MG: 'Minas Gerais — público fiel como poucos. Perfil mineiro que gera confiança transforma seguidor em cliente de anos.',
-  ES: 'Espírito Santo — mercado em alta e pouca gente fazendo conteúdo sério. Quem se posiciona agora sai anos na frente.',
-  RS: 'Rio Grande do Sul — audiência exigente, mas leal. Conteúdo consistente aí constrói autoridade de verdade.',
-  SC: 'Santa Catarina — um dos públicos com maior poder de compra do país. Perfil forte aí monetiza rápido.',
-  PR: 'Paraná — público pragmático que valoriza quem entrega. Autoridade no digital aí vira contrato fechado.',
-  BA: 'Bahia — alcance orgânico gigante pra quem entende a cultura local. Conteúdo com identidade aí viraliza.',
-  PE: 'Pernambuco — polo criativo do Nordeste. Quem une conteúdo e estratégia aí domina o mercado regional.',
-  CE: 'Ceará — terra de gente criativa e empreendedora. O orgânico aí tem força que anúncio nenhum compra.',
-  AL: 'Alagoas — turismo forte e mercado local aquecido. Perfil com autoridade aí vira referência estadual rápido.',
-  MA: 'Maranhão — mercado digital em plena expansão. Quem constrói audiência agora pega a onda no início.',
-  PB: 'Paraíba — mercado aquecido e concorrência ainda baixa no digital. Janela perfeita pra crescer.',
-  RN: 'Rio Grande do Norte — turismo e serviços bombando. Perfil local forte aí vira máquina de indicação.',
-  SE: 'Sergipe — mercado compacto onde autoridade se espalha rápido. Poucos posts certos mudam o jogo.',
-  PI: 'Piauí — digital crescendo acima da média nacional. Quem planta audiência agora colhe primeiro.',
-  AM: 'Amazonas — Manaus tem um mercado consumidor enorme e pouca gente fazendo conteúdo estratégico.',
-  PA: 'Pará — público engajado e orgulhoso da própria cultura. Conteúdo com identidade local converte muito.',
-  AP: 'Amapá — mercado pouco explorado no digital. Ser o primeiro do seu nicho aí é vantagem real.',
-  RR: 'Roraima — concorrência mínima no digital. Constância básica já coloca você na frente de todo mundo.',
-  RO: 'Rondônia — agro e comércio fortes. Perfil que fala a língua do produtor e do lojista fatura bem.',
-  AC: 'Acre — mercado único onde quem aparece, domina. Pouco conteúdo bom aí já constrói autoridade.',
-  TO: 'Tocantins — economia jovem e em movimento. Audiência construída agora vale ouro em 2 anos.',
-  DF: 'Brasília — renda alta e público que paga por especialista. Autoridade no perfil aí vira ticket alto.',
-  GO: 'Goiás — Goiânia é uma das capitais que mais consome conteúdo no Brasil. Mercado faminto por referência.',
-  MT: 'Mato Grosso — capital do agro. Quem se torna referência digital aí fala com um mercado bilionário.',
-  MS: 'Mato Grosso do Sul — mercado regional forte e fiel. Perfil consistente aí fecha o ano lotado.',
-};
-const MSG_UF_FALLBACK = 'Show! Crescimento orgânico não tem fronteira — o método é o mesmo em qualquer canto.';
+/* (as mensagens regionais do quiz de Instagram foram removidas — o DDD
+   continua sendo usado só pra validar o telefone e salvar a UF do lead) */
 
 /* ================================================================
    CORREÇÃO DE TYPO DE E-MAIL
@@ -691,100 +726,132 @@ function sugerirEmail(email) {
 }
 
 /* ================================================================
-   OPÇÕES DAS ETAPAS
+   RESULTADOS SUAVIS — copy dos 3 perfis (extraída do quiz original)
    ================================================================ */
-const NICHOS = ['Saúde & Bem-estar','Estética & Beleza','Fitness','Direito','Finanças & Investimentos','Educação & Concursos','Moda','Gastronomia & Food','Imobiliário','Marketing & Negócios','Serviços locais','Outro'];
-const SEGUIDORES = Object.keys(PONTOS_SEGUIDORES);
-const DESAFIOS = ['Alcance baixo (views travadas)','Falta de constância','Não sei o que postar','Seguidores não engajam','Não converto em vendas','Estou começando do zero'];
-const FATURAMENTOS = Object.keys(PONTOS_FATURAMENTO);
-
-/* Templates de diagnóstico v1 (fallback final qdo NÃO houve pré-diagnóstico).
-   Recebem dados JÁ ESCAPADOS via safeData(). */
-const DIAGNOSTICOS = {
-  'Alcance baixo (views travadas)': (s) =>
-    `<b>${s.primeiro}</b>, views travadas no <b>@${s.instagram}</b> quase nunca são "punição do algoritmo" — são sintoma de conteúdo que não segura os 3 primeiros segundos. No nicho de <b>${s.nicho}</b>, o perfil que domina gancho e retenção cresce mesmo postando menos.<br><br>Com ${s.seguidores} de base, seu próximo salto não vem de postar mais — vem de reestruturar o formato do conteúdo pra ser distribuído pra quem ainda não te segue.`,
-  'Falta de constância': (s) =>
-    `<b>${s.primeiro}</b>, a falta de constância no <b>@${s.instagram}</b> raramente é preguiça — é falta de sistema. Quem depende de inspiração posta 3x numa semana e some na outra, e o perfil paga o preço no alcance.<br><br>No nicho de <b>${s.nicho}</b>, um sistema simples de produção em lote resolve: 1 dia de gravação rende 2 semanas de conteúdo. Constância vira consequência, não esforço.`,
-  'Não sei o que postar': (s) =>
-    `<b>${s.primeiro}</b>, ficar sem ideia de conteúdo pro <b>@${s.instagram}</b> é o sinal clássico de quem ainda não mapeou as dores da própria audiência. No nicho de <b>${s.nicho}</b>, existem perguntas que seu público faz TODO dia — cada uma delas é um post pronto.<br><br>Com um banco de conteúdo estruturado por linhas editoriais, você nunca mais abre o app sem saber o que postar — e cada post passa a ter função no funil.`,
-  'Seguidores não engajam': (s) =>
-    `<b>${s.primeiro}</b>, audiência calada no <b>@${s.instagram}</b> geralmente significa uma coisa: conteúdo que informa, mas não conversa. Seguidor engaja quando se enxerga no post — e no nicho de <b>${s.nicho}</b> isso vem de história e posicionamento, não de mais dica.<br><br>Com ${s.seguidores} de base, você já tem massa crítica. O trabalho agora é transformar seguidor passivo em comunidade que comenta, compartilha e compra.`,
-  'Não converto em vendas': (s) =>
-    `<b>${s.primeiro}</b>, atrair seguidor e não converter é o gargalo mais caro que existe — porque o público já está aí. No <b>@${s.instagram}</b>, o que falta não é alcance: é uma esteira que transforme atenção em conversa e conversa em venda.<br><br>No nicho de <b>${s.nicho}</b>, perfis com ${s.seguidores} já sustentam faturamento consistente quando o conteúdo tem chamada certa e o direct tem processo. É ajuste de funil, não de frequência.`,
-  'Estou começando do zero': (s) =>
-    `<b>${s.primeiro}</b>, começar do zero no <b>@${s.instagram}</b> hoje é mais rápido do que era há 3 anos — o alcance pra contas novas nunca distribuiu tanto pra não-seguidores. A armadilha é copiar quem já é grande em <b>${s.nicho}</b> em vez de fazer o que funciona pra quem está começando.<br><br>Os primeiros 5 mil seguidores vêm de clareza de posicionamento + formato validado. Com isso definido, cada post trabalha a seu favor.`,
+const OUTCOMES = {
+  low: {
+    titulo: 'Baixa Consciência',
+    resumo: 'Você ainda não entendeu que precisa mergulhar fundo na transformação. Talvez ainda esteja resistindo à ideia de priorizar a si mesma.',
+    situacaoH: "Você está no modo 'piloto automático' do cuidado.",
+    situacaoB: 'A rotina te engoliu, e você se sente presa a um ciclo de obrigações. A ideia de mudar parece distante e até um pouco assustadora.',
+    problemaH: 'A raiz do problema: a dificuldade em se priorizar.',
+    problemaB: 'Você se sente culpada ao pensar em si mesma, como se estivesse negligenciando seus pais. Essa culpa te impede de buscar soluções e perpetua o ciclo de exaustão.',
+    implicacaoH: 'Se você continuar nesse caminho, 3 coisas podem acontecer:',
+    implicacaoItens: [
+      'Sua saúde física e mental se deteriorarão cada vez mais.',
+      'Seus relacionamentos se desgastarão, gerando isolamento e ressentimento.',
+      'Você perderá sua identidade e seus sonhos, vivendo apenas em função do cuidado.',
+    ],
+    perspectivaH: 'É possível cuidar sem se perder de si mesma.',
+    perspectivaB: 'Priorizar seu bem-estar não é egoísmo, mas sim uma necessidade para que você possa oferecer o melhor cuidado aos seus pais. Ao se fortalecer emocionalmente, você se torna uma cuidadora mais presente, equilibrada e feliz.',
+    quote: 'Cuidar de si não é egoísmo, é autopreservação, e autopreservação é um ato de guerra.',
+  },
+  mid: {
+    titulo: 'Média Consciência',
+    resumo: 'Você já reconhece que precisa de ajuda, mas ainda está hesitante em investir tempo e recursos em si mesma. Você está no caminho certo, mas precisa de um empurrãozinho.',
+    situacaoH: "Você está no 'meio do caminho' da transformação.",
+    situacaoB: 'Você sente o peso do cuidado, mas também vislumbra a possibilidade de uma vida mais equilibrada. A dúvida é: como chegar lá?',
+    problemaH: 'A hesitação em investir em si mesma te impede de avançar.',
+    problemaB: 'Você sabe que precisa de ajuda, mas se sente insegura em gastar tempo e dinheiro em um programa. O medo de não funcionar te paralisa e te mantém presa à rotina.',
+    implicacaoH: 'Se você não tomar uma atitude agora, 3 coisas podem acontecer:',
+    implicacaoItens: [
+      'O estresse crônico se intensificará, afetando sua saúde e bem-estar.',
+      'A sobrecarga emocional te deixará mais irritada e impaciente com seus pais.',
+      'Você perderá oportunidades de se reconectar com seus hobbies e paixões.',
+    ],
+    perspectivaH: 'Investir em você é investir no melhor cuidado para seus pais.',
+    perspectivaB: 'Ao se fortalecer emocionalmente, você se torna uma cuidadora mais eficiente, presente e amorosa. Um programa de desenvolvimento pessoal não é um luxo, mas sim um investimento estratégico no seu bem-estar e no bem-estar de seus pais.',
+    quote: 'Seja a mudança que você quer ver no mundo.',
+  },
+  high: {
+    titulo: 'Alta Consciência',
+    resumo: 'Você está decidida a transformar sua vida e reconquistar sua felicidade. Você sabe que precisa de um suporte especializado e está pronta para investir em si mesma. Parabéns!',
+    situacaoH: 'Você está no ponto ideal para a transformação!',
+    situacaoB: 'Você já reconhece a importância de priorizar seu bem-estar e está disposta a investir tempo e recursos em um programa que te ajude a reconquistar sua vida. Você está no caminho certo!',
+    problemaH: 'Ainda existe uma lacuna entre o desejo e a ação.',
+    problemaB: 'Você já sabe o que precisa fazer, mas sente que precisa de um suporte especializado para te guiar e te manter motivada ao longo do processo. Sozinha, pode ser difícil superar os obstáculos e manter o foco nos seus objetivos.',
+    implicacaoH: 'Se você não agir agora, o custo da espera pode ser alto:',
+    implicacaoItens: [
+      'Perder a oportunidade de viver uma vida plena e realizada.',
+      'Ver seus sonhos e projetos pessoais se distanciarem cada vez mais.',
+      'Arrepender-se de não ter tomado uma atitude antes que a situação se tornasse insustentável.',
+    ],
+    perspectivaH: 'A hora de agir é agora! Não espere mais para reconquistar sua vida.',
+    perspectivaB: '',
+    quote: 'O melhor momento para plantar uma árvore foi há 20 anos. O segundo melhor momento é agora.',
+  },
 };
-function safeData() {
-  const d = state.data;
-  return {
-    primeiro: esc((d.nome || '').split(' ')[0]),
-    instagram: esc(d.instagram || ''),
-    nicho: esc(d.nicho || ''),
-    seguidores: esc((d.seguidores || '').toLowerCase()),
-  };
+
+/* pergunta-chave = a da renda (opções com `destino`) — pode ter qualquer id */
+function perguntaChave() {
+  return QUIZ.find((p) => (p.opts || []).some((o) => o && o.destino)) || null;
+}
+/* destino da lead pela renda familiar: comunidade | imersao | premium.
+   A Imersão tem data-limite (CONFIG.IMERSAO_ATE): passou, a lead vai pra
+   Comunidade — o convite e a agenda seguem juntos, sem tela vazia. */
+function destinoQ6() {
+  const p = perguntaChave();
+  const o = (p && p.opts[(state.data.respostas || {})[p.id]]) || {};
+  let d = o.destino || 'comunidade';
+  if (d === 'imersao' && CONFIG.IMERSAO_ATE &&
+      new Date() > new Date(CONFIG.IMERSAO_ATE + 'T23:59:59-03:00')) d = 'comunidade';
+  return d;
 }
 
-/* Fallback local do Método CORE: notas heurísticas pelos números reais,
-   mesmo formato de placar da versão com IA. Seeds NÃO revelam a solução. */
-const SEEDS_METODO = {
-  1: 'Existem <b>7 Gatilhos da Atenção</b> que todo gancho precisa ativar — e na Sessão Estratégica eu te mostro os melhores pro seu caso.',
-  2: 'Conteúdos que viralizam seguem <b>4 princípios obrigatórios e 7 elementos estratégicos</b> — e sabemos exatamente quais estão faltando no seu.',
-  3: 'Existem <b>3 tipos de CTA estratégico</b> que transformam atenção em resultado real — e sabemos qual funciona melhor pro seu nicho.',
+/* convite final: o nome do produto acompanha o destino da lead */
+const NOME_DESTINO = {
+  comunidade: 'A <b>Comunidade SUAVIS</b> é o espaço',
+  imersao: 'A <b>Imersão Terapêutica</b> é o espaço',
+  premium: 'O <b>Programa de Desenvolvimento SUAVIS</b> é o espaço',
 };
-function tplPreDiag() {
+function conviteSuavis() {
+  return '<b>Você não precisa continuar carregando isso sozinha.</b><br><br>' +
+    NOME_DESTINO[destinoQ6()] + ' para filhos cuidadores que precisam de apoio, direção e força para cuidar sem se perder no processo. ' +
+    'Aqui você vai sair do modo <i>"eu não aguento mais e não sei o que fazer"</i> para o modo <i>"eu tenho direção, apoio e ferramentas para cuidar melhor sem me abandonar pelo caminho."</i>';
+}
+
+function safeData() {
   const d = state.data;
-  const p = d.profile || {};
-  const r = d.reel;
+  return { primeiro: esc((d.nome || '').split(' ')[0]) };
+}
+
+/* mostra o resultado do perfil (copy do OUTCOMES) como sequência de mensagens */
+async function mostrarResultado(res) {
+  const o = OUTCOMES[res.perfil];
   const s = safeData();
-  const f = p.followersCount || 0;
-  const cap = (r && r.caption) || '';
-
-  // notas heurísticas (critérios do método aplicados aos números)
-  const ratio = r && r.views != null && f > 0 ? r.views / f : null;
-  const engPct = r && f > 0 ? (((r.likes || 0) + (r.comments || 0)) / f) * 100 : null;
-  const n1 = ratio == null ? 5 : ratio >= 2 ? 8 : ratio >= 1 ? 7 : ratio >= 0.5 ? 5 : ratio >= 0.2 ? 4 : 3;
-  const n2 = engPct == null ? 5 : engPct >= 3 ? 8 : engPct >= 1 ? 6 : engPct >= 0.5 ? 5 : 4;
-  const temIsca = /coment[ae]|comenta ['"“]?\w+/i.test(cap);
-  const temCtaGenerico = /link|bio|salv|compartilh|segue|me siga|arrast/i.test(cap);
-  const n3 = temIsca ? 7 : temCtaGenerico ? 5 : 2;
-  const geral = ((n1 + n2 + n3) / 3).toFixed(1).replace('.', ',');
-
-  const t1 = `<b>${s.primeiro}</b>, olhando o <b>@${s.instagram}</b>: ${fmtNum(f)} seguidores e ${fmtNum(p.postsCount || 0)} publicações.` +
-    (p.externalUrl ? '' : ' E está <b>sem link na bio</b> — atenção gerada sem destino.') +
-    (p.biography ? '' : ' A bio vazia não diz em 3 segundos por que seguir você.');
-
-  const v1 = ratio == null
-    ? 'Sem métricas do reel pra avaliar o gancho — o que já indica espaço pra estruturar a abertura pelos gatilhos do método.'
-    : ratio >= 1
-      ? `${fmtNum(r.views)} views (${ratio.toFixed(1).replace('.', ',')}x a base): o gancho está furando a bolha — agora é refinar pra escalar.`
-      : `${fmtNum(r.views)} views pra ${fmtNum(f)} de base (${ratio.toFixed(2).replace('.', ',')}x): a abertura não ativa nenhum gatilho — o algoritmo não distribui além de quem já te segue.`;
-
-  const fim = `O problema não é o seu conteúdo, <b>${s.primeiro}</b> — é a estrutura do gancho. ${SEEDS_METODO[1]}`;
-
-  // heurística do gatilho ausente: alcance preso → Atenção Imediata; alcance ok mas eng. frio → Recompensa
-  const gatilho = (ratio != null && ratio < 1) ? 'Atenção Imediata' : 'Recompensa';
-
-  return {
-    html: t1 +
-      `<br><br><b>Score CORE do reel: ${geral}/10</b>` +
-      `<br><br>⚡ <b>Gatilho da Atenção — ${n1}/10</b><br>${v1}` +
-      `<br><br>${fim}`,
-    notas: { notavel: n2, cta: n3 },
-    gatilho,
-  };
+  await bot(`<b>${s.primeiro}</b>, li tudo o que você me contou, e li com muito carinho 🌿<br><br>O que eu percebo é que você está num momento de <b>${o.titulo}</b>.<br><br>${o.resumo}`, { delay: 1000 });
+  await bot(`<b>${o.situacaoH}</b><br><br>${o.situacaoB}<br><br><b>${o.problemaH}</b><br><br>${o.problemaB}`, { delay: 1100 });
+  await bot(`<b>${o.implicacaoH}</b><br><br>• ${o.implicacaoItens.join('<br>• ')}<br><br><b>${o.perspectivaH}</b>${o.perspectivaB ? '<br><br>' + o.perspectivaB : ''}<br><br>💬 <i>"${o.quote}"</i>`, { delay: 1200 });
+  await bot(conviteSuavis(), { delay: 1000 });
 }
 
 /* ================================================================
    ESTADO + PERSISTÊNCIA
    ================================================================ */
-const SKEY = 'core_diag_ig_v2';
+const SKEY = 'suavis_quiz_v1';
 let state = { step: 0, data: {}, leadRef: null, done: false };
+/* ?demo na URL = MODO DEMONSTRAÇÃO (pra apresentar o sistema a clientes):
+   o quiz roda inteirinho, mas NADA é gravado — sem banco de dados, sem
+   Cal.com (agenda simulada), sem pixel. Cada recarregada começa do zero. */
+const MODO_DEMO = /[?&]demo\b/.test(location.search);
+/* ?reiniciar na URL = apaga o progresso salvo e começa do zero (útil p/ testes) */
+if (MODO_DEMO || /[?&]reiniciar/.test(location.search)) { try { localStorage.removeItem(SKEY); } catch (e) {} }
+if (MODO_DEMO) {
+  const marcarDemo = () => {
+    const b = document.createElement('div');
+    b.textContent = '🧪 Demonstração · nada é gravado';
+    b.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:9999;background:#005355;color:#fff;font-size:12px;font-weight:700;padding:6px 14px;border-radius:99px;opacity:.92;box-shadow:0 2px 10px rgba(0,0,0,.25);pointer-events:none;';
+    document.body.appendChild(b);
+  };
+  if (document.body) marcarDemo();
+  else document.addEventListener('DOMContentLoaded', marcarDemo);
+}
 try {
   const saved = JSON.parse(localStorage.getItem(SKEY) || 'null');
   if (saved && saved.leadRef && !saved.done) state = saved;
 } catch (e) {}
 if (!state.leadRef) state.leadRef = 'lr_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
-function persist() { try { localStorage.setItem(SKEY, JSON.stringify(state)); } catch (e) {} }
+function persist() { if (MODO_DEMO) return; try { localStorage.setItem(SKEY, JSON.stringify(state)); } catch (e) {} }
 
 /* captura UTMs/click-id da URL de entrada — 1x, e persiste no state (sobrevive
    às etapas/refresh e vai junto em todo salvarLead). Preserva a 1ª atribuição. */
@@ -906,10 +973,10 @@ function showLoader(titulo, steps, intervalMs = 5000) {
 /* progress header */
 function setProgress(n) {
   const pill = $('stepPill');
-  pill.textContent = `${n} de 8`;
+  pill.textContent = `${n} de ${TOTAL_PASSOS}`;
   pill.classList.remove('bump'); void pill.offsetWidth;
   pill.classList.add('bump');
-  $('progressFill').style.width = (n / 8 * 100) + '%';
+  $('progressFill').style.width = (n / TOTAL_PASSOS * 100) + '%';
 }
 
 /* input dock modes — o dock é inline: sempre vai pro fim do chat,
@@ -972,6 +1039,32 @@ function askChips(options, onPick) {
     b.onclick = async () => { hideDock(); await onPick(opt); };
     chipsEl.appendChild(b);
   });
+  chipsEl.classList.add('show');
+  scrollDown();
+}
+/* chips de MÚLTIPLA escolha — toca pra marcar/desmarcar, confirma no final */
+function askChipsMulti(options, onDone) {
+  hideDock(); ensureDockLast();
+  chipsEl.textContent = '';
+  const sel = new Set();
+  const ok = document.createElement('button');
+  options.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = 'chip'; b.textContent = opt;
+    b.onclick = () => {
+      if (sel.has(i)) { sel.delete(i); b.classList.remove('sel'); }
+      else { sel.add(i); b.classList.add('sel'); }
+      ok.style.display = sel.size ? '' : 'none';
+    };
+    chipsEl.appendChild(b);
+  });
+  ok.className = 'chip chip-ok'; ok.textContent = 'Continuar ✅'; ok.style.display = 'none';
+  ok.onclick = async () => {
+    if (!sel.size) return;
+    hideDock();
+    await onDone([...sel].sort((a, b) => a - b));
+  };
+  chipsEl.appendChild(ok);
   chipsEl.classList.add('show');
   scrollDown();
 }
@@ -1069,19 +1162,31 @@ const vInsta = (v) => {
 /* ================================================================
    CAPTURA PROGRESSIVA — nunca trava a UX
    ================================================================ */
+/* rótulo legível de uma resposta do quiz (pro banco/painel) */
+function respostaLabel(id) {
+  const p = QUIZ.find((x) => x.id === id);
+  const v = (state.data.respostas || {})[id];
+  if (!p || v == null) return '';
+  if (Array.isArray(v)) return v.map((i) => (p.opts[i] ? p.opts[i].t : '')).filter(Boolean).join(' · ');
+  return p.opts[v] ? p.opts[v].t : '';
+}
+
 function salvarLead(status) {
+  if (MODO_DEMO) return;   // demonstração: nenhum lead vai pro banco
   const d = state.data;
-  const p = d.profile;
   fetch(CONFIG.API_SAVE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       lead_ref: state.leadRef, status,
       nome: d.nome || '', whatsapp: d.whatsapp || '', email: d.email || '',
-      instagram: d.instagram || '', uf: d.uf || '', nicho: d.nicho || '',
-      nicho_detectado: d.nichoDetectado || '',
-      seguidores: d.seguidores || '', dificuldade: d.desafio || '',
-      faturamento: d.faturamento || '', score: d.score ?? null,
+      instagram: '', uf: d.uf || '',
+      nicho: respostaLabel('q2'),            // como se sente
+      nicho_detectado: respostaLabel('q5'),  // já buscou ajuda?
+      seguidores: respostaLabel('q1'),       // idade
+      dificuldade: respostaLabel('q3'),      // áreas afetadas
+      faturamento: respostaLabel((perguntaChave() || {}).id),  // renda média mensal da família
+      score: d.score ?? null,
       qualificado: d.qualificado ?? null,
       agendado: d.agendado === true,
       agendamento_em: d.agendamentoEm || null,
@@ -1089,14 +1194,9 @@ function salvarLead(status) {
       video_url: d.videoUrl || '',
       call_track: d.callTrack || '',
       vendedor: d.vendedor || '',
-      profile: p ? {
-        fullName: p.fullName, biography: p.biography, profilePicUrl: p.profilePicUrl,
-        followersCount: p.followersCount, followsCount: p.followsCount, postsCount: p.postsCount,
-        isBusinessAccount: p.isBusinessAccount, businessCategoryName: p.businessCategoryName,
-        externalUrl: p.externalUrl, verified: p.verified,
-      } : null,
-      reel: d.reel || null,
-      reel_transcript: (d.reelTranscript || '').slice(0, 600),
+      profile: null,
+      reel: null,
+      reel_transcript: '',
       utm_source: (d.utm && d.utm.source) || '',
       utm_medium: (d.utm && d.utm.medium) || '',
       utm_campaign: (d.utm && d.utm.campaign) || '',
@@ -1118,6 +1218,7 @@ function salvarLead(status) {
 //  • Schedule → dispara no AGENDAMENTO (booking confirmado). Mede quem fechou horário.
 // Cada um tem sua própria flag de 1x-por-lead (persistida), então não se atrapalham.
 function dispararEventoMeta(eventName, flagKey, contentName) {
+  if (MODO_DEMO) return;   // demonstração: nenhum pixel dispara
   const d = state.data;
   if (d.callTrack !== 'premium' && d.callTrack !== 'audience') return;  // só 10k+
   if (d[flagKey]) return;                       // evita duplicar (1x por lead)
@@ -1165,117 +1266,18 @@ async function postJSON(url, payload, timeoutMs = 9000) {
   return null;
 }
 
-async function fetchPerfil(handle) {
-  const start = await postJSON(CONFIG.API_PROFILE, { action: 'start', username: handle });
-  if (!start || start.status !== 'started') return start; // no_key / erro → fluxo manual
-  const t0 = Date.now();
-  while (Date.now() - t0 < 55000) {
-    await sleep(2500);
-    const res = await postJSON(CONFIG.API_PROFILE, { action: 'poll', runId: start.runId, datasetId: start.datasetId });
-    if (res && res.status && res.status !== 'running') return res;
-  }
-  return null; // estourou a paciência → fluxo manual
-}
+/* (a busca de perfil no Instagram via Apify foi removida do fluxo SUAVIS) */
 
-function renderProfileCard(p) {
-  const pic = p.profilePicUrl ? `/api/proxy-image?url=${encodeURIComponent(p.profilePicUrl)}` : '';
-  addRow('bot', `
-    <div class="pcard">
-      <div class="ppic" style="${pic ? `background-image:url('${pic}')` : ''}"></div>
-      <div class="pinfo">
-        <div class="pname">${esc(p.fullName || '@' + p.username)}${p.verified ? ' <span class="pverif">✓</span>' : ''}</div>
-        <div class="puser">@${esc(p.username)}</div>
-        <div class="pstats">
-          <span><b>${fmtNum(p.followersCount)}</b> seguidores</span>
-          <span><b>${fmtNum(p.postsCount)}</b> posts</span>
-        </div>
-        ${p.businessCategoryName ? `<div class="pcat">${esc(p.businessCategoryName)}</div>` : ''}
-      </div>
-    </div>`, 'pcard-bubble');
-}
+/* (o pré-diagnóstico de Instagram via IA foi removido do fluxo SUAVIS) */
 
 /* ================================================================
-   PRÉ-DIAGNÓSTICO — Método CORE via IA com fallback local
-   ================================================================ */
-async function gerarPreDiagnostico() {
-  const d = state.data;
-  try {
-    const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), 15000);
-    const r = await fetch(CONFIG.API_DIAGNOSIS, {
-      method: 'POST', signal: ctl.signal,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome: d.nome, instagram: d.instagram, nicho: d.nicho, uf: d.uf,
-        desafio: d.desafio || '', faturamento: d.faturamento || '',
-        profile: d.profile || null, reel: d.reel || null,
-        transcript: d.reelTranscript || '',
-      }),
-    });
-    clearTimeout(timer);
-    if (r.ok) {
-      const j = await r.json();
-      if (j.ok && j.text) {
-        // escapa TUDO que veio de fora, depois aplica só a formatação nossa
-        return {
-          html: esc(j.text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>'),
-          notas: j.notas || null,
-          gatilho: j.gatilho || '',
-        };
-      }
-    }
-  } catch (e) { /* segue pro fallback */ }
-  return tplPreDiag();
-}
-
-/* destaque do gatilho principal que faltou no gancho */
-const GATILHOS_VALIDOS = ['Atenção Imediata', 'Recompensa', 'Reconhecimento', 'Crença', 'Popularidade/Autoridade', 'Mistério', 'Disrupção'];
-/* introdução do diagnóstico — explica os 3 pilares antes de mostrar o placar.
-   Texto 100% estático (nenhum dado do lead interpolado) → sem risco de XSS. */
-function blocoContextoMetodo() {
-  return `
-    <div class="metodo-intro">
-      <div class="mi-head">Antes do resultado, deixa eu te situar: o <b>Método CORE</b> mede 3 pilares — é o que separa um reel que viraliza de um que o algoritmo ignora.</div>
-      <div class="mi-pilar"><span class="mi-ic">🎯</span><div><b>Gatilho da Atenção</b><i>fazer a pessoa parar pra te assistir</i></div></div>
-      <div class="mi-pilar"><span class="mi-ic">🔥</span><div><b>Conteúdo Notável</b><i>fazer ela assistir e engajar até o final</i></div></div>
-      <div class="mi-pilar"><span class="mi-ic">🎬</span><div><b>CTA &amp; Conversão</b><i>fazer ela agir e virar cliente do seu produto/serviço</i></div></div>
-      <div class="mi-foot">Vou analisar o <b>Gatilho da Atenção</b> agora 👇 A análise completa dos 3 — com as correções — eu abro na sua <b>Sessão Estratégica</b>.</div>
-    </div>`;
-}
-
-function blocoGatilho(gatilho) {
-  if (!gatilho) return '';
-  const nome = GATILHOS_VALIDOS.find(g => String(gatilho).toLowerCase().includes(g.toLowerCase().split('/')[0])) || String(gatilho).slice(0, 40);
-  return `
-    <div class="gatilho-falta">
-      <span class="gf-ic">🚨</span>
-      <span>O gatilho que mais faltou no seu gancho: <b>Gatilho da ${esc(nome)}</b></span>
-    </div>`;
-}
-
-/* bloco dos 2 pilares trancados — notas visíveis, análise só na sessão */
-function blocoTrancado(notas) {
-  const nota = (n) => n != null ? `${n}/10` : '🔒';
-  const fake = 'A análise completa deste pilar fica disponível na sua sessão com o time — incluindo os ajustes recomendados pro seu perfil e os exemplos aplicados ao seu nicho.';
-  return `
-    <div class="locked">
-      <div class="locked-row"><span>🔥 <b>Conteúdo Notável</b></span><span class="locked-nota">${nota(notas && notas.notavel)}</span></div>
-      <div class="locked-fake">${fake}</div>
-      <div class="locked-row"><span>🎯 <b>CTA & Conversão</b></span><span class="locked-nota">${nota(notas && notas.cta)}</span></div>
-      <div class="locked-fake">${fake}</div>
-      <div class="locked-cta">🔒 As análises completas desses 2 pilares — e as correções — eu abro na sua <b>Sessão Estratégica</b></div>
-    </div>`;
-}
-
-/* ================================================================
-   FLUXO PRINCIPAL — 8 etapas
-   0 nome · 1 whats · 2 email · 3 @ · 4 reel(ou seguidores) ·
-   5 nicho(+pré-diag) · 6 desafio · 7 faturamento · 8 final
+   FLUXO PRINCIPAL SUAVIS — 11 passos
+   0 nome · 1 whats · 2 email · 3-10 quiz (q1..q8) · resultado
    ================================================================ */
 async function etapaNome(replay = false) {
   if (!replay) {
-    await bot('Perfis que aplicam o conteúdo certo estão multiplicando o alcance em até <b>10x</b> e transformando seguidores em <b>vendas</b> — sem investir 1 real em anúncio. Quer descobrir o que está travando o crescimento do seu perfil?', { delay: 1100 });
-    await bot('Bora começar: qual seu nome?');
+    await bot('Você se sente exausta pelos cuidados que tem enfrentado? Eu estou aqui para te mostrar o quanto você está preparada para transformar sua realidade e reconquistar sua vida. Responda com sinceridade! 💚', { delay: 1100 });
+    await bot('Antes de tudo, me conta: como você se chama?');
   }
   askText({
     label: 'Nome completo', placeholder: 'Digite seu nome e sobrenome...',
@@ -1290,27 +1292,25 @@ async function etapaNome(replay = false) {
 
 async function etapaWhats(replay = false) {
   const primeiro = esc(state.data.nome.split(' ')[0]);
-  if (!replay) await bot(`Prazer, <b>${primeiro}</b>! 👊 Pra eu te enviar o resultado completo do diagnóstico, qual seu WhatsApp?`);
+  if (!replay) await bot(`Que bom ter você aqui, <b>${primeiro}</b> 💚 Me passa seu WhatsApp? É por ele que eu te envio suas orientações depois da nossa conversa.`);
   askText({
     label: 'WhatsApp', placeholder: '(11) 99999-9999', type: 'tel', mask: maskFoneIntl,
     validate: vFoneIntl, ddiSelect: true,
     onOk: async (fone) => {
       const ddi = foneDDI, isBR = ddi === '55';
       user(isBR ? '🇧🇷 ' + maskFone(fone) : '+' + ddi + ' ' + fone);
-      const uf = isBR ? DDD_UF[+fone.slice(0, 2)] : '';
-      state.data.whatsapp = ddi + fone;   // E.164 sem '+' (ddi + número), funciona p/ Cal/CAPI/WhatsApp
-      state.data.uf = uf || '';
+      state.data.whatsapp = ddi + fone;   // E.164 sem '+' (ddi + número)
+      state.data.uf = isBR ? (DDD_UF[+fone.slice(0, 2)] || '') : '';
       state.data.paisDDI = ddi;
       state.step = 2; persist(); setProgress(2);
       salvarLead('parcial');
-      await bot(isBR ? (MSG_UF[uf] || MSG_UF_FALLBACK) : 'Show, recebido! 🌎', { delay: 1000 });
       await etapaEmail();
     },
   });
 }
 
 async function etapaEmail(replay = false) {
-  if (!replay) await bot('E qual seu melhor e-mail?', { delay: 700 });
+  if (!replay) await bot('Obrigada pela confiança 🙏 E qual e-mail você mais usa no dia a dia?', { delay: 700 });
   askText({
     label: 'E-mail', placeholder: 'seu@email.com', type: 'email',
     validate: vEmail,
@@ -1332,292 +1332,124 @@ async function etapaEmail(replay = false) {
 async function confirmarEmail(email) {
   state.data.email = email; state.step = 3; persist(); setProgress(3);
   salvarLead('contato');
-  await etapaInstagram();
+  await bot('Agora quero te conhecer um pouquinho melhor, tá? Fica à vontade pra responder com o coração 🌿', { delay: 1000 });
+  await etapaQuiz(0);
 }
 
-async function etapaInstagram(replay = false) {
-  if (!replay) await bot('Agora a parte boa: qual o <b>@</b> do seu perfil no Instagram? Vou dar uma olhada nele em tempo real 👀', { delay: 800 });
-  askText({
-    label: 'Seu @ do Instagram', placeholder: 'seuperfil', prefix: '@',
-    validate: vInsta,
-    onOk: async (handle) => {
-      user('@' + handle);
-      state.data.instagram = handle; persist();
-      await buscarPerfil(handle);
-    },
-  });
-}
-
-async function buscarPerfil(handle) {
-  const h = esc(handle);
-  const loader = showLoader(
-    `🔎 Analisando o <b>@${h}</b> ao vivo`,
-    ['Abrindo o perfil no Instagram', 'Lendo bio, seguidores e números', 'Carregando seus últimos reels', 'Organizando tudo pra você'],
-    7000
-  );
-  const res = await fetchPerfil(handle);
-  await loader.done();
-
-  if (res && res.status === 'ok' && res.profile) {
-    state.data.profile = res.profile;
-    state.data.reels = (res.reels || []).slice(0, 6);
-    state.data.nichoDetectado = res.niche || '';
-    state.data.seguidores = followersToFaixa(res.profile.followersCount || 0);
-    state.data.flowMode = 'apify';
-    persist();
-    renderProfileCard(res.profile);
-    await bot('Achei! Esse é você?', { delay: 700 });
-    askChips(['Sou eu ✅', 'Não é esse perfil'], async (opt) => {
-      user(opt);
-      if (opt.startsWith('Sou')) {
-        state.step = 4; persist(); setProgress(4);
-        salvarLead('parcial');
-        await etapaReel();
-      } else {
-        state.data.profile = null; state.data.reels = null; state.data.flowMode = null; persist();
-        await bot('Sem problema! Me passa o @ certinho então:');
-        await etapaInstagram(true);
-      }
+/* pergunta i do quiz (0..7) */
+async function etapaQuiz(i, replay = false) {
+  const p = QUIZ[i];
+  state.data.respostas = state.data.respostas || {};
+  if (!replay) await bot(p.q, { delay: 900 });
+  const registrar = async (valor, labelTxt) => {
+    user(labelTxt);
+    state.data.respostas[p.id] = valor;
+    state.step = PASSOS_CONTATO + i + 1;
+    persist(); setProgress(state.step);
+    salvarLead('parcial');
+    if (i + 1 < QUIZ.length) await etapaQuiz(i + 1);
+    else await etapaResultado();
+  };
+  if (p.multi) {
+    askChipsMulti(p.opts.map((o) => o.t), async (idxs) => {
+      await registrar(idxs, idxs.map((x) => p.opts[x].t).join(' · '));
     });
   } else {
-    // Apify indisponível / perfil não encontrado → fluxo manual
-    state.data.flowMode = 'manual'; state.step = 4; persist(); setProgress(4);
-    salvarLead('parcial');
-    if (res && res.status === 'not_found') {
-      await bot(`Não consegui abrir o <b>@${h}</b> agora (pode ser privado ou novo) — sem problema, seguimos com o diagnóstico! 💪`);
-    }
-    await etapaSeguidoresQ();
-  }
-}
-
-async function etapaReel(replay = false) {
-  const reels = state.data.reels || [];
-  if (!reels.length) {
-    if (!replay) await bot('Não achei reels públicos recentes no perfil — sem problema, seguimos!');
-    state.step = 5; persist(); setProgress(5);
-    await etapaNicho();
-    return;
-  }
-  if (!replay) await bot(`E olha o que eu separei: seus últimos reels. <b>Escolhe UM</b> pra eu analisar a fundo no seu diagnóstico 👇`);
-  askReels(reels, async (reel) => {
-    if (reel) {
-      state.data.reel = reel;
-      user(`🎬 ${reel.views != null ? fmtNum(reel.views) + ' views' : 'Reel escolhido'}${reel.caption ? ' — "' + reel.caption.slice(0, 42) + '…"' : ''}`);
-    } else {
-      user('Prefiro pular a análise de reel');
-    }
-    state.step = 5; persist(); setProgress(5);
-    salvarLead('parcial');
-    await etapaNicho();
-  });
-}
-
-async function etapaSeguidoresQ(replay = false) {
-  if (!replay) await bot('Quantos seguidores o perfil tem hoje?');
-  askChips(SEGUIDORES, async (faixa) => {
-    user(faixa);
-    state.data.seguidores = faixa; state.step = 5; persist(); setProgress(5);
-    salvarLead('parcial');
-    await etapaNicho();
-  });
-}
-
-async function etapaNicho(replay = false) {
-  const det = state.data.nichoDetectado;
-  // nicho extraído do scraping → só pede confirmação (1 toque)
-  if (det && NICHOS.includes(det)) {
-    if (!replay) await bot(`Pela bio do <b>@${esc(state.data.instagram)}</b>, deu pra ver: seu nicho é <b>${esc(det)}</b>. Confere?`);
-    askChips(['Confere ✅', 'É outro nicho'], async (opt) => {
-      user(opt);
-      if (opt.startsWith('Confere')) { await confirmarNicho(det); return; }
-      await bot('Sem problema — seleciona o nicho certo aqui:');
-      askSelect({
-        label: 'Seu nicho', placeholder: 'Selecione seu nicho...',
-        options: NICHOS.filter(n => n !== det),
-        onOk: async (n) => { user(n); await confirmarNicho(n); },
-      });
+    askChips(p.opts.map((o) => o.t), async (t) => {
+      const idx = p.opts.findIndex((o) => o.t === t);
+      await registrar(idx, t);
     });
-    return;
   }
-  if (!replay) await bot(`Antes de eu rodar a análise: em qual nicho o <b>@${esc(state.data.instagram)}</b> atua?`);
-  askSelect({
-    label: 'Seu nicho', placeholder: 'Selecione seu nicho...',
-    options: NICHOS,
-    onOk: async (nicho) => { user(nicho); await confirmarNicho(nicho); },
-  });
-}
-async function confirmarNicho(nicho) {
-  state.data.nicho = nicho; state.step = 6; persist(); setProgress(6);
-  salvarLead('parcial');
-  if (state.data.flowMode === 'apify' && state.data.profile) {
-    await preDiagnostico();
-  }
-  await etapaDesafio();
 }
 
-/* transcreve o áudio do reel escolhido (start+poll, até ~75s); falhou → '' */
-async function transcreverReel() {
-  const r = state.data.reel;
-  if (!r || !r.url || !/instagram\.com/i.test(r.url)) return '';
-  const start = await postJSON(CONFIG.API_TRANSCRIBE, { action: 'start', reelUrl: r.url });
-  if (!start || !start.ok) return '';
-  const t0 = Date.now();
-  while (Date.now() - t0 < 75000) {
-    await sleep(3000);
-    const res = await postJSON(CONFIG.API_TRANSCRIBE, { action: 'poll', runId: start.runId, datasetId: start.datasetId });
-    if (!res || res.ok === false) return '';
-    if (res.status === 'done') return res.transcript || '';
-  }
-  return '';
-}
-
-async function preDiagnostico() {
-  const temReel = !!(state.data.reel && state.data.reel.url);
-  const steps = temReel
-    ? ['Transcrevendo o áudio do seu reel', 'Analisando o roteiro com os 7 Gatilhos', 'Medindo o Conteúdo Notável e o CTA', 'Calculando seu Score CORE']
-    : ['Analisando os números do perfil', 'Aplicando os 7 Gatilhos da Atenção', 'Medindo o Conteúdo Notável e o CTA', 'Calculando seu Score CORE'];
-  const loader = showLoader('🧠 Rodando o <b>Método CORE</b> no seu conteúdo', steps, temReel ? 9000 : 3400);
-
-  if (temReel) {
-    const transcript = await transcreverReel();
-    if (transcript) {
-      state.data.reelTranscript = transcript;
-      persist();
-    }
-  }
-  const [res] = await Promise.all([gerarPreDiagnostico(), sleep(temReel ? 1500 : 5000)]);
-  await loader.done();
-  await bot(blocoContextoMetodo(), { delay: 1000 });
-  const htmlFinal = res.html + blocoGatilho(res.gatilho) + blocoTrancado(res.notas);
-  // persiste já: se o lead der refresh com o botão na tela, o replay mostra o diagnóstico
-  state.data.preDiag = true;
-  state.data.preDiagHtml = htmlFinal;
+/* calcula, mostra o resultado e encaminha pro destino certo */
+async function etapaResultado() {
+  lgpdEl.style.display = 'none';
+  const res = calcularResultado();
+  state.data.score = res.score;
+  state.data.qualificado = true;   // todo mundo segue — o destino vem da renda (q6)
+  state.data.perfil = res.perfil;
+  state.data.callTrack = destinoQ6();  // grava o destino JÁ — mesmo que a lead saia antes da agenda
   persist();
-  // GATE: o lead confirma que leu os 3 pilares; só então revela o placar
-  await new Promise((resolve) => {
-    askChips(['Entendi, quero ver o resultado 👀'], async () => {
-      await bot(htmlFinal, { delay: 1200 });
-      await sleep(3000);             // diagnóstico é longo — deixa o lead ler
-      resolve();
-    });
-  });
+  salvarLead('completo');
+
+  const loader = showLoader('💚 Um instante, estou te lendo com atenção...',
+    ['Acolhendo o que você me contou', 'Entendendo o seu momento emocional', 'Preparando suas orientações personalizadas'], 800);
+  await sleep(2500);
+  await loader.done();
+
+  await mostrarResultado(res);
+
+  await finalPresente();
+  state.done = true; persist();
 }
 
-async function etapaDesafio(replay = false) {
-  if (!replay) await bot('Me confirma uma coisa: qual é o <b>maior desafio</b> do seu perfil hoje?');
-  askChips(DESAFIOS, async (desafio) => {
-    user(desafio);
-    state.data.desafio = desafio; state.step = 7; persist(); setProgress(7);
-    salvarLead('parcial');
-    await etapaFaturamento();
-  });
+/* ---------- FINAL (todas): presente + destino pela renda ---------- */
+async function finalPresente() {
+  const s = safeData();
+  await sleep(400);
+  await bot('Ah, e antes que eu me esqueça... preparei uma coisinha pra você 👀', { delay: 800 });
+  await sleep(300);
+  addRow('bot', `🎁 <b>É seu, ${s.primeiro}!</b> Meu ebook<br><b class="gift-prod">7 DICAS<br>COMO MANTER SEU IDOSO FELIZ E VOCÊ MENOS ESTRESSADA</b>`, 'gift-announce');
+  await sleep(700);
+  renderProdutoCard();
+  await sleep(800);
+  await bot('Ele já é seu! 🗝️ E a <b>chave pra destravar</b> eu te entrego pessoalmente no final do nosso <b>Encontro</b>: um encontro gratuito, ao vivo comigo. É o espaço pra você se sentir acolhido e ouvido de verdade, sem compromisso nenhum 💚', { delay: 900 });
+  // o destino vem da resposta de renda familiar (q6)
+  const destino = destinoQ6();
+  if (destino === 'premium') await ctaWhatsPremium();
+  else if (destino === 'imersao') await renderAgendaSuavis(CONFIG.CAL_IMERSAO, 'imersao');
+  else await renderAgendaSuavis(CONFIG.CAL_COMUNIDADE, 'comunidade');
 }
 
-async function etapaFaturamento(replay = false) {
-  if (!replay) await bot('Última pergunta: qual a sua <b>renda mensal</b> atualmente?');
-  askChips(FATURAMENTOS, async (fat) => {
-    user(fat);
-    state.data.faturamento = fat; state.step = 8;
-    state.data.score = calcularScore(state.data);
-    state.data.qualificado = state.data.score >= QUALIFICADO_MIN;
-    persist(); setProgress(8);
-    salvarLead('completo');
-    await etapaFinal();
-  });
+/* agenda embutida do cal.com (COMUNIDADE ou IMERSÃO) */
+async function renderAgendaSuavis(link, track) {
+  state.data.callTrack = track; persist();
+  salvarLead('completo');
+  await bot('Escolhe aqui embaixo o dia e o horário que ficam melhores pra você 👇 Vou te esperar com muito carinho e com seu ebook 💚', { delay: 1100 });
+  // demonstração: agenda simulada (local) no lugar do Cal.com de verdade
+  if (MODO_DEMO) { renderAgendaInline({ track }); return; }
+  renderAgendaEmbed({ embedLink: link, track, vendor: '' });
+}
+
+/* faixa acima de R$20 mil → contato direto no WhatsApp da Suely */
+async function ctaWhatsPremium() {
+  state.data.callTrack = 'premium'; persist();
+  salvarLead('completo');
+  const s = safeData();
+  await bot(`${s.primeiro}, pelo que você me contou, eu quero marcar nossa conversa pessoalmente com você. Clica no botão aqui embaixo que a gente combina o melhor horário. Pode vir, é comigo mesma que você vai falar 👇`, { delay: 1300 });
+  addRow('bot', `<a class="ag-link" href="${waLink()}" target="_blank" rel="noopener">💬&nbsp; Agendar minha conversa no WhatsApp</a>`);
+}
+
+/* botão para o site da Suavitatis (reservado p/ produtos low-ticket no futuro) */
+async function ctaSite(intro) {
+  if (intro) await bot(intro, { delay: 1300 });
+  addRow('bot', `<a class="ag-link" href="${CONFIG.SITE_URL}" target="_blank" rel="noopener">🌿&nbsp; Conhecer a Suavitatis Terapias</a>`);
 }
 
 /* ================================================================
-   PREVIEW DO PRODUTO — mockup nativo do Template dos 30 Reels.
-   Se CONFIG.PRODUTO_IMG estiver preenchido, usa a imagem real.
+   PREVIEW DO PRESENTE — ebook "7 Dicas" da Suavitatis.
+   Se CONFIG.PRODUTO_IMG estiver preenchido, usa a capa real.
    ================================================================ */
 function renderProdutoCard() {
-  const s = safeData();
   if (CONFIG.PRODUTO_IMG) {
-    addRow('bot', `<img class="produto-img" src="${esc(CONFIG.PRODUTO_IMG)}" alt="Template dos 30 Reels Virais">`, 'produto-bubble');
+    addRow('bot', `<img class="produto-img" src="${esc(CONFIG.PRODUTO_IMG)}" alt="Ebook 7 Dicas Suavitatis">`, 'produto-bubble');
     return;
   }
   addRow('bot', `
     <div class="pr-body">
       <div class="pr-glow"></div>
       <span class="pr-badge">🎁 PRESENTE DESBLOQUEADO</span>
-      <div class="pr-kicker">TEMPLATE CORE</div>
-      <div class="pr-title">30 REELS<br>VIRAIS</div>
-      <div class="pr-sub">Roteiros prontos — gancho, estrutura e CTA — validados em perfis de <b>${s.nicho}</b>.</div>
-      <div class="pr-stack">
-        <div class="pr-item"><span class="n">#01</span> Gancho da Crença — "Tudo que te ensinaram sobre…"</div>
-        <div class="pr-item"><span class="n">#02</span> História de Transformação em 3 atos</div>
-        <div class="pr-item blur"><span class="n">#03</span> Plot Twist + CTA de salvamento</div>
-        <div class="pr-mais"><span>🔒 +27 roteiros liberados na sessão</span></div>
-      </div>
-      <div class="pr-foot"><s>R$197</s> <b>GRÁTIS</b> <span>na Sessão Estratégica</span></div>
+      <div class="pr-kicker">EBOOK SUAVITATIS</div>
+      <div class="pr-title">7 DICAS</div>
+      <div class="pr-sub">Como manter seu idoso <b>feliz</b> e você <b>menos estressada</b>. Um guia prático da Suavitatis Terapias Integrativas.</div>
+      <div class="pr-foot"><b>GRÁTIS</b> <span>no seu Encontro com a Suely</span></div>
     </div>
   `, 'produto-bubble');
 }
 
-/* ================================================================
-   FINAL — fechamento + PRESENTE + agendamento
-   ================================================================ */
-async function etapaFinal() {
-  const d = state.data;
-  const s = safeData();
-  lgpdEl.style.display = 'none';
-
-  if (d.preDiag) {
-    await bot(`Fechamos, <b>${s.primeiro}</b>. Seu maior gargalo — <b>${esc(d.desafio)}</b> — bate exatamente com o que vi no <b>@${s.instagram}</b>. E a boa notícia: é o tipo de coisa que se destrava rápido com o método certo.`, { delay: 1300 });
-  } else {
-    await bot(`Fechou, <b>${s.primeiro}</b>! Cruzando suas respostas com os padrões que a gente mapeou em centenas de perfis... 🔍`, { delay: 1400 });
-    const tpl = DIAGNOSTICOS[d.desafio] || DIAGNOSTICOS['Alcance baixo (views travadas)'];
-    await bot(tpl(s), { delay: 1500 });
-  }
-
-  await sleep(2200);                 // ler o fechamento do diagnóstico
-  await bot('E o diagnóstico desbloqueou uma coisa pra você... 👀', { delay: 1400 });
-  await sleep(1200);                 // suspense
-  {
-    const t = showTyping();
-    await sleep(1700);
-    hideTyping(t);
-    addRow('bot', `🎁 <b>PARABÉNS, ${s.primeiro}!</b> Você acaba de ganhar o<br><b class="gift-prod">TEMPLATE DOS 30 REELS VIRAIS</b><br>os roteiros que usamos pra estourar perfis no seu nicho.`, 'gift-announce');
-  }
-  await sleep(2400);                 // deixa o presente ser lido antes do card
-  renderProdutoCard();
-  await sleep(2800);                 // tempo de ver o preview do produto
-  if (d.qualificado) {
-    await bot('⚡ Pelo seu estágio, seu perfil entrou como <b>alto potencial</b> — aproveita a vaga.', { delay: 1300 });
-    await sleep(1400);
-  }
-  await bot(`Pra resgatar, agenda uma <b>reunião gratuita</b> pra conhecer o método de crescimento no Instagram que já gerou <b>+50 milhões de seguidores</b>, <b>3 bilhões de visualizações</b> e <b>100 mil clientes</b> — você sai com o template na mão. Toca no melhor horário 👇`, { delay: 1600 });
-  await sleep(2000);                 // ler o convite antes do calendário aparecer
-
-  await renderAgenda();
-  state.done = true; persist();
-}
-
-/* decide a agenda: embed da instância (vendedor sorteado no backend)
-   ou, sem rota de embed, o calendário local */
-async function renderAgenda() {
-  const d = state.data;
-  const rota = await postJSON(CONFIG.API_AGENDA, {
-    action: 'route',
-    renda: d.faturamento || '', nicho: d.nicho || '',
-    bio: (d.profile && d.profile.biography) || '',
-  }, 6000);
-  // Grava a trilha assim que ela é decidida — mesmo que o lead NÃO conclua o
-  // agendamento. Sem isso, o banco (e o dashboard) só conheceria a trilha de
-  // quem fechou booking, sub-contando os médicos/premium que só chegaram aqui.
-  if (rota && rota.track) {
-    state.data.callTrack = rota.track;
-    state.data.vendedor = rota.vendor || '';
-    state.data.vendorEventTypeId = rota.vendorEventTypeId || null;
-    persist();
-    salvarLead('completo');
-    dispararLeadQualificado();   // Lead aqui: lead qualificado 10k+ (closer/audience), mesmo que não agende
-  }
-  // Motor invisível primeiro: horários reais via API, o lead nunca vê o Cal.
-  // Se a API não trouxer horários, renderAgendaInline cai no embed (se houver
-  // link na trilha) e, por último, na agenda local.
-  await renderAgendaInline(rota || {});
-}
+/* (o fechamento antigo do quiz de Instagram foi substituído por
+   etapaResultado/finalQualificada/finalNaoQualificada, acima) */
 
 /* booker da instância embutido no chat — agendamento REAL sem API */
 function renderAgendaEmbed(info) {
@@ -1627,7 +1459,7 @@ function renderAgendaEmbed(info) {
   const row = addRow('bot', `
     <div class="ag-head">
       <span class="ag-ic">📅</span>
-      <div><h4>Escolhe o melhor horário</h4><p>Sessão de diagnóstico gratuita · online</p></div>
+      <div><h4>Escolhe o melhor horário</h4><p>Encontro gratuito com a Suely · online</p></div>
     </div>
     <div class="cal-embed-body"><div class="cal-embed-slot"></div></div>
   `, 'agenda-card cal-embed-card');
@@ -1651,6 +1483,11 @@ async function onEmbedAgendado(e, row, info) {
   if (state.data.agendado) return;
   const det = (e && e.detail && e.detail.data) || {};
   const startISO = det.date || det.startTime || (det.booking && (det.booking.startTime || det.booking.start)) || '';
+  // código do booking no Cal (confirmação) — o payload varia por versão do embed
+  const uid = (det.booking && (det.booking.uid || det.booking.id)) || det.uid || det.bookingId || '';
+  state.data.bookingUid = uid ? String(uid) : '';
+  const vUrl = (det.booking && (det.booking.videoCallUrl || (det.booking.metadata && det.booking.metadata.videoCallUrl))) || '';
+  if (vUrl) state.data.videoUrl = vUrl;
   state.data.agendado = true;
   state.data.agendamentoEm = startISO ? new Date(startISO).toISOString() : null;
   state.data.callTrack = info.track || state.data.callTrack || '';
@@ -1672,7 +1509,7 @@ async function onEmbedAgendado(e, row, info) {
   card.innerHTML = `
     <div class="ag-head">
       <span class="ag-ic">📅</span>
-      <div><h4>Sessão agendada</h4><p>Te esperamos lá!</p></div>
+      <div><h4>Tá marcado!</h4><p>Vou te esperar 💚</p></div>
     </div>
     <div class="ag-done">
       <div class="ag-check">✓</div>
@@ -1684,16 +1521,16 @@ async function onEmbedAgendado(e, row, info) {
   scrollDown();
 
   const s = safeData();
-  await bot(`✅ <b>Agendado, ${s.primeiro}!</b> Salvei sua <a href="${pageUrl}" target="_blank" rel="noopener"><b>página da reunião</b></a> — lá tem o contador e os detalhes. Seu <b>Template dos 30 Reels Virais</b> está garantido. Até lá! 🚀`, { delay: 900 });
+  await bot(`Prontinho, <b>${s.primeiro}</b> 💚 Seu Encontro está marcado! Guardei sua <a href="${pageUrl}" target="_blank" rel="noopener"><b>página do Encontro</b></a> com todos os detalhes, e seu ebook <b>7 Dicas</b> já está separado pra você. Até lá!`, { delay: 900 });
 }
 
 function waLink() {
   const d = state.data;
+  const perfilNome = d.perfil === 'high' ? 'Alta Consciência' : d.perfil === 'mid' ? 'Média Consciência' : 'Baixa Consciência';
   const msg = encodeURIComponent(
-    `Olá! Acabei de fazer o Diagnóstico de Crescimento Orgânico.\n\n` +
-    `Nome: ${d.nome}\nPerfil: @${d.instagram}\nNicho: ${d.nicho}\n` +
-    `Seguidores: ${d.seguidores}\nDesafio: ${d.desafio}\n\n` +
-    `Quero agendar minha Sessão Estratégica e resgatar o TEMPLATE DOS 30 REELS VIRAIS! 🎁`
+    `Olá, Suely! Acabei de fazer o quiz "Reconstrua Suas Emoções".\n\n` +
+    `Nome: ${d.nome}\nResultado: ${perfilNome}\n\n` +
+    `Quero agendar minha conversa sobre o Programa SUAVIS! 💚`
   );
   return `https://wa.me/${CONFIG.WHATSAPP_NUMERO}?text=${msg}`;
 }
@@ -1739,7 +1576,7 @@ async function renderAgendaInline(rota = {}) {
   let modo = 'local';
   let slotsCal = null, isoCal = null;
   const dStr = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  {
+  if (!MODO_DEMO) {   // demonstração usa só a agenda simulada (regras locais)
     const hoje = new Date();
     const fimJanela = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + CONFIG.AGENDA.diasAdiante);
     const r = await postJSON(CONFIG.API_AGENDA, {
@@ -1761,7 +1598,7 @@ async function renderAgendaInline(rota = {}) {
 
   // API não trouxe horários (sem chave, sem event type da trilha, ou erro):
   // se a trilha tem booker, usa o embed; senão segue pra agenda local.
-  if (modo !== 'cal' && rota && rota.embedLink) { renderAgendaEmbed(rota); return; }
+  if (!MODO_DEMO && modo !== 'cal' && rota && rota.embedLink) { renderAgendaEmbed(rota); return; }
 
   let disponiveis;
   if (modo === 'cal') {
@@ -1903,7 +1740,7 @@ async function confirmarAgendamento(card, dia, hora, iso) {
       if (r.start) quandoISO = r.start;
     } else if (r && r.reason === 'slot_taken') {
       card.closest('.row')?.remove();
-      await bot('Eita — esse horário acabou de ser preenchido por outra pessoa 😅 Escolhe outro aqui:', { delay: 800 });
+      await bot('Eita! Esse horário acabou de ser preenchido por outra pessoa 😅 Escolhe outro aqui:', { delay: 800 });
       await renderAgendaInline();
       return;
     } else {
@@ -1936,7 +1773,7 @@ async function confirmarAgendamento(card, dia, hora, iso) {
   card.innerHTML = `
     <div class="ag-head">
       <span class="ag-ic">📅</span>
-      <div><h4>Sessão agendada</h4><p>Te esperamos lá!</p></div>
+      <div><h4>Tá marcado!</h4><p>Vou te esperar 💚</p></div>
     </div>
     <div class="ag-done">
       <div class="ag-check">✓</div>
@@ -1948,7 +1785,7 @@ async function confirmarAgendamento(card, dia, hora, iso) {
   scrollDown();
 
   const s = safeData();
-  await bot(`✅ <b>Agendado, ${s.primeiro}!</b> ${esc(diaTxt)} às <b>${esc(horaTxt)}</b>. Salvei sua <a href="${pageUrl}" target="_blank" rel="noopener"><b>página da reunião</b></a> — lá tem o contador e o botão de entrar. Seu <b>Template dos 30 Reels Virais</b> está garantido. Até lá! 🚀`, { delay: 900 });
+  await bot(`Prontinho, <b>${s.primeiro}</b> 💚 Seu Encontro está marcado pra <b>${esc(diaTxt)} às ${esc(horaTxt)}</b>! Guardei sua <a href="${pageUrl}" target="_blank" rel="noopener"><b>página do Encontro</b></a> com todos os detalhes, e seu ebook <b>7 Dicas</b> já está separado pra você. Até lá!`, { delay: 900 });
 }
 
 /* ================================================================
@@ -1956,76 +1793,47 @@ async function confirmarAgendamento(card, dia, hora, iso) {
    ================================================================ */
 function replayUserLabel(st) {
   const d = state.data;
-  switch (st) {
-    case 0: return d.nome;
-    case 1: return (d.paisDDI && d.paisDDI !== '55')
-      ? '+' + d.paisDDI + ' ' + (d.whatsapp || '').slice(d.paisDDI.length)
-      : maskFone((d.whatsapp || '').slice(2));
-    case 2: return d.email;
-    case 3: return '@' + d.instagram;
-    case 4:
-      if (d.flowMode !== 'apify') return d.seguidores;
-      if (d.reel) return `🎬 ${d.reel.views != null ? fmtNum(d.reel.views) + ' views' : 'Reel escolhido'}`;
-      return 'Prefiro pular a análise de reel';
-    case 5: return d.nicho;
-    case 6: return d.desafio;
-    default: return '';
-  }
+  if (st === 0) return d.nome;
+  if (st === 1) return (d.paisDDI && d.paisDDI !== '55')
+    ? '+' + d.paisDDI + ' ' + (d.whatsapp || '').slice(d.paisDDI.length)
+    : maskFone((d.whatsapp || '').slice(2));
+  if (st === 2) return d.email;
+  const p = QUIZ[st - PASSOS_CONTATO];
+  if (!p) return '';
+  const r = (d.respostas || {})[p.id];
+  if (p.multi) return (Array.isArray(r) ? r : []).map((i) => (p.opts[i] ? p.opts[i].t : '')).filter(Boolean).join(' · ');
+  return p.opts[r] ? p.opts[r].t : '';
 }
-function replayBotAfter(st) {
-  const d = state.data;
-  switch (st) {
-    case 0: return [`Prazer, <b>${esc(d.nome.split(' ')[0])}</b>! 👊 Pra eu te enviar o resultado completo do diagnóstico, qual seu WhatsApp?`];
-    case 1: return [MSG_UF[d.uf] || MSG_UF_FALLBACK, 'E qual seu melhor e-mail?'];
-    case 2: return ['Agora a parte boa: qual o <b>@</b> do seu perfil no Instagram? Vou dar uma olhada nele em tempo real 👀'];
-    case 3: {
-      const msgs = [];
-      if (d.flowMode === 'apify' && d.profile) msgs.push('__PCARD__', 'Achei! Esse é você?');
-      return msgs;
-    }
-    case 4: return [`Pela bio do <b>@${esc(d.instagram)}</b>, deu pra ver: seu nicho é <b>${esc(d.nichoDetectado || '')}</b>. Confere?`];
-    case 5: {
-      const msgs = [];
-      if (d.preDiagHtml) msgs.push(blocoContextoMetodo(), d.preDiagHtml);
-      msgs.push('Me confirma uma coisa: qual é o <b>maior desafio</b> do seu perfil hoje?');
-      return msgs;
-    }
-    case 6: return ['Última pergunta: qual a sua <b>renda mensal</b> atualmente?'];
-    default: return [];
-  }
+/* mensagens do bot que antecedem a resposta do passo st */
+function replayBotBefore(st) {
+  if (st === 0) return [
+    'Você se sente exausta pelos cuidados que tem enfrentado? Eu estou aqui para te mostrar o quanto você está preparada para transformar sua realidade e reconquistar sua vida. Responda com sinceridade! 💚',
+    'Pra começar, me diz: qual seu nome?',
+  ];
+  if (st === 1) return [`Que bom ter você aqui, <b>${esc((state.data.nome || '').split(' ')[0])}</b> 💚 Me passa seu WhatsApp? É por ele que eu te envio suas orientações depois da nossa conversa.`];
+  if (st === 2) return ['Obrigada pela confiança 🙏 E qual e-mail você mais usa no dia a dia?'];
+  if (st === 3) return ['Agora quero te conhecer um pouquinho melhor, tá? Fica à vontade pra responder com o coração 🌿', QUIZ[0].q];
+  const p = QUIZ[st - PASSOS_CONTATO];
+  return p ? [p.q] : [];
 }
-const ETAPAS = [etapaNome, etapaWhats, etapaEmail, etapaInstagram, null, etapaNicho, etapaDesafio, etapaFaturamento];
 
 async function boot() {
   sendBtn.onclick = () => onSubmit && onSubmit();
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); onSubmit && onSubmit(); } });
+  await carregarQuizConfig();   // perguntas do painel (ou padrão embutido)
 
-  if (state.step > 0 && state.step < 8 && state.data.nome) {
-    addRow('bot', 'Perfis que aplicam o conteúdo certo estão multiplicando o alcance em até <b>10x</b> e transformando seguidores em <b>vendas</b> — sem investir 1 real em anúncio.');
-    addRow('bot', 'Bora começar: qual seu nome?');
-    for (let st = 0; st < state.step; st++) {
+  if (state.step > 0 && state.data.nome && !state.done) {
+    const ate = Math.min(state.step, TOTAL_PASSOS);
+    for (let st = 0; st < ate; st++) {
+      replayBotBefore(st).forEach((m) => addRow('bot', m));
       user(replayUserLabel(st));
-      if (st === 3 && state.data.flowMode === 'apify' && state.data.profile) {
-        replayBotAfter(3).forEach(m => m === '__PCARD__' ? renderProfileCard(state.data.profile) : addRow('bot', m));
-        user('Sou eu ✅');
-        if (state.step > 4) continue;
-      } else if (st === 4 && !(state.data.nichoDetectado && NICHOS.includes(state.data.nichoDetectado))) {
-        addRow('bot', `Antes de eu rodar a análise: em qual nicho o <b>@${esc(state.data.instagram)}</b> atua?`);
-        continue;
-      } else {
-        replayBotAfter(st).forEach(m => addRow('bot', m));
-        continue;
-      }
-      addRow('bot', 'E olha o que eu separei: seus últimos reels. <b>Escolhe UM</b> pra eu analisar a fundo no seu diagnóstico 👇');
     }
-    setProgress(state.step);
-    await bot('Continuando de onde você parou 😉', { delay: 600 });
-    if (state.step === 4) {
-      if (state.data.flowMode === 'apify') await etapaReel(true);
-      else await etapaSeguidoresQ(true);
-    } else {
-      await ETAPAS[state.step](true);
-    }
+    setProgress(ate);
+    await bot('Que bom te ver de novo 💚 Vamos continuar de onde paramos?', { delay: 600 });
+    if (state.step >= TOTAL_PASSOS) await etapaResultado();   // completou mas saiu antes da agenda → resultado + agenda de novo
+    else if (state.step === 1) await etapaWhats();
+    else if (state.step === 2) await etapaEmail();
+    else await etapaQuiz(state.step - PASSOS_CONTATO);
   } else {
     await sleep(500);
     await etapaNome();

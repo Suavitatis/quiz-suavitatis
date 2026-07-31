@@ -5,19 +5,8 @@
 [dev]
   port = 8888
 
-# Funções AGENDADAS (cron). Declaradas aqui (não só no in-source config.schedule)
-# porque o deploy via CLI não registra o schedule do in-source de forma confiável.
-# closer-noshow: closers que completaram e NÃO agendaram → webhook.
-# raiox-agendou: trilha audience que AGENDOU Raio X → webhook (com data da call).
-[functions."closer-noshow"]
-  schedule = "*/15 * * * *"
-
-[functions."raiox-agendou"]
-  schedule = "*/15 * * * *"
-
-# closer-agendou: trilha premium que AGENDOU o call dos closers → webhook (stage call_agendada).
-[functions."closer-agendou"]
-  schedule = "*/15 * * * *"
+# (As funções agendadas do funil original foram removidas — elas enviavam
+# dados de leads para o webhook do autor. Nada roda automaticamente aqui.)
 
 # ----------------------------------------------------------------------------
 # SEGURANÇA: bloqueia o acesso público ao código-fonte das functions e aos
@@ -63,6 +52,37 @@
 
 [[redirects]]
   from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# arquivos internos do projeto SUAVIS (documentação e scripts) — nunca públicos
+[[redirects]]
+  from = "/PERSONALIZACAO.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/QUIZ-SUAVIS.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/setup-fix.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/setup-equipe.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env"
   to = "/404.html"
   status = 404
   force = true
